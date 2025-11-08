@@ -1,0 +1,806 @@
+{
+  "lowLevelDesign": [
+    {
+      "id": "LLD-1",
+      "category": "Kolay",
+      "title": "Polymorphism ve Overriding",
+      "question": "Java'da *polymorphism*'in (çok biçimlilik) temel prensibini ve bir metot *overriding* (geçersiz kılma) örneğini açıklayınız.",
+      "answer": "Sınıflar arasında üst sınıf referansı ile alt sınıf nesnesini çalıştırma yeteneğidir.",
+      "explanation": "Çalışma zamanında (runtime) hangi metotun çağrılacağını belirler. Anahtar kelime 'extends' (veya 'implements') ve metot imzalarının (isim ve parametreler) birebir aynı olması gerekir. Bu, kodun esnekliğini artırır."
+    },
+    {
+      "id": "LLD-2",
+      "category": "Kolay",
+      "title": "Spring Bean Scopes",
+      "question": "Spring Framework'te en sık kullanılan iki Bean kapsamını ('scope') adlandırınız ve aralarındaki temel farkı belirtiniz.",
+      "answer": "'singleton' ve 'prototype'.",
+      "explanation": "'singleton' (varsayılan): Spring IoC container'ı başına tek bir örnek oluşturulur ve her enjeksiyon talebinde bu tek örnek paylaşılır. 'prototype': Her enjeksiyon talebinde yeni bir bean örneği oluşturulur."
+    },
+    {
+      "id": "LLD-3",
+      "category": "Kolay",
+      "title": "SOLID Prensipleri",
+      "question": "SOLID prensiplerinden Single Responsibility Principle'ı açıklayınız ve bir örnek veriniz.",
+      "answer": "Bir sınıfın sadece bir değişiklik nedeni olmalıdır. Yani bir sınıf sadece bir sorumluluğa sahip olmalıdır.",
+      "explanation": "Örneğin, bir User sınıfı hem kullanıcı bilgilerini tutmamalı hem de email göndermemelidir. Email gönderme işlemi ayrı bir EmailService sınıfına ayrılmalıdır."
+    },
+    {
+      "id": "LLD-4",
+      "category": "Kolay",
+      "title": "Dependency Injection",
+      "question": "Dependency Injection (Bağımlılık Enjeksiyonu) nedir ve neden kullanılır?",
+      "answer": "Bir sınıfın bağımlılıklarının dışarıdan enjekte edilmesi prensibidir.",
+      "explanation": "Kodun gevşek bağlı (loosely coupled) olmasını sağlar, test edilebilirliği artırır ve bakımı kolaylaştırır. Spring Framework'te @Autowired veya constructor injection ile kullanılır."
+    },
+    {
+      "id": "LLD-5",
+      "category": "Kolay",
+      "title": "Interface vs Abstract Class",
+      "question": "Java'da interface ve abstract class arasındaki farkları açıklayınız.",
+      "answer": "Interface: Sadece metod imzaları, çoklu kalıtım destekler. Abstract Class: Hem metod imzaları hem implementasyon, tek kalıtım.",
+      "explanation": "Interface'ler Java 8'den itibaren default metodlar içerebilir. Abstract class'lar constructor'a sahip olabilir ama interface'ler olamaz. Interface'ler sadece public static final değişkenler içerebilir."
+    },
+    {
+      "id": "LLD-6",
+      "category": "Orta",
+      "title": "Design Patterns - Singleton",
+      "question": "Singleton design pattern'i ne zaman kullanılır ve thread-safe bir implementasyon nasıl yapılır?",
+      "answer": "Tek bir instance'ın olması gerektiği durumlarda kullanılır. Thread-safe için synchronized, enum veya double-checked locking kullanılır.",
+      "explanation": "Enum singleton en güvenli yöntemdir. Lazy initialization için double-checked locking pattern kullanılabilir. Spring'de @Component ile singleton bean oluşturulabilir."
+    },
+    {
+      "id": "LLD-7",
+      "category": "Orta",
+      "title": "Factory Pattern",
+      "question": "Factory Design Pattern'in amacı nedir ve ne zaman kullanılır?",
+      "answer": "Nesne oluşturma mantığını gizleyerek, istemci kodunu somut sınıflardan ayırmak için kullanılır.",
+      "explanation": "Yeni nesnelerin oluşturulma şekli değiştiğinde sadece factory sınıfını değiştirmek yeterlidir. Spring Framework'te BeanFactory bu pattern'i kullanır."
+    },
+    {
+      "id": "LLD-8",
+      "category": "Orta",
+      "title": "Observer Pattern",
+      "question": "Observer Pattern'i açıklayınız ve Java'da nasıl implement edilir?",
+      "answer": "Bir nesnenin durumu değiştiğinde, ona bağlı tüm nesnelere bildirim gönderen pattern'dir.",
+      "explanation": "Java'da java.util.Observable ve Observer kullanılabilir veya custom implementation yapılabilir. Event-driven mimarilerde yaygın kullanılır."
+    },
+    {
+      "id": "LLD-9",
+      "category": "Orta",
+      "title": "Builder Pattern",
+      "question": "Builder Pattern'in avantajları nelerdir ve ne zaman tercih edilir?",
+      "answer": "Çok sayıda parametreli constructor'ları okunabilir hale getirir ve optional parametreleri kolay yönetir.",
+      "explanation": "Özellikle 4-5'ten fazla parametreli constructor'larda kullanılır. Immutable nesneler oluştururken ve parametrelerin sırası önemli değilken idealdir."
+    },
+    {
+      "id": "LLD-10",
+      "category": "Orta",
+      "title": "Strategy Pattern",
+      "question": "Strategy Pattern nedir ve gerçek hayatta hangi senaryolarda kullanılır?",
+      "answer": "Algoritmaları aileler halinde tanımlayıp, bunları değiştirilebilir hale getiren pattern'dir.",
+      "explanation": "Ödeme yöntemleri (kredi kartı, nakit, crypto), sıralama algoritmaları (quick sort, merge sort) gibi durumlarda kullanılır. Runtime'da algoritma değiştirilebilir."
+    },
+    {
+      "id": "LLD-11",
+      "category": "Orta",
+      "title": "Decorator Pattern",
+      "question": "Decorator Pattern'i açıklayınız ve Java I/O sınıflarında nasıl kullanıldığını belirtiniz.",
+      "answer": "Nesnelere dinamik olarak yeni davranışlar eklemek için kullanılan pattern'dir.",
+      "explanation": "Java'da FileInputStream, BufferedInputStream, DataInputStream gibi sınıflar decorator pattern kullanır. Her decorator bir InputStream'i wrap eder ve ek özellikler sağlar."
+    },
+    {
+      "id": "LLD-12",
+      "category": "Orta",
+      "title": "Adapter Pattern",
+      "question": "Adapter Pattern ne zaman kullanılır ve gerçek bir örnek veriniz.",
+      "answer": "Uyumsuz interface'leri bir araya getirmek için kullanılır.",
+      "explanation": "Örneğin, eski bir payment sistemini yeni bir interface'e adapte etmek. Spring'de HandlerAdapter, farklı controller tiplerini handle eder."
+    },
+    {
+      "id": "LLD-13",
+      "category": "Orta",
+      "title": "Template Method Pattern",
+      "question": "Template Method Pattern'in amacı nedir?",
+      "answer": "Bir algoritmanın iskeletini tanımlayıp, bazı adımları alt sınıflara bırakan pattern'dir.",
+      "explanation": "Abstract class'ta template metod tanımlanır, bazı adımlar abstract olarak bırakılır. Alt sınıflar bu adımları implement eder. Spring'de JdbcTemplate bu pattern'i kullanır."
+    },
+    {
+      "id": "LLD-14",
+      "category": "Orta",
+      "title": "Command Pattern",
+      "question": "Command Pattern'i açıklayınız ve undo/redo işlemlerinde nasıl kullanılır?",
+      "answer": "İstekleri nesne olarak kapsülleyen pattern'dir, böylece parametreleştirilebilir ve sıraya konulabilir.",
+      "explanation": "Her command bir execute() metoduna sahiptir. Undo için execute()'un tersini yapan undo() metodu eklenir. Command'lar bir stack'te saklanarak undo/redo yapılabilir."
+    },
+    {
+      "id": "LLD-15",
+      "category": "Zor",
+      "title": "Proxy Pattern",
+      "question": "Proxy Pattern'in türlerini açıklayınız (Virtual, Remote, Protection).",
+      "answer": "Virtual: Lazy loading için, Remote: Remote object erişimi için, Protection: Access control için kullanılır.",
+      "explanation": "Spring AOP proxy pattern kullanır. JDK dynamic proxy veya CGLIB ile oluşturulur. Virtual proxy örneği: Büyük resimlerin lazy loading'i."
+    },
+    {
+      "id": "LLD-16",
+      "category": "Zor",
+      "title": "Chain of Responsibility",
+      "question": "Chain of Responsibility Pattern'i açıklayınız ve Servlet Filter'larda nasıl kullanıldığını belirtiniz.",
+      "answer": "İstekleri bir handler zincirinden geçiren pattern'dir. Her handler ya işlemi yapar ya da bir sonrakine iletir.",
+      "explanation": "Servlet Filter'lar bu pattern'i kullanır. Her filter doFilter() metodunda işlemi yapar ve chain.doFilter() ile bir sonrakine iletir. Spring Security'de de kullanılır."
+    },
+    {
+      "id": "LLD-17",
+      "category": "Zor",
+      "title": "State Pattern",
+      "question": "State Pattern ve Strategy Pattern arasındaki fark nedir?",
+      "answer": "State Pattern: Nesnenin iç durumuna göre davranış değişir. Strategy: Algoritma seçimi client tarafından yapılır.",
+      "explanation": "State pattern'de state transition'lar otomatik olabilir. Strategy'de client hangi algoritmanın kullanılacağını seçer. State pattern state machine'lerde kullanılır."
+    },
+    {
+      "id": "LLD-18",
+      "category": "Zor",
+      "title": "Visitor Pattern",
+      "question": "Visitor Pattern ne zaman kullanılır ve avantajları nelerdir?",
+      "answer": "Bir veri yapısındaki elementler üzerinde farklı işlemler yapmak gerektiğinde kullanılır.",
+      "explanation": "Yeni işlemler eklemek kolaydır (yeni visitor eklenir), ama yeni element tipleri eklemek zordur (tüm visitor'lar güncellenir). Compiler'larda AST traversal için kullanılır."
+    },
+    {
+      "id": "LLD-19",
+      "category": "Zor",
+      "title": "Memento Pattern",
+      "question": "Memento Pattern'in amacı nedir?",
+      "answer": "Bir nesnenin iç durumunu kaydedip, daha sonra geri yüklemek için kullanılır.",
+      "explanation": "Originator durumu oluşturur, Memento durumu saklar, Caretaker memento'yu yönetir. Undo işlemlerinde ve checkpoint sistemlerinde kullanılır."
+    },
+    {
+      "id": "LLD-20",
+      "category": "Zor",
+      "title": "Flyweight Pattern",
+      "question": "Flyweight Pattern ne zaman kullanılır?",
+      "answer": "Çok sayıda benzer nesne oluşturulduğunda memory kullanımını azaltmak için kullanılır.",
+      "explanation": "Intrinsic state (paylaşılan) ve extrinsic state (nesneye özel) ayrılır. String pool, character rendering gibi durumlarda kullanılır."
+    },
+    {
+      "id": "LLD-21",
+      "category": "Kolay",
+      "title": "Exception Handling",
+      "question": "Java'da checked ve unchecked exception arasındaki fark nedir?",
+      "answer": "Checked exception: Compile-time'da kontrol edilir (IOException). Unchecked: Runtime'da oluşur (NullPointerException).",
+      "explanation": "Checked exception'lar throws ile declare edilmeli veya try-catch ile handle edilmelidir. Unchecked exception'lar (RuntimeException alt sınıfları) zorunlu değildir."
+    },
+    {
+      "id": "LLD-22",
+      "category": "Kolay",
+      "title": "Collections Framework",
+      "question": "ArrayList ve LinkedList arasındaki farkları açıklayınız.",
+      "answer": "ArrayList: Array tabanlı, random access O(1), insertion/deletion O(n). LinkedList: Node tabanlı, random access O(n), insertion/deletion O(1).",
+      "explanation": "ArrayList memory'de contiguous, LinkedList scattered. ArrayList cache-friendly, LinkedList değil. Çoğu durumda ArrayList tercih edilir."
+    },
+    {
+      "id": "LLD-23",
+      "category": "Kolay",
+      "title": "HashMap vs HashTable",
+      "question": "HashMap ve HashTable arasındaki farkları belirtiniz.",
+      "answer": "HashMap: Thread-safe değil, null key/value izin verir. HashTable: Thread-safe (synchronized), null izin vermez.",
+      "explanation": "Modern uygulamalarda HashMap tercih edilir. Thread-safe gerekiyorsa ConcurrentHashMap kullanılır. HashTable eski ve yavaştır."
+    },
+    {
+      "id": "LLD-24",
+      "category": "Kolay",
+      "title": "ConcurrentHashMap",
+      "question": "ConcurrentHashMap'in thread-safety'i nasıl sağlanır?",
+      "answer": "Segment-based locking veya (Java 8+) CAS (Compare-And-Swap) operasyonları kullanır.",
+      "explanation": "Java 8'den önce segment'lere bölünür, her segment ayrı lock'a sahiptir. Java 8+ synchronized yerine volatile ve CAS kullanır, daha performanslıdır."
+    },
+    {
+      "id": "LLD-25",
+      "category": "Kolay",
+      "title": "String vs StringBuilder",
+      "question": "String ve StringBuilder arasındaki fark ve ne zaman kullanılır?",
+      "answer": "String: Immutable, her değişiklikte yeni nesne. StringBuilder: Mutable, aynı nesne üzerinde değişiklik.",
+      "explanation": "String concatenation loop'larda StringBuilder kullanılmalıdır. Tek satırda + operatörü compiler tarafından optimize edilir ama loop'larda değil."
+    },
+    {
+      "id": "LLD-26",
+      "category": "Orta",
+      "title": "Thread Safety",
+      "question": "Java'da thread-safety nasıl sağlanır?",
+      "answer": "synchronized keyword, volatile, atomic classes (AtomicInteger), concurrent collections, immutable objects.",
+      "explanation": "synchronized method/block mutual exclusion sağlar. volatile visibility garantisi verir. Atomic classes lock-free programming sağlar."
+    },
+    {
+      "id": "LLD-27",
+      "category": "Orta",
+      "title": "Deadlock",
+      "question": "Deadlock nedir ve nasıl önlenir?",
+      "answer": "İki veya daha fazla thread'in birbirini beklediği durum. Lock sırası tutarlı tutularak önlenir.",
+      "explanation": "Tüm thread'ler aynı sırada lock almalıdır. Timeout kullanılabilir. Lock ordering, lock timeout, deadlock detection gibi yöntemler kullanılır."
+    },
+    {
+      "id": "LLD-28",
+      "category": "Orta",
+      "title": "ExecutorService",
+      "question": "ExecutorService nedir ve ne zaman kullanılır?",
+      "answer": "Thread pool yönetimi için kullanılan interface'dir. Thread lifecycle'ını yönetir.",
+      "explanation": "Thread'leri manuel yönetmek yerine ExecutorService kullanılır. FixedThreadPool, CachedThreadPool, ScheduledThreadPool gibi implementasyonlar vardır."
+    },
+    {
+      "id": "LLD-29",
+      "category": "Orta",
+      "title": "CompletableFuture",
+      "question": "CompletableFuture nedir ve async programming'de nasıl kullanılır?",
+      "answer": "Java 8'de eklenen, async işlemleri ve callback'leri yönetmek için kullanılan sınıftır.",
+      "explanation": "thenApply, thenCompose, thenCombine gibi metodlarla async işlemler zincirlenebilir. Exception handling için handle() veya exceptionally() kullanılır."
+    },
+    {
+      "id": "LLD-30",
+      "category": "Orta",
+      "title": "Lambda Expressions",
+      "question": "Lambda expression nedir ve functional interface ile ilişkisi nedir?",
+      "answer": "Anonymous function'ları temsil eden syntax'tır. Sadece bir abstract method'a sahip interface'ler (functional interface) ile kullanılır.",
+      "explanation": "@FunctionalInterface annotation ile işaretlenir. Runnable, Comparator, Predicate gibi interface'ler functional interface'dir. Stream API ile yaygın kullanılır."
+    },
+    {
+      "id": "LLD-31",
+      "category": "Orta",
+      "title": "Stream API",
+      "question": "Java Stream API'nin temel operasyonlarını açıklayınız.",
+      "answer": "Intermediate: filter, map, sorted, distinct. Terminal: collect, forEach, reduce, count.",
+      "explanation": "Stream'ler lazy evaluation kullanır. Intermediate operasyonlar yeni stream döner, terminal operasyonlar sonucu üretir. Parallel stream'ler multi-threading sağlar."
+    },
+    {
+      "id": "LLD-32",
+      "category": "Orta",
+      "title": "Optional",
+      "question": "Optional sınıfı neden kullanılır ve nasıl kullanılır?",
+      "answer": "Null pointer exception'ları önlemek için kullanılır. null yerine Optional.empty() döner.",
+      "explanation": "orElse(), orElseGet(), orElseThrow() gibi metodlarla default değer veya exception sağlanır. ifPresent(), map(), flatMap() ile güvenli işlem yapılır."
+    },
+    {
+      "id": "LLD-33",
+      "category": "Zor",
+      "title": "Reflection",
+      "question": "Java Reflection nedir ve ne zaman kullanılır?",
+      "answer": "Runtime'da class, method, field gibi bilgilere erişmek ve dinamik olarak invoke etmek için kullanılır.",
+      "explanation": "Class.forName(), getDeclaredMethods(), invoke() gibi metodlar kullanılır. Framework'ler (Spring, Hibernate) annotation processing için kullanır. Performance overhead'i vardır."
+    },
+    {
+      "id": "LLD-34",
+      "category": "Zor",
+      "title": "Annotation Processing",
+      "question": "Java Annotation'ları nasıl çalışır ve custom annotation nasıl oluşturulur?",
+      "answer": "Meta-data sağlar. @interface ile tanımlanır, @Retention, @Target gibi meta-annotation'lar kullanılır.",
+      "explanation": "@Retention: SOURCE, CLASS, RUNTIME. @Target: METHOD, FIELD, TYPE vb. Spring, Hibernate gibi framework'ler runtime'da annotation'ları okuyup işlem yapar."
+    },
+    {
+      "id": "LLD-35",
+      "category": "Zor",
+      "title": "ClassLoader",
+      "question": "Java ClassLoader nedir ve nasıl çalışır?",
+      "answer": "Class'ları yükleyen mekanizmadır. Bootstrap, Extension, Application classloader'ları vardır.",
+      "explanation": "Delegation model kullanır. Önce parent classloader'a sorar. Custom classloader yazılabilir. Hot deployment, plugin sistemleri için kullanılır."
+    },
+    {
+      "id": "LLD-36",
+      "category": "Zor",
+      "title": "Garbage Collection",
+      "question": "Java Garbage Collection algoritmalarını açıklayınız.",
+      "answer": "Serial GC, Parallel GC, CMS, G1, ZGC gibi algoritmalar vardır. Heap'i Young (Eden, Survivor) ve Old generation'a böler.",
+      "explanation": "Minor GC: Young generation temizlenir. Major GC: Old generation temizlenir. G1 GC low-latency için, ZGC büyük heap'ler için idealdir."
+    },
+    {
+      "id": "LLD-37",
+      "category": "Zor",
+      "title": "Memory Leaks",
+      "question": "Java'da memory leak nasıl oluşur ve nasıl tespit edilir?",
+      "answer": "Unused reference'lar, listener'lar, cache'ler, thread local variable'lar memory leak'e neden olabilir.",
+      "explanation": "Heap dump analizi (jmap, jhat, VisualVM), profiler kullanımı. WeakReference, SoftReference kullanılabilir. Connection, stream'ler kapatılmalıdır."
+    },
+    {
+      "id": "LLD-38",
+      "category": "Zor",
+      "title": "Serialization",
+      "question": "Java Serialization nedir ve ne zaman kullanılır?",
+      "answer": "Nesneleri byte stream'e çevirme işlemidir. Network transfer, persistence için kullanılır.",
+      "explanation": "Serializable interface implement edilir. serialVersionUID kullanılmalıdır. Security risk'leri vardır, JSON/Protobuf gibi alternatifler tercih edilir."
+    },
+    {
+      "id": "LLD-39",
+      "category": "Zor",
+      "title": "JVM Tuning",
+      "question": "JVM performans tuning için hangi parametreler kullanılır?",
+      "answer": "-Xmx (max heap), -Xms (initial heap), -XX:NewRatio, -XX:SurvivorRatio, GC algorithm seçimi.",
+      "explanation": "Heap size workload'a göre ayarlanır. Young/Old generation ratio ayarlanır. GC log analizi yapılır. JVM profiler'lar kullanılır."
+    },
+    {
+      "id": "LLD-40",
+      "category": "Zor",
+      "title": "Spring AOP",
+      "question": "Spring AOP nasıl çalışır ve hangi proxy türlerini kullanır?",
+      "answer": "Aspect-Oriented Programming, cross-cutting concern'leri (logging, transaction) ayrıştırır. JDK dynamic proxy veya CGLIB kullanır.",
+      "explanation": "@Aspect, @Before, @After, @Around annotation'ları kullanılır. Interface varsa JDK proxy, yoksa CGLIB. Weaving compile-time veya runtime'da yapılır."
+    },
+    {
+      "id": "LLD-41",
+      "category": "Orta",
+      "title": "Spring Transaction Management",
+      "question": "Spring'de transaction yönetimi nasıl yapılır?",
+      "answer": "@Transactional annotation ile declarative transaction management. Propagation, isolation level ayarlanabilir.",
+      "explanation": "REQUIRED (default): Mevcut transaction varsa kullan, yoksa yeni oluştur. REQUIRES_NEW: Her zaman yeni transaction. Isolation: READ_COMMITTED, REPEATABLE_READ vb."
+    },
+    {
+      "id": "LLD-42",
+      "category": "Orta",
+      "title": "Spring Boot Auto Configuration",
+      "question": "Spring Boot Auto Configuration nasıl çalışır?",
+      "answer": "@EnableAutoConfiguration veya @SpringBootApplication ile aktifleşir. classpath'teki jar'lara göre otomatik bean'ler oluşturur.",
+      "explanation": "META-INF/spring.factories dosyasında AutoConfiguration class'ları listelenir. @ConditionalOnClass, @ConditionalOnProperty gibi condition'lar kontrol edilir."
+    },
+    {
+      "id": "LLD-43",
+      "category": "Orta",
+      "title": "REST API Design",
+      "question": "RESTful API tasarım prensipleri nelerdir?",
+      "answer": "Resource-based URL'ler, HTTP method'ları (GET, POST, PUT, DELETE), stateless, HATEOAS (opsiyonel).",
+      "explanation": "/users/{id} gibi resource-based. GET: read, POST: create, PUT: update, DELETE: delete. Status code'lar doğru kullanılmalı (200, 201, 404, 500)."
+    },
+    {
+      "id": "LLD-44",
+      "category": "Orta",
+      "title": "JPA vs Hibernate",
+      "question": "JPA ve Hibernate arasındaki ilişki nedir?",
+      "answer": "JPA bir specification, Hibernate bir implementation'dır. JPA standardını Hibernate implement eder.",
+      "explanation": "JPA annotation'ları (@Entity, @Id, @OneToMany) kullanılır. Hibernate-specific özellikler de kullanılabilir ama portable değildir. EntityManager JPA interface'idir."
+    },
+    {
+      "id": "LLD-45",
+      "category": "Orta",
+      "title": "Lazy vs Eager Loading",
+      "question": "JPA'da lazy ve eager loading arasındaki fark nedir?",
+      "answer": "Eager: İlişkili entity'ler hemen yüklenir. Lazy: İhtiyaç duyulduğunda yüklenir (proxy).",
+      "explanation": "@OneToMany default lazy, @ManyToOne default eager. Lazy loading N+1 problem'ine neden olabilir. @EntityGraph veya JOIN FETCH kullanılabilir."
+    },
+    {
+      "id": "LLD-46",
+      "category": "Zor",
+      "title": "Database Connection Pool",
+      "question": "Connection pool nedir ve neden kullanılır?",
+      "answer": "Database connection'larını önceden oluşturup bir pool'da tutar, gerektiğinde dağıtır.",
+      "explanation": "Her request'te yeni connection açmak maliyetlidir. HikariCP, Apache DBCP gibi pool'lar kullanılır. max-pool-size, min-idle gibi parametreler ayarlanır."
+    },
+    {
+      "id": "LLD-47",
+      "category": "Zor",
+      "title": "Caching Strategies",
+      "question": "Caching stratejilerini açıklayınız (Cache-Aside, Write-Through, Write-Back).",
+      "answer": "Cache-Aside: App cache'i kontrol eder. Write-Through: Hem cache hem DB'ye yazar. Write-Back: Önce cache'e, sonra async DB'ye.",
+      "explanation": "Cache-Aside en yaygınıdır. Redis, Memcached kullanılır. TTL, eviction policy (LRU, LFU) ayarlanır. Cache invalidation önemlidir."
+    },
+    {
+      "id": "LLD-48",
+      "category": "Zor",
+      "title": "Distributed Locking",
+      "question": "Distributed system'lerde locking nasıl yapılır?",
+      "answer": "Redis SETNX, ZooKeeper, database-based locking, Redisson gibi kütüphaneler kullanılır.",
+      "explanation": "Single point of failure olmamalıdır. Lease time (TTL) kullanılmalıdır. Deadlock önlenmelidir. Redisson Java client'ı kolay kullanım sağlar."
+    },
+    {
+      "id": "LLD-49",
+      "category": "Zor",
+      "title": "Circuit Breaker Pattern",
+      "question": "Circuit Breaker Pattern nedir ve ne zaman kullanılır?",
+      "answer": "Hatalı servislere yapılan çağrıları durdurup, sistemin çökmesini önleyen pattern'dir.",
+      "explanation": "Closed: Normal çalışır. Open: Hata threshold aşıldı, çağrılar reddedilir. Half-Open: Test için birkaç çağrı yapılır. Resilience4j, Hystrix kullanılır."
+    },
+    {
+      "id": "LLD-50",
+      "category": "Zor",
+      "title": "Event Sourcing",
+      "question": "Event Sourcing nedir ve avantajları nelerdir?",
+      "answer": "State değişikliklerini event'ler olarak saklar. State event'lerden replay edilerek oluşturulur.",
+      "explanation": "Audit trail sağlar, time travel yapılabilir, CQRS ile birlikte kullanılır. Event store (Kafka, EventStore) kullanılır. Snapshot'lar performance için kullanılır."
+    }
+  ],
+  "highLevelDesign": [
+    {
+      "id": "HLD-1",
+      "category": "Orta",
+      "title": "System Design Basics",
+      "question": "Yüksek trafikli bir web uygulaması için temel mimari bileşenleri nelerdir?",
+      "answer": "Load Balancer, Web Server, Application Server, Database, Cache, CDN",
+      "explanation": "Load Balancer trafiği dağıtır, Web Server statik içeriği sunar, Application Server iş mantığını yürütür, Database veriyi saklar, Cache performansı artırır, CDN içeriği kullanıcıya yakın sunar."
+    },
+    {
+      "id": "HLD-2",
+      "category": "Zor",
+      "title": "Microservices Architecture",
+      "question": "Microservices mimarisinin monolitik mimariye göre avantaj ve dezavantajları nelerdir?",
+      "answer": "Avantajlar: Bağımsız ölçeklendirme, teknoloji çeşitliliği, hızlı deployment. Dezavantajlar: Karmaşıklık, network latency, distributed transaction yönetimi.",
+      "explanation": "Microservices her servisin bağımsız geliştirilmesine ve deploy edilmesine izin verir, ancak servisler arası iletişim ve veri tutarlılığı gibi yeni zorluklar getirir."
+    },
+    {
+      "id": "HLD-3",
+      "category": "Orta",
+      "title": "Load Balancing",
+      "question": "Load balancing algoritmalarını açıklayınız (Round Robin, Least Connections, IP Hash).",
+      "answer": "Round Robin: Sırayla dağıtır. Least Connections: En az bağlantılı sunucuya gönderir. IP Hash: IP'ye göre sabit sunucu seçer.",
+      "explanation": "Round Robin basit ama server kapasitesini dikkate almaz. Least Connections daha dengeli. IP Hash session affinity için kullanılır."
+    },
+    {
+      "id": "HLD-4",
+      "category": "Orta",
+      "title": "Database Sharding",
+      "question": "Database sharding nedir ve nasıl yapılır?",
+      "answer": "Büyük database'i daha küçük parçalara (shard) bölme işlemidir. Horizontal partitioning kullanılır.",
+      "explanation": "Shard key'e göre (user_id, region) veri dağıtılır. Range-based, hash-based, directory-based sharding yöntemleri vardır. Cross-shard query'ler zordur."
+    },
+    {
+      "id": "HLD-5",
+      "category": "Orta",
+      "title": "CAP Theorem",
+      "question": "CAP Theorem'i açıklayınız ve örnek sistemler veriniz.",
+      "answer": "Consistency, Availability, Partition tolerance'dan sadece ikisi aynı anda sağlanabilir.",
+      "explanation": "CP: MongoDB, HBase (consistency öncelikli). AP: Cassandra, DynamoDB (availability öncelikli). CA sistemler distributed değildir (geleneksel RDBMS)."
+    },
+    {
+      "id": "HLD-6",
+      "category": "Zor",
+      "title": "Event-Driven Architecture",
+      "question": "Event-driven architecture nedir ve ne zaman kullanılır?",
+      "answer": "Servislerin event'ler üzerinden iletişim kurduğu mimaridir. Loose coupling sağlar.",
+      "explanation": "Producer event publish eder, Consumer subscribe eder. Kafka, RabbitMQ, AWS SNS/SQS kullanılır. Async communication, scalability sağlar."
+    },
+    {
+      "id": "HLD-7",
+      "category": "Zor",
+      "title": "CQRS Pattern",
+      "question": "CQRS (Command Query Responsibility Segregation) nedir?",
+      "answer": "Read ve Write işlemlerini ayrı modellere ayıran pattern'dir.",
+      "explanation": "Write model: Normalized, transaction'lar için. Read model: Denormalized, query'ler için optimize edilmiş. Event sourcing ile birlikte kullanılır."
+    },
+    {
+      "id": "HLD-8",
+      "category": "Zor",
+      "title": "API Gateway",
+      "question": "API Gateway'in rolü ve sorumlulukları nelerdir?",
+      "answer": "Single entry point, routing, authentication, rate limiting, load balancing, protocol translation.",
+      "explanation": "Kong, AWS API Gateway, Zuul kullanılır. BFF (Backend for Frontend) pattern ile farklı client'lar için farklı API'ler sağlanabilir."
+    },
+    {
+      "id": "HLD-9",
+      "category": "Orta",
+      "title": "Message Queue",
+      "question": "Message queue'lar ne zaman kullanılır ve hangi senaryolarda tercih edilir?",
+      "answer": "Async processing, decoupling, load leveling, reliability için kullanılır.",
+      "explanation": "RabbitMQ, Kafka, AWS SQS kullanılır. Producer-Consumer pattern. Guaranteed delivery, message ordering önemlidir. Dead letter queue hatalı mesajlar için."
+    },
+    {
+      "id": "HLD-10",
+      "category": "Orta",
+      "title": "Caching Strategies",
+      "question": "Distributed caching stratejilerini açıklayınız.",
+      "answer": "Cache-Aside, Read-Through, Write-Through, Write-Back, Refresh-Ahead.",
+      "explanation": "Redis, Memcached kullanılır. Cache invalidation stratejisi önemlidir. TTL, LRU eviction. Cache stampede önlenmelidir."
+    },
+    {
+      "id": "HLD-11",
+      "category": "Zor",
+      "title": "Distributed Transactions",
+      "question": "Distributed transaction yönetimi nasıl yapılır?",
+      "answer": "Two-Phase Commit (2PC), Saga Pattern, Eventual Consistency yaklaşımları kullanılır.",
+      "explanation": "2PC: Coordinator tüm participant'ları commit/rollback eder, blocking. Saga: Her servis local transaction yapar, compensation action'lar ile rollback. Eventual consistency: Kısa süreli inconsistency kabul edilir."
+    },
+    {
+      "id": "HLD-12",
+      "category": "Zor",
+      "title": "Service Discovery",
+      "question": "Service discovery nedir ve nasıl çalışır?",
+      "answer": "Servislerin dinamik olarak bulunması mekanizmasıdır. Client-side veya server-side olabilir.",
+      "explanation": "Eureka, Consul, ZooKeeper, Kubernetes Service kullanılır. Service registry'de servisler kayıtlıdır. Health check ile unhealthy servisler kaldırılır."
+    },
+    {
+      "id": "HLD-13",
+      "category": "Zor",
+      "title": "Rate Limiting",
+      "question": "Rate limiting stratejilerini açıklayınız.",
+      "answer": "Token Bucket, Leaky Bucket, Fixed Window, Sliding Window algoritmaları kullanılır.",
+      "explanation": "API abuse'i önler, fair usage sağlar. Redis ile distributed rate limiting yapılır. 429 Too Many Requests status code döner."
+    },
+    {
+      "id": "HLD-14",
+      "category": "Orta",
+      "title": "CDN",
+      "question": "CDN (Content Delivery Network) nedir ve nasıl çalışır?",
+      "answer": "İçeriği kullanıcıya yakın edge server'larda cache'leyen ağdır.",
+      "explanation": "CloudFront, Cloudflare, Akamai kullanılır. Static content (images, videos, CSS, JS) için idealdir. Origin server yükünü azaltır, latency düşürür."
+    },
+    {
+      "id": "HLD-15",
+      "category": "Orta",
+      "title": "Database Replication",
+      "question": "Database replication türlerini açıklayınız.",
+      "answer": "Master-Slave (read scaling), Master-Master (high availability), Multi-master replication.",
+      "explanation": "Master-Slave: Write master'a, read slave'lardan. Replication lag olabilir. Master-Master: Her iki node'a da yazılabilir, conflict resolution gerekir."
+    },
+    {
+      "id": "HLD-16",
+      "category": "Zor",
+      "title": "Consistent Hashing",
+      "question": "Consistent hashing nedir ve neden kullanılır?",
+      "answer": "Distributed system'lerde node ekleme/çıkarma sırasında minimum data movement sağlayan hashing tekniğidir.",
+      "explanation": "Hash ring üzerinde node'lar ve key'ler yerleştirilir. Node eklendiğinde sadece bir kısmı taşınır. DynamoDB, Cassandra, Redis Cluster kullanır."
+    },
+    {
+      "id": "HLD-17",
+      "category": "Zor",
+      "title": "Leader Election",
+      "question": "Distributed system'lerde leader election nasıl yapılır?",
+      "answer": "ZooKeeper, Raft, Paxos algoritmaları kullanılır. Bir node leader seçilir, diğerleri follower olur.",
+      "explanation": "Leader tüm write'ları yönetir. Leader crash olursa yeni leader seçilir. Split-brain problem'i önlenmelidir. ZooKeeper ZAB protocol kullanır."
+    },
+    {
+      "id": "HLD-18",
+      "category": "Zor",
+      "title": "Idempotency",
+      "question": "Idempotency nedir ve REST API'lerde nasıl sağlanır?",
+      "answer": "Aynı request'in birden fazla kez yapılması aynı sonucu vermelidir.",
+      "explanation": "Idempotency key (UUID) kullanılır. PUT, DELETE idempotent'tir. POST için idempotency key header'ı eklenir. Database'de key kontrol edilir."
+    },
+    {
+      "id": "HLD-19",
+      "category": "Orta",
+      "title": "Horizontal vs Vertical Scaling",
+      "question": "Horizontal ve vertical scaling arasındaki fark nedir?",
+      "answer": "Vertical: Daha güçlü makine (scale up). Horizontal: Daha fazla makine (scale out).",
+      "explanation": "Vertical scaling limitlidir ve pahalıdır. Horizontal scaling daha esnektir ama distributed system complexity getirir. Cloud'da horizontal tercih edilir."
+    },
+    {
+      "id": "HLD-20",
+      "category": "Orta",
+      "title": "Stateless vs Stateful",
+      "question": "Stateless ve stateful servisler arasındaki fark nedir?",
+      "answer": "Stateless: Her request bağımsızdır, state yoktur. Stateful: State tutulur (session).",
+      "explanation": "Stateless servisler horizontal scaling için idealdir. State external storage'da (Redis, database) tutulur. REST API'ler genelde stateless'tur."
+    },
+    {
+      "id": "HLD-21",
+      "category": "Zor",
+      "title": "Circuit Breaker",
+      "question": "Circuit breaker pattern'i system design'da nasıl kullanılır?",
+      "answer": "Hatalı servislere yapılan çağrıları durdurup, cascade failure'ı önler.",
+      "explanation": "Closed: Normal. Open: Hata threshold aşıldı, çağrılar reddedilir. Half-Open: Test için. Resilience4j, Hystrix kullanılır. Fallback mechanism eklenir."
+    },
+    {
+      "id": "HLD-22",
+      "category": "Zor",
+      "title": "Bulkhead Pattern",
+      "question": "Bulkhead pattern nedir?",
+      "answer": "Sistem kaynaklarını izole ederek, bir bölümdeki hata diğerlerini etkilemez.",
+      "explanation": "Thread pool'lar, connection pool'lar ayrılır. Critical ve non-critical işlemler izole edilir. Kubernetes namespace, resource quota kullanılabilir."
+    },
+    {
+      "id": "HLD-23",
+      "category": "Zor",
+      "title": "Saga Pattern",
+      "question": "Saga pattern'i distributed transaction'lar için nasıl kullanılır?",
+      "answer": "Uzun transaction'ları küçük local transaction'lara böler, compensation action'larla rollback yapar.",
+      "explanation": "Choreography: Her servis kendi event'ini publish eder. Orchestration: Orchestrator tüm adımları yönetir. Compensation: Her adımın tersi yapılır."
+    },
+    {
+      "id": "HLD-24",
+      "category": "Orta",
+      "title": "Database Indexing",
+      "question": "Database indexing stratejilerini açıklayınız.",
+      "answer": "B-tree index (default), Hash index, Bitmap index, Composite index kullanılır.",
+      "explanation": "Index read'i hızlandırır ama write'i yavaşlatır. Composite index column order önemlidir. Covering index sadece index'ten okur."
+    },
+    {
+      "id": "HLD-25",
+      "category": "Orta",
+      "title": "NoSQL Database Types",
+      "question": "NoSQL database türlerini açıklayınız.",
+      "answer": "Document (MongoDB), Key-Value (Redis), Column-family (Cassandra), Graph (Neo4j).",
+      "explanation": "Document: JSON-like documents. Key-Value: Simple key-value pairs. Column-family: Wide columns. Graph: Node-relationship model. Use case'e göre seçilir."
+    },
+    {
+      "id": "HLD-26",
+      "category": "Zor",
+      "title": "Event Sourcing",
+      "question": "Event sourcing nedir ve avantajları nelerdir?",
+      "answer": "State değişikliklerini event sequence olarak saklar. State event'lerden replay edilerek oluşturulur.",
+      "explanation": "Audit trail, time travel, CQRS ile birlikte kullanılır. Event store (Kafka, EventStore) kullanılır. Snapshot'lar performance için."
+    },
+    {
+      "id": "HLD-27",
+      "category": "Zor",
+      "title": "Data Partitioning",
+      "question": "Data partitioning stratejilerini açıklayınız.",
+      "answer": "Horizontal (sharding), Vertical (column-based), Functional (service-based) partitioning.",
+      "explanation": "Horizontal: Row'lar farklı shard'lara. Vertical: Column'lar farklı table'lara. Functional: Service'e göre database ayrılır. Partition key seçimi kritiktir."
+    },
+    {
+      "id": "HLD-28",
+      "category": "Orta",
+      "title": "API Versioning",
+      "question": "API versioning stratejilerini açıklayınız.",
+      "answer": "URL versioning (/v1/users), Header versioning (Accept: application/vnd.api+json;version=1), Query parameter (?version=1).",
+      "explanation": "URL versioning en yaygınıdır. Backward compatibility sağlanmalıdır. Deprecation policy belirlenmelidir. Semantic versioning kullanılabilir."
+    },
+    {
+      "id": "HLD-29",
+      "category": "Orta",
+      "title": "WebSocket vs REST",
+      "question": "WebSocket ve REST API ne zaman kullanılır?",
+      "answer": "REST: Request-response, stateless. WebSocket: Persistent connection, real-time bidirectional communication.",
+      "explanation": "REST: CRUD operations, caching, stateless. WebSocket: Chat, real-time notifications, live updates. WebSocket connection overhead'i vardır."
+    },
+    {
+      "id": "HLD-30",
+      "category": "Zor",
+      "title": "Distributed Locking",
+      "question": "Distributed system'lerde locking nasıl yapılır?",
+      "answer": "Redis SETNX, ZooKeeper, database-based locking, Redisson, etcd kullanılır.",
+      "explanation": "Single point of failure olmamalı. Lease time (TTL) kullanılmalı. Deadlock önlenmeli. Redlock algorithm (Redis) kullanılabilir."
+    },
+    {
+      "id": "HLD-31",
+      "category": "Zor",
+      "title": "Bloom Filter",
+      "question": "Bloom filter nedir ve ne zaman kullanılır?",
+      "answer": "Probabilistic data structure, bir element'in set'te olup olmadığını kontrol eder. False positive olabilir, false negative olmaz.",
+      "explanation": "Memory efficient, O(1) lookup. Cache'de olmayan key'leri filtrelemek için kullanılır. Cassandra, Redis kullanır. False positive rate ayarlanabilir."
+    },
+    {
+      "id": "HLD-32",
+      "category": "Zor",
+      "title": "Gossip Protocol",
+      "question": "Gossip protocol nedir ve nasıl çalışır?",
+      "answer": "Distributed system'lerde node'lar arası bilgi yayma protokolüdür. Epidemic algorithm kullanır.",
+      "explanation": "Her node rastgele node'lara bilgi gönderir. Eventually consistent. Cassandra, DynamoDB kullanır. Network partition'lara dayanıklıdır."
+    },
+    {
+      "id": "HLD-33",
+      "category": "Zor",
+      "title": "Vector Clocks",
+      "question": "Vector clock nedir ve causal ordering için nasıl kullanılır?",
+      "answer": "Distributed system'lerde event'lerin causal relationship'ini takip eden mekanizmadır.",
+      "explanation": "Her node bir vector tutar. Event'te vector clock güncellenir. Event'lerin hangisinin önce geldiği belirlenebilir. Riak, DynamoDB kullanır."
+    },
+    {
+      "id": "HLD-34",
+      "category": "Orta",
+      "title": "Database Connection Pooling",
+      "question": "Connection pooling neden önemlidir?",
+      "answer": "Connection açma/kapama maliyetlidir. Pool'da hazır connection'lar tutulur, gerektiğinde kullanılır.",
+      "explanation": "HikariCP, Apache DBCP kullanılır. max-pool-size, min-idle, connection-timeout ayarlanır. Connection leak detection yapılmalıdır."
+    },
+    {
+      "id": "HLD-35",
+      "category": "Orta",
+      "title": "Health Checks",
+      "question": "Health check endpoint'leri nasıl tasarlanır?",
+      "answer": "/health (basic), /health/readiness (traffic alabilir mi), /health/liveness (çalışıyor mu) endpoint'leri.",
+      "explanation": "Kubernetes liveness/readiness probe kullanır. Database, external service connectivity kontrol edilir. Circuit breaker ile entegre edilir."
+    },
+    {
+      "id": "HLD-36",
+      "category": "Zor",
+      "title": "Blue-Green Deployment",
+      "question": "Blue-green deployment nedir?",
+      "answer": "İki identical environment (blue, green) vardır. Birinde production çalışır, diğerinde yeni version deploy edilir.",
+      "explanation": "Traffic switch ile anında rollback yapılabilir. Zero-downtime deployment. Database migration dikkatli yapılmalıdır. Load balancer traffic'i yönlendirir."
+    },
+    {
+      "id": "HLD-37",
+      "category": "Zor",
+      "title": "Canary Deployment",
+      "question": "Canary deployment nedir?",
+      "answer": "Yeni version küçük bir trafik ile test edilir, sorun yoksa kademeli olarak artırılır.",
+      "explanation": "Risk azaltır. A/B testing ile birlikte kullanılabilir. Metrics (error rate, latency) izlenir. Kubernetes, Istio ile yapılabilir."
+    },
+    {
+      "id": "HLD-38",
+      "category": "Orta",
+      "title": "Monitoring & Observability",
+      "question": "Monitoring ve observability için hangi metrikler takip edilir?",
+      "answer": "Metrics (Prometheus), Logs (ELK Stack), Traces (Jaeger, Zipkin). RED (Rate, Errors, Duration) metodolojisi.",
+      "explanation": "Application metrics, infrastructure metrics, business metrics. Alerting threshold'lar belirlenir. Distributed tracing microservices'te önemlidir."
+    },
+    {
+      "id": "HLD-39",
+      "category": "Zor",
+      "title": "Distributed Tracing",
+      "question": "Distributed tracing nasıl çalışır?",
+      "answer": "Request'in tüm servisler arasındaki yolunu takip eder. Trace ID, Span ID kullanılır.",
+      "explanation": "OpenTracing, OpenTelemetry standard'ları. Jaeger, Zipkin, AWS X-Ray kullanılır. Correlation ID header'da taşınır. Performance bottleneck'ler bulunur."
+    },
+    {
+      "id": "HLD-40",
+      "category": "Zor",
+      "title": "Data Consistency Models",
+      "question": "Data consistency modellerini açıklayınız.",
+      "answer": "Strong consistency, Eventual consistency, Weak consistency, Causal consistency.",
+      "explanation": "Strong: Tüm node'lar aynı anda aynı data'yı görür. Eventual: Zamanla consistent olur. Causal: Causally related event'ler sıralı görülür."
+    },
+    {
+      "id": "HLD-41",
+      "category": "Zor",
+      "title": "Quorum",
+      "question": "Quorum nedir ve distributed system'lerde nasıl kullanılır?",
+      "answer": "Okuma/yazma işlemleri için minimum node sayısı. R + W > N (N: total nodes, R: read quorum, W: write quorum).",
+      "explanation": "Consistency ve availability arasında trade-off. Cassandra, DynamoDB kullanır. Network partition'da quorum sağlanamazsa işlem yapılamaz."
+    },
+    {
+      "id": "HLD-42",
+      "category": "Orta",
+      "title": "API Security",
+      "question": "API security için hangi yöntemler kullanılır?",
+      "answer": "Authentication (JWT, OAuth2), Authorization (RBAC), Rate limiting, HTTPS, Input validation, CORS.",
+      "explanation": "JWT stateless authentication sağlar. OAuth2 authorization framework. API key, Basic Auth da kullanılabilir. SQL injection, XSS önlenmelidir."
+    },
+    {
+      "id": "HLD-43",
+      "category": "Orta",
+      "title": "OAuth2 Flow",
+      "question": "OAuth2 authorization flow'larını açıklayınız.",
+      "answer": "Authorization Code (web apps), Client Credentials (server-to-server), Implicit (deprecated), Resource Owner Password (not recommended).",
+      "explanation": "Authorization Code en güvenli, PKCE ile mobile apps için kullanılır. Client Credentials machine-to-machine. Refresh token kullanılır."
+    },
+    {
+      "id": "HLD-44",
+      "category": "Zor",
+      "title": "Database Denormalization",
+      "question": "Database denormalization ne zaman yapılır?",
+      "answer": "Read performance için normalized data denormalize edilir. Write overhead'i artar ama read hızlanır.",
+      "explanation": "NoSQL database'ler genelde denormalized. Materialized view, read replica kullanılabilir. CQRS pattern ile read model denormalized olur."
+    },
+    {
+      "id": "HLD-45",
+      "category": "Zor",
+      "title": "Time-Series Database",
+      "question": "Time-series database nedir ve ne zaman kullanılır?",
+      "answer": "Zaman bazlı data için optimize edilmiş database'lerdir. IoT, monitoring, financial data için kullanılır.",
+      "explanation": "InfluxDB, TimescaleDB, Prometheus kullanılır. Compression, downsampling özellikleri vardır. TTL ile eski data silinir."
+    },
+    {
+      "id": "HLD-46",
+      "category": "Zor",
+      "title": "Graph Database",
+      "question": "Graph database ne zaman kullanılır?",
+      "answer": "Node ve relationship'lerin önemli olduğu durumlarda. Social network, recommendation engine, fraud detection.",
+      "explanation": "Neo4j, Amazon Neptune kullanılır. Cypher query language. Complex relationship query'leri hızlıdır. Friend-of-friend gibi sorgular kolaydır."
+    },
+    {
+      "id": "HLD-47",
+      "category": "Orta",
+      "title": "Search Engine",
+      "question": "Full-text search için hangi teknolojiler kullanılır?",
+      "answer": "Elasticsearch, Solr, Algolia, AWS CloudSearch. Inverted index kullanır.",
+      "explanation": "Elasticsearch distributed, real-time search engine. Analyzer, tokenizer kullanır. Fuzzy search, faceted search, autocomplete özellikleri vardır."
+    },
+    {
+      "id": "HLD-48",
+      "category": "Zor",
+      "title": "Stream Processing",
+      "question": "Stream processing nedir ve hangi teknolojiler kullanılır?",
+      "answer": "Real-time data stream'lerini işleme. Kafka Streams, Apache Flink, Spark Streaming, AWS Kinesis.",
+      "explanation": "Event time vs processing time. Windowing (tumbling, sliding, session). Stateful processing. Exactly-once semantics önemlidir."
+    },
+    {
+      "id": "HLD-49",
+      "category": "Zor",
+      "title": "Data Lake vs Data Warehouse",
+      "question": "Data lake ve data warehouse arasındaki fark nedir?",
+      "answer": "Data Warehouse: Structured, schema-on-write, SQL. Data Lake: Raw data, schema-on-read, various formats.",
+      "explanation": "Data Warehouse: ETL, predefined schema. Data Lake: ELT, flexible schema. AWS S3 + Athena, Snowflake, Redshift kullanılır."
+    },
+    {
+      "id": "HLD-50",
+      "category": "Zor",
+      "title": "Multi-Tenancy",
+      "question": "Multi-tenancy modellerini açıklayınız.",
+      "answer": "Shared Database Shared Schema, Shared Database Separate Schema, Separate Database.",
+      "explanation": "Shared DB Shared Schema: En efficient ama isolation zayıf. Separate DB: En güvenli ama maliyetli. Tenant ID ile row-level security sağlanır."
+    }
+  ]
+}
