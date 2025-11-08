@@ -399,6 +399,406 @@
       "question": "Event Sourcing nedir ve avantajları nelerdir?",
       "answer": "State değişikliklerini event'ler olarak saklar. State event'lerden replay edilerek oluşturulur.",
       "explanation": "Audit trail sağlar, time travel yapılabilir, CQRS ile birlikte kullanılır. Event store (Kafka, EventStore) kullanılır. Snapshot'lar performance için kullanılır."
+    },
+    {
+      "id": "LLD-51",
+      "category": "Kolay",
+      "title": "Polymorphism ve Overriding",
+      "question": "Java'da *polymorphism*'in (çok biçimlilik) temel prensibini ve bir metot *overriding* (geçersiz kılma) örneğini açıklayınız.",
+      "answer": "Sınıflar arasında üst sınıf referansı ile alt sınıf nesnesini çalıştırma yeteneğidir.",
+      "explanation": "Çalışma zamanında (runtime) hangi metotun çağrılacağını belirler. Anahtar kelime 'extends' (veya 'implements') ve metot imzalarının (isim ve parametreler) birebir aynı olması gerekir. Bu, kodun esnekliğini artırır."
+    },
+    {
+      "id": "LLD-52",
+      "category": "Kolay",
+      "title": "Spring Bean Scopes",
+      "question": "Spring Framework'te en sık kullanılan iki Bean kapsamını ('scope') adlandırınız ve aralarındaki temel farkı belirtiniz.",
+      "answer": "'singleton' ve 'prototype'.",
+      "explanation": "'singleton' (varsayılan): Spring IoC container'ı başına tek bir örnek oluşturulur ve her enjeksiyon talebinde bu tek örnek paylaşılır. 'prototype': Her enjeksiyon talebinde yeni bir bean örneği oluşturulur."
+    },
+    {
+      "id": "LLD-53",
+      "category": "Kolay",
+      "title": "Final, Finally, Finalize",
+      "question": "Java'da 'final', 'finally' ve 'finalize' anahtar kelimeleri arasındaki farkları kısaca belirtiniz.",
+      "answer": "'final': Sabit (değiştirilemez) değişken, metot (override edilemez) veya sınıf (inherit edilemez) tanımlar.\n'finally': 'try-catch' bloğunda, hata oluşsa da oluşmasa da her durumda çalıştırılacak olan kod bloğudur (genellikle kaynak kapatma için kullanılır).\n'finalize': Çöp toplayıcı (Garbage Collector) bir nesneyi bellekten silmeden hemen önce çağırdığı metottur (kullanımı önerilmez, deprecated).",
+      "explanation": "Birincisi kısıtlama, ikincisi istisna yönetimi akışı, üçüncüsü ise bellek yönetimi (GC) ile ilgilidir."
+    },
+    {
+      "id": "LLD-54",
+      "category": "Kolay",
+      "title": "SOLID Prensibi - S (Single Responsibility)",
+      "question": "SOLID prensiplerinden Single Responsibility Principle (Tek Sorumluluk Prensibi) nedir?",
+      "answer": "Bir sınıfın sadece bir değişim nedeni olmalıdır. Yani, bir sınıfın yalnızca tek bir işlevi veya sorumluluğu olmalıdır.",
+      "explanation": "Bu, kodun daha anlaşılır, bakımı daha kolay ve test edilebilir olmasını sağlar. Sorumlulukların ayrılması (separation of concerns) ilkesinin temelidir."
+    },
+    {
+      "id": "LLD-55",
+      "category": "Kolay",
+      "title": "CRUD Operasyonu İçin Repository Metotları",
+      "question": "Bir 'UserRepository' arayüzünde (Spring Data JPA varsayarak) bir kullanıcıyı ID ile bulmak ve hepsini listelemek için kullanılması gereken iki temel metodu yazınız (imza olarak).",
+      "answer": "public interface UserRepository extends JpaRepository<User, Long> {\n    // Bu metotlar JpaRepository'den miras alınır\n    // Optional<User> findById(Long id);\n    // List<User> findAll();\n}",
+      "explanation": "Spring Data JPA, 'JpaRepository' arayüzünü genişlettiğinizde bu temel CRUD metotlarını ('save', 'findById', 'findAll', 'deleteById' vb.) otomatik olarak sağlar. 'Optional' ile null olma ihtimali güvenli bir şekilde yönetilir."
+    },
+    {
+      "id": "LLD-56",
+      "category": "Kolay",
+      "title": "Veri Kapsülleme (Encapsulation)",
+      "question": "Java'da veri kapsüllemeyi (Encapsulation) nasıl sağlarsınız? Bunun faydası nedir?",
+      "answer": "Sınıf alanlarını (variables) 'private' olarak tanımlayıp, bu alanlara erişimi 'public' getter ve setter metotları aracılığıyla kontrol ederek sağlarız.",
+      "explanation": "Faydası, veri bütünlüğünü korumak (örn: setter içinde validasyon yapmak) ve sınıfın dahili çalışma detaylarını dış dünyadan gizlemektir (Information Hiding). Bu, kodun esnekliğini artırır."
+    },
+    {
+      "id": "LLD-57",
+      "category": "Kolay",
+      "title": "Interface vs Abstract Class",
+      "question": "Bir Interface ile Abstract Class arasındaki temel fark nedir? Hangi durumda hangisini tercih etmelisiniz?",
+      "answer": "Interface, bir sınıfın \"ne yapabileceğini\" (sözleşme) tanımlar, Abstract Class ise \"ne olduğunu\" (genel bir kimlik) ve \"nasıl yapılacağını\" (ortak kod) tanımlar. Java'da bir sınıf birden fazla Interface'i implement edebilir ancak sadece bir Abstract Class'ı extend edebilir.",
+      "explanation": "Çoklu davranış yeteneği (örn: 'Runnable', 'Serializable') kazandırmak için Interface; ortak bir temel yapı ve kod paylaşımı (ortak metot gövdeleri) sağlamak için Abstract Class tercih edilir."
+    },
+    {
+      "id": "LLD-58",
+      "category": "Kolay",
+      "title": "@Autowired vs Constructor Injection",
+      "question": "Spring'de bağımlılık enjeksiyonu (DI) için '@Autowired' alan enjeksiyonu (field injection) yerine Constructor Injection (Yapıcı Metot Enjeksiyonu) neden tercih edilmelidir?",
+      "answer": "Constructor Injection, bağımlılıkları zorunlu (mandatory) kılar, bean'in değişmez (immutable) olmasını sağlar ('final' kullanılabilir) ve unit testlerde mock'lamayı kolaylaştırır.",
+      "explanation": "Alan enjeksiyonu, bağımlılıkların eksik olabileceği (null pointer riski) ve testlerde yansıtma (reflection) gerektiren durumlar yaratır. Spring ekibi tarafından da resmi olarak Constructor Injection önerilmektedir."
+    },
+    {
+      "id": "LLD-59",
+      "category": "Kolay",
+      "title": "Exception Handling (Checked vs Unchecked)",
+      "question": "Java'da *Checked Exception* ile *Unchecked Exception* arasındaki fark nedir?",
+      "answer": "Checked Exception'lar ('Exception' alt sınıfları, 'RuntimeException' hariç), derleme zamanında (compile-time) yakalanması ('try-catch') veya fırlatılması ('throws') zorunlu olan istisnalardır (örn: 'IOException'). Unchecked Exception'lar ('RuntimeException' alt sınıfları), genellikle programlama hatalarını (örn: 'NullPointerException') gösterir ve yakalanması zorunlu değildir.",
+      "explanation": "API tasarımında, çağıran kodun kurtarabileceği (recoverable) durumlar için Checked; programcının düzeltmesi gereken mantık hataları için Unchecked ('RuntimeException') tercih edilmelidir."
+    },
+    {
+      "id": "LLD-60",
+      "category": "Kolay",
+      "title": "Singleton Pattern Uygulaması",
+      "question": "Thread-safe (iş parçacığı güvenli) bir Singleton nesnesini sadece Java kodu kullanarak en basit nasıl tasarlarsınız?",
+      "answer": "En basit ve güvenli yol Enum kullanmaktır.\n\npublic enum SingletonEnum {\n    INSTANCE; // Tekil örnek\n\n    // Metotlar buraya eklenebilir\n    public void doSomething() {\n        System.out.println(\"Singleton çalışıyor...\");\n    }\n}",
+      "explanation": "Enum tabanlı Singleton, JVM tarafından thread-safety, serileştirme (serialization) ve yansıma (reflection) saldırılarına karşı koruma garantisi verir. Diğer yöntemlere (örn: Double-Checked Locking) göre çok daha basittir."
+    },
+    {
+      "id": "LLD-61",
+      "category": "Kolay",
+      "title": "HTTP Metotları: POST vs PUT",
+      "question": "REST API tasarımında 'POST' ve 'PUT' metotları arasındaki temel fark nedir?",
+      "answer": "'POST' genellikle yeni bir kaynak oluşturmak için kullanılır ve idempotent (tekrarlanabilir) değildir (her istek yeni bir kaynak yaratabilir). 'PUT' ise bir kaynağı tamamen güncellemek veya belirli bir URI'da oluşturmak için kullanılır ve idempotenttir (aynı 'PUT' isteği defalarca yapılsa bile sonuç değişmez).",
+      "explanation": "'POST /users' (yeni kullanıcı ekle), 'PUT /users/123' (123 ID'li kullanıcıyı tamamen güncelle)."
+    },
+    {
+      "id": "LLD-62",
+      "category": "Kolay",
+      "title": "Spring'de @Component, @Service, @Repository Farkı",
+      "question": "Spring'de '@Component', '@Service' ve '@Repository' anotasyonları arasındaki fark nedir?",
+      "answer": "Hepsi '@Component'in özel bir türüdür ve Spring'in bileşen taraması (component scan) sırasında bean olarak algılanmalarını sağlar. Aralarındaki fark anlamsaldır (semantik).",
+      "explanation": "'@Service': İş mantığı katmanını (Business Layer) belirtir.\n'@Repository': Veri erişim katmanını (DAO/Persistence Layer) belirtir ve veritabanı istisnalarını (exceptions) Spring'in 'DataAccessException' hiyerarşisine çevirir.\n'@Component': Diğerlerine uymayan genel amaçlı bileşenler için kullanılır."
+    },
+    {
+      "id": "LLD-63",
+      "category": "Kolay",
+      "title": "Builder Design Pattern",
+      "question": "Builder tasarım deseni (Design Pattern) hangi sorunu çözer?",
+      "answer": "Çok fazla parametreye sahip (özellikle çoğu opsiyonel olan) nesnelerin oluşturulmasını basitleştirir. \"Teleskopik Constructor\" (iç içe çoklu constructor) karmaşasını önler.",
+      "explanation": "Nesnenin oluşturulma adımlarını ayırarak, daha okunabilir ve esnek bir nesne yaratma süreci sağlar. (Örn: Lombok '@Builder' anotasyonu)."
+    },
+    {
+      "id": "LLD-64",
+      "category": "Kolay",
+      "title": "Java'da 'static' Anahtar Kelimesi",
+      "question": "Java'da 'static' anahtar kelimesi bir metot veya değişken için kullanıldığında ne anlama gelir?",
+      "answer": "'static', o metot veya değişkenin bir nesne örneğine (instance) değil, doğrudan sınıfa ait olduğunu belirtir.",
+      "explanation": "Statik değişkenler tüm nesneler tarafından paylaşılır (tek bir kopya vardır). Statik metotlar, nesne oluşturmaya gerek kalmadan doğrudan 'SinifAdi.metotAdi()' şeklinde çağrılabilir."
+    },
+    {
+      "id": "LLD-65",
+      "category": "Kolay",
+      "title": "ORM (Object-Relational Mapping) Nedir?",
+      "question": "ORM (Object-Relational Mapping) nedir ve Spring Data JPA'da bunun rolü nedir?",
+      "answer": "ORM, nesne yönelimli dillerdeki (Java gibi) nesneleri, ilişkisel veritabanlarındaki (SQL gibi) tablolara eşleyen bir tekniktir. Geliştiricinin SQL yazma zorunluluğunu azaltır.",
+      "explanation": "Spring Data JPA, bu ORM işlemini standartlaştırır. Arka planda varsayılan olarak Hibernate (bir ORM aracı) kullanarak Java sınıflarını ('@Entity') veritabanı tablolarıyla eşler ve CRUD işlemlerini kolaylaştırır."
+    },
+    {
+      "id": "LLD-66",
+      "category": "Kolay",
+      "title": "HTTP Durum Kodları (200, 404, 500)",
+      "question": "En sık karşılaşılan HTTP durum kodlarından 200, 404 ve 500'ün anlamlarını açıklayın.",
+      "answer": "200 OK: İstek başarılı oldu. (Örn: 'GET' başarılı).\n404 Not Found: Sunucu istenen kaynağı (endpoint veya veri) bulamadı. (İstemci hatası).\n500 Internal Server Error: Sunucu, isteği nasıl işleyeceğini bilemediği beklenmedik bir durumla karşılaştı. (Sunucu hatası).",
+      "explanation": "Bu kodlar, API'nin istemciye (frontend veya başka bir servis) işlemin sonucu hakkında standart bir bilgi vermesini sağlar."
+    },
+    {
+      "id": "LLD-67",
+      "category": "Kolay",
+      "title": "SOLID - L (Liskov Substitution Principle)",
+      "question": "SOLID prensiplerinden Liskov Substitution Principle (Liskov'un Yerine Geçme Prensibi) nedir?",
+      "answer": "Alt sınıflar (subtypes), üst sınıfların (supertypes) yerine, programın davranışını bozmadan kullanılabilmelidir.",
+      "explanation": "Eğer bir 'Kus' sınıfınız ve onu genişleten bir 'Penguen' sınıfınız varsa, 'Kus' sınıfının 'uc()' metodu 'Penguen' sınıfında \"uçamam\" hatası fırlatmamalıdır. Bu, kalıtım hiyerarşisinin yanlış kurulduğunu gösterir."
+    },
+    {
+      "id": "LLD-68",
+      "category": "Kolay",
+      "title": "Spring Boot @SpringBootApplication",
+      "question": "Bir Spring Boot uygulamasının ana sınıfında bulunan '@SpringBootApplication' anotasyonu hangi üç temel anotasyonu birleştirir?",
+      "answer": "'@Configuration', '@EnableAutoConfiguration' ve '@ComponentScan'.",
+      "explanation": "'@Configuration': Sınıfın Spring yapılandırma (configuration) sınıfı olduğunu belirtir.\n'@EnableAutoConfiguration': Spring Boot'un, classpath'teki JAR'lara bakarak otomatik yapılandırma yapmasını sağlar.\n'@ComponentScan': Mevcut paketten başlayarak '@Component', '@Service' vb. bean'leri taramasını sağlar."
+    },
+    {
+      "id": "LLD-69",
+      "category": "Kolay",
+      "title": "Java'da String Neden 'Immutable' (Değişmez)?",
+      "question": "Java'da 'String' sınıfı neden \"immutable\" (değişmez) olarak tasarlanmıştır? Bunun bir avantajını belirtiniz.",
+      "answer": "Bir String nesnesi oluşturulduktan sonra içeriği değiştirilemez. 'concat()', 'substring()' gibi metotlar her zaman *yeni* bir String nesnesi döndürür.",
+      "explanation": "Avantajı: Thread-safety (İş parçacığı güvenliği). Değişmez oldukları için, birden fazla thread arasında kilitlenme (locking) endişesi olmadan güvenle paylaşılabilirler."
+    },
+    {
+      "id": "LLD-70",
+      "category": "Kolay",
+      "title": "DAO (Data Access Object) Pattern",
+      "question": "DAO (Data Access Object) tasarım deseni nedir?",
+      "answer": "Veri erişim mantığını (SQL sorguları, veritabanı bağlantıları) iş mantığından (business logic) ayıran bir soyutlama katmanıdır.",
+      "explanation": "Spring'deki '@Repository'ler bu deseni uygular. Bu sayede, gelecekte veritabanını (örn: MySQL'den MongoDB'ye) değiştirmeniz gerekirse, sadece DAO (Repository) katmanını değiştirmeniz yeterli olur, iş mantığı katmanı ('@Service') etkilenmez."
+    },
+    {
+      "id": "LLD-71",
+      "category": "Orta",
+      "title": "Thread-Safe Koleksiyonlar",
+      "question": "Çoklu iş parçacığının (multithread) aynı anda erişeceği bir liste için standart 'ArrayList' yerine hangi koleksiyon sınıfını kullanırsınız ve neden?",
+      "answer": "'CopyOnWriteArrayList' veya 'Collections.synchronizedList(new ArrayList<>())'.",
+      "explanation": "'ArrayList' thread-safe değildir. 'synchronizedList' her okuma/yazma işleminde kilitleme yapar (düşük performans). 'CopyOnWriteArrayList' ise *yazma* işleminde listenin bir kopyasını yaratır, *okuma* işlemlerini kilitsiz ve hızlı yapar. Okumanın çok sık, yazmanın az olduğu senaryolar için idealdir."
+    },
+    {
+      "id": "LLD-72",
+      "category": "Orta",
+      "title": "RESTful API Tasarımı - Kaynak İlişkileri",
+      "question": "Bir 'Order' (Sipariş) nesnesinin birden çok 'OrderItem' (Sipariş Kalemi) olduğunu varsayalım. Bu iki kaynak arasındaki ilişkiyi gösteren RESTful URI yapısını nasıl tasarlarsınız?",
+      "answer": "İç içe kaynak gösterimi kullanılır:\n\nGET /api/orders/{orderId}             // Belirli bir siparişi getir\nGET /api/orders/{orderId}/items       // O siparişin tüm kalemlerini getir\nGET /api/orders/{orderId}/items/{itemId} // O siparişin belirli bir kalemini getir",
+      "explanation": "Bu yapı, kaynakların hiyerarşik ilişkisini (parent-child) açıkça belirtir ve API'nin keşfedilmesini kolaylaştırır."
+    },
+    {
+      "id": "LLD-73",
+      "category": "Orta",
+      "title": "Veritabanı İşlemleri (Transaction Isolation)",
+      "question": "Bir veritabanı işleminde (transaction) *Dirty Read* (Kirli Okuma) problemini önlemek için en az hangi izolasyon seviyesini kullanmalısınız?",
+      "answer": "'READ_COMMITTED' (Onaylanmışı Oku) izolasyon seviyesi.",
+      "explanation": "'READ_COMMITTED', bir işlemin, başka bir işlem tarafından başlatılmış ancak henüz commit edilmemiş (yani geri alınabilir durumdaki) verileri okumasını engeller. Bu, Dirty Read'i önler."
+    },
+    {
+      "id": "LLD-74",
+      "category": "Orta",
+      "title": "ExecutorService ve Thread Pool",
+      "question": "Java'da eşzamanlı (concurrent) görevleri yönetmek için 'ExecutorService' kullanmanın faydası nedir? Basit bir thread pool oluşturma örneğini gösteriniz.",
+      "answer": "Thread'lerin yaşam döngüsü yönetimini (oluşturma, sonlandırma) soyutlar. Aşırı thread oluşturma maliyetini azaltır ve kaynakları (CPU, bellek) daha verimli kullanır.\n\n// 5 adet thread'den oluşan sabit bir havuz oluştur\nExecutorService executor = Executors.newFixedThreadPool(5);\n\n// Görevi havuza teslim et (submit)\nexecutor.submit(() -> {\n    System.out.println(\"Görev çalışıyor: \" + Thread.currentThread().getName());\n});\n\n// Yeni görev kabul etmeyi durdur ve mevcut görevlerin bitmesini bekle\nexecutor.shutdown();",
+      "explanation": "Thread pool, mevcut thread'leri yeniden kullanarak performansı artırır ve sistemin aşırı yüklenmesini (thread starvation/thrashing) engeller."
+    },
+    {
+      "id": "LLD-75",
+      "category": "Orta",
+      "title": "Idempotent API Endpoints",
+      "question": "Bir REST API endpoint'inin idempotent (tekrarlanabilir) olması ne anlama gelir? Hangi HTTP metodları doğası gereği idempotenttir?",
+      "answer": "Bir isteğin, sunucu üzerinde aynı etkiyi bırakacak şekilde birden çok kez tekrarlanabilmesidir. İlk istekten sonraki aynı istekler sistemin durumunu değiştirmez. 'GET', 'PUT', 'DELETE' metodları doğası gereği idempotenttir. 'POST' genellikle idempotent değildir.",
+      "explanation": "Ağ hataları nedeniyle tekrar gönderilen isteklerin (retry) sistemde istenmeyen yan etkilere (örn: çift kayıt) yol açmasını önlemek için kritik öneme sahiptir."
+    },
+    {
+      "id": "LLD-76",
+      "category": "Orta",
+      "title": "Cache Miss ve Cache Hit",
+      "question": "Caching (Önbellekleme) mekanizmalarında Cache Miss (Önbellek Iskalama) ve Cache Hit (Önbellek İsabeti) terimlerini açıklayınız.",
+      "answer": "Cache Hit: İstenen verinin önbellekte (örn: Redis) bulunması ve hızlıca oradan getirilmesidir.\nCache Miss: İstenen verinin önbellekte bulunmaması ve ana depodan (örn: Veritabanı) getirilmesi gerekmesi durumudur. Veri daha sonra genellikle önbelleğe yazılır.",
+      "explanation": "Yüksek \"Cache Hit Rate\" (İsabet Oranı), sistem performansını (gecikmeyi azaltır) ve veritabanı yükünü düşürür. Düşük oran, önbellek stratejisinin verimsiz olduğunu gösterebilir."
+    },
+    {
+      "id": "LLD-77",
+      "category": "Orta",
+      "title": "Spring Transaction Propagation",
+      "question": "Spring'de '@Transactional' anotasyonu ile kullanılan 'Propagation.REQUIRES_NEW' ayarının anlamı nedir?",
+      "answer": "Metot çağrıldığında, mevcut bir transaction (işlem) varsa onu askıya alır (suspend) ve her zaman *yeni*, bağımsız bir transaction başlatır. Mevcut transaction yoksa yine yeni bir tane başlatır.",
+      "explanation": "Bu, içteki işlemin (örn: loglama işlemi) başarısız olmasının, dıştaki ana işlemi (örn: sipariş oluşturma) etkilemesini (rollback) istemediğimiz veya tam tersi durumlarda kullanılır."
+    },
+    {
+      "id": "LLD-78",
+      "category": "Orta",
+      "title": "HashMap vs ConcurrentHashMap",
+      "question": "Çoklu iş parçacıklı (multithreaded) ortamda 'HashMap' kullanmanın riskleri nelerdir? Bunun yerine neden 'ConcurrentHashMap' kullanılır?",
+      "answer": "'HashMap' thread-safe değildir. Birden fazla thread aynı anda 'put' işlemi yaparsa, veri bozulmasına veya sonsuz döngülere (resize sırasında) yol açabilir. 'ConcurrentHashMap' ise thread-safe'dir.",
+      "explanation": "'ConcurrentHashMap', tüm map'i kilitlemek yerine, veriyi segmentlere (veya Java 8+ sonrası bucket'lara) ayırarak daha ince taneli kilitleme (fine-grained locking) yapar. Bu, yüksek eşzamanlılıkta (high concurrency) bile iyi performans sağlar."
+    },
+    {
+      "id": "LLD-79",
+      "category": "Orta",
+      "title": "Controller Katmanında Hata Yönetimi",
+      "question": "Spring Boot uygulamasında global olarak tüm REST API hatalarını yakalayıp standart bir JSON formatında istemciye dönmek için hangi mekanizmayı kullanırsınız?",
+      "answer": "'@ControllerAdvice' (veya '@RestControllerAdvice') anotasyonuna sahip bir sınıf ve içinde '@ExceptionHandler' anotasyonlu metotlar kullanılır.\n\n@RestControllerAdvice\npublic class GlobalExceptionHandler {\n\n    @ExceptionHandler(ResourceNotFoundException.class)\n    @ResponseStatus(HttpStatus.NOT_FOUND)\n    public ErrorResponse handleNotFound(ResourceNotFoundException ex) {\n        // ErrorResponse özel bir POJO sınıfıdır\n        return new ErrorResponse(404, ex.getMessage());\n    }\n}",
+      "explanation": "Bu yapı (Centralized Exception Handling), her controller metodunda tek tek 'try-catch' blokları yazma ihtiyacını ortadan kaldırarak kod tekrarını önler ve standart bir hata yanıtı formatı sağlar."
+    },
+    {
+      "id": "LLD-80",
+      "category": "Orta",
+      "title": "Design Pattern - Factory Method",
+      "question": "Factory Method (Fabrika Metodu) tasarım desenini kısaca tanımlayın ve bir örnek kullanım senaryosu verin.",
+      "answer": "Bir nesnenin yaratılma mantığını bir metot içine soyutlar ve bu metodun alt sınıflar tarafından override edilmesine izin verir. Hangi somut sınıfın yaratılacağına alt sınıflar karar verir.",
+      "explanation": "Örnek: Farklı türde dosyaları (CSV, JSON, XML) işleyen bir 'DocumentProcessor' (soyut) sınıfınız var. 'CsvProcessor' ve 'JsonProcessor' (somut) alt sınıfları, kendi 'createParser()' (factory metot) metotlarını implement ederek doğru parser nesnesini yaratır."
+    },
+    {
+      "id": "LLD-81",
+      "category": "Orta",
+      "title": "Java'da 'volatile' Anahtar Kelimesi",
+      "question": "Java'da bir değişken 'volatile' olarak işaretlendiğinde bu neyi garanti eder ve neyi etmez?",
+      "answer": "Görünürlük (Visibility) garantisi verir. Yani, bir thread bu değişkene yazdığında, bu değişiklik anında diğer thread'ler tarafından ana bellekten okunur (CPU cache'inden değil). Atomiklik (Atomicity) garantisi vermez ('i++' gibi bileşik işlemler için).",
+      "explanation": "Sadece basit okuma/yazma işlemlerinin (örn: bir flag'i true/false yapmak) diğer thread'lerce anında görülmesi gereken durumlarda kullanılır. Bileşik işlemler için 'AtomicInteger' gibi sınıflar gerekir."
+    },
+    {
+      "id": "LLD-82",
+      "category": "Orta",
+      "title": "Spring'de @Transactional(readOnly = true)",
+      "question": "Spring'de '@Transactional(readOnly = true)' ayarının kullanılması ne gibi optimizasyonlar sağlar?",
+      "answer": "Bu ayar, Spring'e ve JPA sağlayıcısına (örn: Hibernate) bu transaction'ın veritabanında *değişiklik yapmayacağını* bildirir.",
+      "explanation": "Hibernate, bu durumda \"dirty checking\" (nesnelerin değişip değişmediğini kontrol etme) mekanizmasını atlayabilir. Ayrıca, veritabanı seviyesinde de (eğer destekleniyorsa) bazı okuma optimizasyonları (örn: replikaya yönlendirme) yapılabilir. Bu, 'SELECT' işlemlerinin performansını artırır."
+    },
+    {
+      "id": "LLD-83",
+      "category": "Orta",
+      "title": "Synchronized Metot vs Synchronized Blok",
+      "question": "Java'da 'synchronized' bir metot kullanmak ile 'synchronized' bir blok kullanmak arasındaki performans farkı nedir?",
+      "answer": "'synchronized' metot, tüm metot boyunca o nesnenin kilidini ('this') alır. 'synchronized' blok ise, sadece belirtilen blok içindeki kod çalışırken ve sadece belirtilen nesne ('this' veya başka bir 'Object') üzerinde kilit alır.",
+      "explanation": "Eğer metot uzunsa ve sadece küçük bir kısmı kritik (critical section) ise, tüm metodu kilitlemek gereksiz yere diğer thread'leri bekletir (contention). Sadece ilgili kod bloğunu kilitlemek ('synchronized(lockObject) { ... }') eşzamanlılık performansını (throughput) artırır."
+    },
+    {
+      "id": "LLD-84",
+      "category": "Orta",
+      "title": "Design Pattern - Observer (Gözlemci)",
+      "question": "Observer tasarım deseni nedir ve Spring'de nerede kullanılır?",
+      "answer": "Bir nesnenin (Subject/Yayıncı) durumunda bir değişiklik olduğunda, ona bağımlı olan diğer nesnelerin (Observers/İzleyiciler) otomatik olarak bilgilendirilmesini sağlayan bir desendir.",
+      "explanation": "Spring Framework, 'ApplicationEvent' ve '@EventListener' mekanizması ile bu deseni yoğun olarak kullanır. Bir servis bir olay (event) yayınladığında (örn: 'UserRegisteredEvent'), bu olayı dinleyen ('@EventListener') diğer servisler (örn: 'EmailService', 'WelcomeBonusService') tetiklenir. Bu, servisler arası gevşek bağlılık (decoupling) sağlar."
+    },
+    {
+      "id": "LLD-85",
+      "category": "Orta",
+      "title": "Java Stream API - map vs flatMap",
+      "question": "Java Stream API'sinde 'map()' ve 'flatMap()' operasyonları arasındaki temel fark nedir?",
+      "answer": "'map()', her bir elemanı başka bir elemana dönüştürür (birebir dönüşüm). 'flatMap()' ise her bir elemanı bir *Stream'e* dönüştürür ve ardından tüm bu stream'leri tek bir \"düz\" (flat) stream'de birleştirir (bireçok dönüşüm ve birleştirme).",
+      "explanation": "Örnek: Elinizde 'List<List<Integer>>' (listelerin listesi) varsa, bunu 'List<Integer>' (tek bir liste) haline getirmek için 'flatMap()' kullanılır."
+    },
+    {
+      "id": "LLD-86",
+      "category": "Orta",
+      "title": "Spring Boot Actuator",
+      "question": "Spring Boot Actuator'ın temel amacı nedir ve sunduğu iki önemli endpoint'i belirtiniz.",
+      "answer": "Uygulamanın çalışma zamanı (runtime) durumunu izlemek (monitoring) ve yönetmek (management) için \"üretim seviyesinde\" (production-ready) HTTP endpoint'leri sağlar.",
+      "explanation": "Önemli Endpoint'ler:\n'/actuator/health': Uygulamanın sağlık durumunu (veritabanı bağlantısı, disk alanı vb.) kontrol eder. (Load balancer'lar için kritik).\n'/actuator/metrics': JVM belleği, CPU kullanımı, HTTP istek sayıları gibi detaylı metrikleri sağlar. (Prometheus/Grafana ile entegrasyon için kullanılır)."
+    },
+    {
+      "id": "LLD-87",
+      "category": "Orta",
+      "title": "Kod Analizi - Potential NullPointerException",
+      "question": "Aşağıdaki Spring kod bloğunda neden bir 'NullPointerException' (NPE) riski vardır ve bu nasıl düzeltilir?\n\n@Service\npublic class UserService {\n    @Autowired\n    private UserRepository userRepository; // Bu bir Spring Data JPA Repository\n\n    public String getUserCity(Long userId) {\n        User user = userRepository.findById(userId).get(); // Riskli satır\n        return user.getAddress().getCity();\n    }\n}",
+      "answer": "'findById' metodu 'Optional<User>' döner. Eğer 'userId' ile bir kullanıcı bulunamazsa, 'Optional' boş (empty) olur. Boş bir 'Optional' üzerinde '.get()' çağırmak 'NoSuchElementException' fırlatır. (Eğer 'user.getAddress()' null dönerse '.getCity()' çağrısı NPE fırlatır.)",
+      "explanation": "Düzeltme ('Optional'ın doğru kullanımı):\n\npublic String getUserCity(Long userId) {\n    // orElseThrow ile bulunamazsa özel bir exception fırlat\n    User user = userRepository.findById(userId)\n        .orElseThrow(() -> new ResourceNotFoundException(\"Kullanıcı bulunamadı: \" + userId));\n\n    // Java 8+ ile null safe zincirleme çağrı\n    return Optional.ofNullable(user.getAddress())\n                   .map(Address::getCity)\n                   .orElse(\"Şehir bilgisi yok\");\n}"
+    },
+    {
+      "id": "LLD-88",
+      "category": "Orta",
+      "title": "HTTP PATCH vs PUT",
+      "question": "Bir kaynağı güncellemek için kullanılan 'PUT' ile 'PATCH' arasındaki fark nedir?",
+      "answer": "'PUT', kaynağın *tamamını* (tüm alanları) güncellemek için kullanılır. Gönderilmeyen alanlar 'null' veya varsayılan değer olarak kabul edilir. 'PATCH' ise kaynağın *kısmi* (partial) olarak güncellenmesi için kullanılır; sadece istekte gönderilen alanlar değiştirilir, diğerleri korunur.",
+      "explanation": "Bir kullanıcının sadece telefon numarasını değiştirmek istiyorsanız, 'PATCH' ile sadece '{\"phone\": \"12345\"}' göndermek yeterlidir. 'PUT' kullansaydınız, ad, soyad gibi diğer tüm alanları da göndermeniz gerekirdi."
+    },
+    {
+      "id": "LLD-89",
+      "category": "Orta",
+      "title": "Immutable (Değişmez) Sınıf Tasarımı",
+      "question": "Java'da \"immutable\" (değişmez) bir sınıf tasarlamak için gereken 3 temel kural nedir?",
+      "answer": "1. Sınıf 'final' ilan edilmelidir (extend edilemesin).\n2. Tüm alanlar (fields) 'private' ve 'final' olmalıdır.\n3. Alanların değerlerini değiştiren \"setter\" metotları olmamalıdır. Alanların değerleri sadece constructor'da set edilmelidir.",
+      "explanation": "(Ek kural: Eğer alanlar 'Date' veya 'List' gibi \"mutable\" (değişebilir) nesneler ise, getter metotlarında bu nesnelerin kopyaları (defensive copy) döndürülmelidir ki dışarıdan değiştirilemesinler.)"
+    },
+    {
+      "id": "LLD-90",
+      "category": "Orta",
+      "title": "Spring AOP (Aspect-Oriented Programming)",
+      "question": "Spring AOP nedir ve en yaygın kullanım alanı nedir?",
+      "answer": "Aspect-Oriented Programming (Yönelimli Programlama), uygulamanın farklı katmanlarını yatay olarak kesen (Cross-Cutting Concerns) mantığı (örn: logging, security, transaction yönetimi) ana iş mantığından ayırmayı sağlayan bir programlama paradigm_asıdır.",
+      "explanation": "Spring, bunu çalışma zamanında (runtime) proxy nesneler yaratarak yapar. En yaygın kullanımı '@Transactional' anotasyonudur. Spring AOP, bu anotasyonu gördüğü metodun başına ve sonuna transaction başlatma/bitirme kodunu otomatik olarak ekler, böylece geliştiricinin iş mantığı temiz kalır."
+    },
+    {
+      "id": "LLD-91",
+      "category": "Zor",
+      "title": "Distributed Lock (Dağıtık Kilit) Gereksinimi",
+      "question": "Birden fazla uygulama sunucusunda (microservice instance) çalışan bir iş parçasının (örneğin stok güncelleme) aynı anda çalışmasını engellemek için Distributed Lock'a neden ihtiyaç duyulur ve hangi teknoloji ile uygulanabilir?",
+      "answer": "Standart Java 'synchronized' veya 'ReentrantLock' mekanizmaları sadece tek bir JVM (uygulama örneği) içinde geçerlidir. Uygulama yatayda ölçeklendiğinde (birden fazla sunucuya dağıtıldığında), farklı sunuculardaki thread'leri senkronize edemezler. Bu durumda merkezi bir kilit mekanizmasına ihtiyaç duyulur.",
+      "explanation": "Bu, Redis (örn: Redisson kütüphanesi ile SETNX komutunu kullanarak) veya ZooKeeper (ZNode'lar aracılığıyla) gibi harici ve paylaşılan bir sistem aracılığıyla uygulanır. Bu sistemler, kritik bölgeye (critical section) aynı anda sadece bir sunucunun girmesini garanti eder."
+    },
+    {
+      "id": "LLD-92",
+      "category": "Zor",
+      "title": "Reactive Programming (WebFlux)",
+      "question": "Spring WebFlux'un geleneksel Spring MVC'ye göre temel avantajı nedir ve neden non-blocking (engellemeyen) mimari kullanır?",
+      "answer": "Spring MVC, \"thread-per-request\" (her istek için bir thread) modelini kullanır. I/O (veritabanı, API çağrısı) beklerken bu thread bloke olur. WebFlux ise \"Event Loop\" modeli ve az sayıda thread kullanır. Bir I/O işlemi başladığında thread bloke olmaz, başka bir işe devam eder; I/O bittiğinde bir \"callback\" ile sonuç işlenir.",
+      "explanation": "Non-blocking mimari, az sayıda thread ile binlerce eşzamanlı (concurrent) bağlantıyı yönetmeyi sağlar. Bu, özellikle I/O yoğun (I/O-bound) sistemlerde (örn: API gateway, yüksek trafikli microservice'ler) kaynak (CPU, bellek) kullanımını dramatik olarak azaltır ve ölçeklenebilirliği artırır."
+    },
+    {
+      "id": "LLD-93",
+      "category": "Zor",
+      "title": "Java Memory Model (JMM) ve 'Happens-Before'",
+      "question": "Java Memory Model (JMM) bağlamında \"Happens-Before\" ilişkisi ne anlama gelir?",
+      "answer": "\"Happens-Before\", bellek görünürlüğü (memory visibility) için bir garantidir. Eğer A eylemi, B eyleminden \"happens-before\" ise, A'nın bellekte yaptığı tüm değişikliklerin (değişkenlere atamalar) B başladığında B tarafından *görünür* olacağı garanti edilir.",
+      "explanation": "Bu, derleyicinin ve CPU'nun yapabileceği optimizasyonları (örn: kodun sırasını değiştirme - reordering) kısıtlar. Örneğin, bir 'volatile' değişkene yazma işlemi, o değişkene daha sonra yapılacak okuma işleminden \"happens-before\" olur. 'synchronized' bloktan çıkmak da, o kilidi daha sonra alan bloktan \"happens-before\" olur."
+    },
+    {
+      "id": "LLD-94",
+      "category": "Zor",
+      "title": "CompletableFuture ile Asenkron Programlama",
+      "question": "Java'da 'CompletableFuture' kullanarak iki farklı API'den asenkron olarak veri çeken ve sonuçlarını birleştiren bir kod örneği yazınız.",
+      "answer": "'supplyAsync' ile görevler ayrı thread'lerde başlatılır ve 'thenCombine' ile sonuçlar birleştirilir.\n\n// İki asenkron görev tanımla (farklı API'leri çağırdığını varsay)\nCompletableFuture<String> future1 = CompletableFuture.supplyAsync(() -> {\n    // apiService.getUserDetails(1L);\n    return \"Kullanıcı Detayı\"; \n});\n\nCompletableFuture<String> future2 = CompletableFuture.supplyAsync(() -> {\n    // apiService.getUserOrders(1L);\n    return \"Kullanıcı Siparişleri\";\n});\n\n// İkisi de bittiğinde sonuçları birleştir (thenCombine)\nCompletableFuture<String> combinedFuture = future1.thenCombine(future2, (result1, result2) -> {\n    return result1 + \" & \" + result2; // İki sonucu birleştir\n});\n\n// Ana thread'i bloklamadan sonucu al (veya .join() ile blokla)\ncombinedFuture.thenAccept(System.out::println); // \"Kullanıcı Detayı & Kullanıcı Siparişleri\"",
+      "explanation": "Bu yaklaşım, iki API çağrısını paralel olarak yürüterek toplam bekleme süresini (eğer sequential yapılsaydı T1+T2 olacaktı) en hızlı olanın süresine (Max(T1, T2)) indirir, böylece I/O bekleme süresini optimize eder."
+    },
+    {
+      "id": "LLD-95",
+      "category": "Zor",
+      "title": "Deadlock (Kilitlenme) Nedir ve Nasıl Önlenir?",
+      "question": "Multithreading'de \"Deadlock\" (Kilitlenme) nedir ve bunu önlemenin bir yolunu açıklayınız.",
+      "answer": "Deadlock, iki veya daha fazla thread'in birbirlerinin elinde tuttuğu kaynakları (kilitleri) beklerken sonsuza kadar bloke olması durumudur. Thread A, Kaynak 1'i kilitler ve Kaynak 2'yi beklerken; Thread B, Kaynak 2'yi kilitler ve Kaynak 1'i bekler.",
+      "explanation": "Önleme Yolu: Kilit Sıralaması (Lock Ordering). Sistemdeki tüm thread'lerin kaynakları (kilitleri) her zaman aynı sırada (örn: Kaynak 1 her zaman Kaynak 2'den önce) almasını zorunlu kılmaktır. Bu, döngüsel beklemeyi (Circular Wait) kırar, ki bu deadlock için gereken dört şarttan biridir."
+    },
+    {
+      "id": "LLD-96",
+      "category": "Zor",
+      "title": "Spring Transactional ve Proxy Mekanizması",
+      "question": "Bir Spring '@Service' bean'i içindeki 'public' olmayan ('private' veya 'protected') bir metoda '@Transactional' koyarsanız ne olur? Neden?",
+      "answer": "'@Transactional' anotasyonu çalışmaz, transaction başlatılmaz.",
+      "explanation": "Spring AOP ('@Transactional'ı çalıştıran mekanizma) varsayılan olarak dinamik proxy'ler (ya CGLIB ya da JDK Dynamic Proxy) kullanır. Bu proxy'ler, ana nesneyi \"sarmalar\" (wrap). Dışarıdan bir çağrı geldiğinde, proxy araya girer (transaction'ı başlatır) ve sonra asıl metoda (ana nesneye) delegasyon yapar. Ancak proxy, ana nesnenin 'private'/'protected' metotlarına erişemez veya bunları override edemez, bu yüzden anotasyon etkisiz kalır."
+    },
+    {
+      "id": "LLD-97",
+      "category": "Zor",
+      "title": "Self-Invocation (Kendi Kendini Çağırma) Problemi",
+      "question": "Aşağıdaki kodda 'processUsers()' metodu çağrıldığında 'updateUserInternal()' metodundaki '@Transactional' anotasyonu neden çalışmaz?\n\n@Service\npublic class UserService {\n\n    @Transactional\n    public void updateUserInternal(User user) {\n        // ... güncelleme mantığı ...\n    }\n\n    public void processUsers(List<User> users) {\n        for (User user : users) {\n            // ...\n            this.updateUserInternal(user); // SORUNLU ÇAĞRI\n        }\n    }\n}",
+      "answer": "Çünkü 'this.updateUserInternal(user)' çağrısı, Spring'in oluşturduğu Proxy nesnesi üzerinden değil, doğrudan nesnenin ('this') kendisi üzerinden yapılır.",
+      "explanation": "Spring'in transaction'ı başlatabilmesi için çağrının *dışarıdan* (başka bir bean'den) gelerek Proxy'ye takılması gerekir. 'this' üzerinden yapılan çağrılar Proxy'yi atlar (bypass) ve AOP mekanizması (transaction) tetiklenmez. Çözüm: 'updateUserInternal' metodunu ayrı bir '@Service' bean'ine taşımak veya kendine enjeksiyon (self-injection) yapmak."
+    },
+    {
+      "id": "LLD-98",
+      "category": "Zor",
+      "title": "Circuit Breaker (Devre Kesici) Deseni",
+      "question": "Microservices mimarisinde Circuit Breaker (Devre Kesici) deseni (örn: Resilience4J) hangi sorunu çözer?",
+      "answer": "Çağrılan bir servisin (örn: Ödeme Servisi) yavaşlaması veya hata vermesi durumunda, çağıran servisin (örn: Sipariş Servisi) kaynaklarının (thread'ler, bağlantılar) tükenmesini ve hatanın tüm sisteme yayılmasını (Cascading Failures - Zincirleme Hata) engeller.",
+      "explanation": "Circuit Breaker, belirli bir hata eşiği aşıldığında (örn: son 10 isteğin %50'si fail oldu) devreyi \"açar\" (OPEN) ve o servise giden istekleri bir süreliğine durdurur, hemen hata döndürür (fail-fast). Belirli bir süre sonra devreyi \"yarı-açık\" (HALF-OPEN) konuma alıp deneme istekleri gönderir, servis düzelmişse devreyi \"kapatır\" (CLOSED)."
+    },
+    {
+      "id": "LLD-99",
+      "category": "Zor",
+      "title": "ThreadLocal Değişkeni",
+      "question": "Java'da 'ThreadLocal' değişkeni ne işe yarar ve Spring Security bunu nerede kullanır?",
+      "answer": "'ThreadLocal', her bir thread'in o değişkene ait kendi özel, bağımsız kopyasını tutmasını sağlar. Global bir değişken gibi görünse de, bir thread'in yaptığı değişiklik diğer thread'ler tarafından görülmez.",
+      "explanation": "Spring Security, kimliği doğrulanmış (authenticated) kullanıcının bilgilerini ('Authentication' nesnesini) 'SecurityContextHolder' içinde saklamak için 'ThreadLocal' kullanır. Bu sayede, aynı istek (request) boyunca çalışan tüm servis katmanları (thread değişmediği sürece) 'SecurityContextHolder.getContext()' üzerinden o isteğe ait kullanıcı bilgisine güvenli bir şekilde erişebilir."
+    },
+    {
+      "id": "LLD-100",
+      "category": "Zor",
+      "title": "Garbage Collection (GC) - Mark and Sweep",
+      "question": "Java'da modern Garbage Collector'lerin (Çöp Toplayıcı) temelini oluşturan \"Mark and Sweep\" (İşaretle ve Süpür) algoritması nasıl çalışır?",
+      "answer": "İki aşamadan oluşur:\n1. Mark (İşaretleme): \"GC Roots\" (kökler - örn: çalışan thread'lerin stack'leri, statik değişkenler) olarak bilinen noktalardan başlar ve bu köklerden erişilebilen *tüm* canlı (live) nesneleri rekürsif olarak gezer ve \"canlı\" olarak işaretler.\n2. Sweep (Süpürme): Bellek yığınını (Heap) tarar. İşaretlenmemiş (yani erişilemeyen, \"çöp\" olan) tüm nesnelerin kapladığı alanı boş (free) olarak işaretler ve belleği geri kazanır.",
+      "explanation": "Bu işlem sırasında uygulama genellikle duraklatılır (\"Stop-the-World\" pause). Modern GC'ler (G1GC, ZGC) bu duraklamaları minimize etmek için bu işlemleri eşzamanlı (concurrently) ve aşamalı (incrementally) yapmaya çalışır."
     }
   ],
   "highLevelDesign": [
@@ -801,6 +1201,406 @@
       "question": "Multi-tenancy modellerini açıklayınız.",
       "answer": "Shared Database Shared Schema, Shared Database Separate Schema, Separate Database.",
       "explanation": "Shared DB Shared Schema: En efficient ama isolation zayıf. Separate DB: En güvenli ama maliyetli. Tenant ID ile row-level security sağlanır."
+    },
+    {
+      "id": "HLD-51",
+      "category": "Kolay",
+      "title": "Load Balancer (Yük Dengeleyici) Nedir?",
+      "question": "Bir Load Balancer'ın (Yük Dengeleyici) temel görevi nedir?",
+      "answer": "Gelen ağ trafiğini (istekleri) birden fazla sunucu (web sunucusu, uygulama sunucusu) arasında dağıtmaktır.",
+      "explanation": "Temel amacı, tek bir sunucunun aşırı yüklenmesini önlemek (performansı artırmak), sistemin hata toleransını (fault tolerance) ve yüksek erişilebilirliğini (high availability) sağlamaktır. Bir sunucu çökerse, Load Balancer trafiği otomatik olarak sağlıklı sunuculara yönlendirir."
+    },
+    {
+      "id": "HLD-52",
+      "category": "Kolay",
+      "title": "Monolitik vs Microservices Mimarisi",
+      "question": "Monolitik mimari ile Microservices (Mikroservis) mimarisi arasındaki temel fark nedir?",
+      "answer": "Monolitik: Tüm uygulama (Kullanıcı arayüzü, iş mantığı, veri erişimi) tek bir büyük kod tabanı (codebase) olarak geliştirilir ve tek bir birim olarak deploy edilir.\nMicroservices: Uygulama, iş yeteneklerine (business capabilities) göre bölünmüş, bağımsız olarak geliştirilebilen, deploy edilebilen ve ölçeklenebilen küçük, gevşek bağlı (loosely coupled) servisler koleksiyonudur.",
+      "explanation": "Monolit basitlik sunar, mikroservisler ise ölçeklenebilirlik (sadece ihtiyaç duyan servisi ölçekleme) ve esneklik (farklı teknolojiler kullanabilme) sunar."
+    },
+    {
+      "id": "HLD-53",
+      "category": "Kolay",
+      "title": "Veritabanı Türleri: SQL vs NoSQL",
+      "question": "SQL (İlişkisel) ve NoSQL (İlişkisel Olmayan) veritabanları arasındaki temel fark nedir?",
+      "answer": "SQL (örn: MySQL, PostgreSQL): Verileri yapılandırılmış (structured) tablolarda (satır ve sütunlar) saklar ve katı bir şema (schema) gerektirir. ACID (Atomicity, Consistency, Isolation, Durability) garantisi yüksektir.\nNoSQL (örn: MongoDB, Cassandra): Verileri çeşitli formatlarda (doküman, key-value, graph) saklar, esnek şemaya sahiptir ve yatay ölçeklenebilirlik (horizontal scaling) için tasarlanmıştır (genellikle BASE modelini tercih eder).",
+      "explanation": "Finansal işlemler gibi tutarlılığın kritik olduğu yerlerde SQL; büyük veri (Big Data), yüksek trafik ve esnek veri modelleri (örn: sosyal medya) için NoSQL tercih edilir."
+    },
+    {
+      "id": "HLD-54",
+      "category": "Kolay",
+      "title": "API Gateway (API Geçidi) Nedir?",
+      "question": "Bir API Gateway'in (API Geçidi) mikroservis mimarisindeki rolü nedir?",
+      "answer": "İstemciler (mobil uygulama, web arayüzü) ile mikroservisler arasında duran tek bir giriş noktasıdır (single entry point). Gelen istekleri alır ve ilgili mikroservislere yönlendirir (routing).",
+      "explanation": "Ayrıca kimlik doğrulama (authentication), yetkilendirme (authorization), hız sınırlaması (rate limiting), loglama ve cache'leme gibi çapraz kesen (cross-cutting) görevleri merkezi olarak yönetir, böylece bu mantığın her mikroserviste tekrarlanmasını önler."
+    },
+    {
+      "id": "HLD-55",
+      "category": "Kolay",
+      "title": "CDN (Content Delivery Network) Nedir?",
+      "question": "CDN (Content Delivery Network - İçerik Dağıtım Ağı) ne işe yarar?",
+      "answer": "Statik içerikleri (resimler, videolar, CSS, JavaScript dosyaları) coğrafi olarak dağıtılmış sunucularda (Edge Locations) önbelleğe alarak (cache) kullanıcılara en yakın konumdan sunar.",
+      "explanation": "Bu, içeriğin yüklenme süresini (gecikmeyi - latency) ciddi şekilde azaltır ve ana sunucunun (origin server) yükünü hafifletir."
+    },
+    {
+      "id": "HLD-56",
+      "category": "Kolay",
+      "title": "Asenkron İletişim (Message Queue)",
+      "question": "Servisler arası asenkron iletişim için neden bir Message Queue (Mesaj Kuyruğu - örn: RabbitMQ, Kafka) kullanılır?",
+      "answer": "Servisler arasında gevşek bağlılık (decoupling) ve dayanıklılık (resilience) sağlamak için kullanılır.",
+      "explanation": "Servis A (Üretici), bir mesajı kuyruğa bırakır ve kendi işine devam eder (hızlı yanıt). Servis B (Tüketici), hazır olduğunda mesajı kuyruktan alır ve işler. Eğer Servis B o an çalışmıyorsa (çökmüşse), mesaj kuyrukta bekler ve sistemin tamamı durmaz."
+    },
+    {
+      "id": "HLD-57",
+      "category": "Kolay",
+      "title": "Cache (Önbellek) Türleri: Write-Through vs Write-Back",
+      "question": "Cache (Önbellek) yazma stratejilerinden \"Write-Through\" ve \"Write-Back\" arasındaki fark nedir?",
+      "answer": "Write-Through: Veri hem önbelleğe hem de ana veritabanına *aynı anda* (senkron) yazılır. Yazma işlemi, her iki yazma da tamamlandığında biter.\nWrite-Back (Write-Behind): Veri *önce* sadece önbelleğe yazılır ve işlem hemen tamamlanır (hızlı). Önbellekteki veri daha sonra (gecikmeli olarak, toplu halde) veritabanına asenkron olarak yazılır.",
+      "explanation": "Write-Through veri tutarlılığını (consistency) garanti eder ama yavaştır. Write-Back çok hızlı yazma sağlar ancak önbellek çökerse veritabanına henüz yazılmamış verinin kaybolma riski vardır."
+    },
+    {
+      "id": "HLD-58",
+      "category": "Kolay",
+      "title": "Vertical vs Horizontal Scaling",
+      "question": "Dikey Ölçeklendirme (Vertical Scaling) ile Yatay Ölçeklendirme (Horizontal Scaling) arasındaki fark nedir?",
+      "answer": "Vertical Scaling (Scale Up): Mevcut sunucunun kaynaklarını artırmak (daha fazla CPU, RAM, Disk eklemek).\nHorizontal Scaling (Scale Out): Sisteme daha fazla sunucu (node/instance) eklemek ve yükü bu sunucular arasında dağıtmak.",
+      "explanation": "Vertical scaling'in fiziksel bir limiti vardır ve pahalıdır. Horizontal scaling (özellikle bulut ortamında) daha esnek, ucuz ve neredeyse sınırsız ölçeklenebilirlik sağlar, ancak daha karmaşık bir mimari (load balancer vb.) gerektirir."
+    },
+    {
+      "id": "HLD-59",
+      "category": "Kolay",
+      "title": "State (Durum) Yönetimi: Stateless vs Stateful",
+      "question": "\"Stateless\" (Durumsuz) bir uygulama sunucusunun avantajı nedir?",
+      "answer": "Stateless bir sunucu, istemciye (client) ait oturum (session) veya uygulama durumu (state) bilgisini kendi üzerinde tutmaz. Her istek, ihtiyaç duyduğu tüm bilgileri (örn: JWT token) kendi içinde taşır.",
+      "explanation": "Avantajı: Ölçeklenebilirlik. Gelen istek herhangi bir sunucuya (çünkü sunucular birbirinin aynıdır, durum bilgisi taşımazlar) Load Balancer tarafından yönlendirilebilir. Stateful uygulamalarda ise kullanıcının hep aynı sunucuya gitmesi gerekir (Sticky Session), bu da ölçeklendirmeyi ve hata toleransını zorlaştırır."
+    },
+    {
+      "id": "HLD-60",
+      "category": "Kolay",
+      "title": "CAP Teoremi Nedir?",
+      "question": "Dağıtık sistemler için CAP Teoremi'nin üç bileşenini ve temel iddiasını açıklayınız.",
+      "answer": "Üç bileşen: Consistency (Tutarlılık - tüm node'lar aynı anda aynı veriyi görür), Availability (Erişilebilirlik - her istek bir yanıt alır) ve Partition Tolerance (Bölünme Toleransı - ağdaki kopukluklara rağmen sistemin çalışmaya devam etmesi).",
+      "explanation": "Teorem, bir ağ bölünmesi (Partition) durumunda, dağıtık bir sistemin aynı anda hem Tutarlı (C) hem de Erişilebilir (A) olamayacağını, ikisinden birini seçmek zorunda olduğunu (CP veya AP) belirtir. (Modern sistemler genellikle P'yi kabul etmek zorundadır)."
+    },
+    {
+      "id": "HLD-61",
+      "category": "Kolay",
+      "title": "Service Discovery (Servis Keşfi)",
+      "question": "Mikroservis mimarisinde Service Discovery (Servis Keşfi) mekanizması ne işe yarar?",
+      "answer": "Mikroservisler dinamik olarak ölçeklendiğinde (yeni instance'lar açılıp kapandığında) IP adresleri ve portları sürekli değişir. Service Discovery (örn: Eureka, Consul), servislerin birbirlerinin güncel konumlarını (IP/Port) bulmasını sağlayan bir \"telefon rehberi\" görevi görür.",
+      "explanation": "Servisler başladığında kendilerini bu rehbere (Service Registry) kaydeder ve diğer servisleri bulmak için bu rehberi sorgularlar."
+    },
+    {
+      "id": "HLD-62",
+      "category": "Kolay",
+      "title": "Database Sharding (Parçalama)",
+      "question": "Veritabanı Sharding (Yatay Parçalama) nedir?",
+      "answer": "Çok büyüyen bir veritabanı tablosunu (milyarlarca satır), belirli bir anahtara (Shard Key - örn: 'user_id') göre daha küçük parçalara (shard'lara) bölmek ve bu parçaları farklı veritabanı sunucularına dağıtmak işlemidir.",
+      "explanation": "Bu, tek bir sunucunun yazma/okuma yükünü ve depolama sınırlarını aşmasını engeller, veritabanını yatay olarak ölçeklendirir."
+    },
+    {
+      "id": "HLD-63",
+      "category": "Kolay",
+      "title": "Observability (Gözlemlenebilirlik) - 3 Sütun",
+      "question": "Modern sistemlerde Observability (Gözlemlenebilirlik) kavramının üç temel direği (sütunu) nedir?",
+      "answer": "1. Logs (Kayıtlar): Uygulamada meydana gelen olayların detaylı, zaman damgalı kayıtları. (Neyin *olduğunu* söyler).\n2. Metrics (Metrikler): Belirli bir zaman aralığındaki sayısal ölçümler (örn: CPU kullanımı, istek sayısı). (Genel *sağlığı* gösterir).\n3. Traces (İzler): Bir isteğin sistem içindeki (mikroservisler arasındaki) tüm yolculuğunu ve gecikmelerini gösterir. (Sorunun *nerede* olduğunu gösterir).",
+      "explanation": "Bu üçü birleştiğinde, bir sistemin iç durumunu sadece dışarıdan bakarak (semptomları) değil, içeriden de (nedenleri) anlama yeteneği sağlar."
+    },
+    {
+      "id": "HLD-64",
+      "category": "Kolay",
+      "title": "Pub/Sub (Publish/Subscribe) Modeli",
+      "question": "Pub/Sub (Yayınla/Abone Ol) mesajlaşma modeli nedir?",
+      "answer": "Üreticinin (Publisher) mesajı belirli bir \"konuya\" (Topic) yayınladığı ve o konuya abone (Subscriber) olan *tüm* tüketicilerin mesajın bir kopyasını aldığı bir modeldir. Üretici, tüketicilerin kim olduğunu bilmez.",
+      "explanation": "Bu, \"fan-out\" senaryoları için idealdir. Örn: Bir sipariş oluşturulduğunda ('order_created' topic'i), hem Fatura servisi hem de Kargo servisi hem de Bildirim servisi bu mesajı alıp kendi işini yapar. (Kafka bu modeli kullanır)."
+    },
+    {
+      "id": "HLD-65",
+      "category": "Kolay",
+      "title": "HTTP vs HTTPS",
+      "question": "HTTP ve HTTPS arasındaki temel fark nedir?",
+      "answer": "HTTPS, HTTP'nin (Hypertext Transfer Protocol) güvenli (Secure) versiyonudur. İstemci ile sunucu arasındaki iletişimi şifrelemek için SSL/TLS (Secure Sockets Layer/Transport Layer Security) protokolünü kullanır.",
+      "explanation": "HTTP'de veriler (kullanıcı adı, şifre, kredi kartı bilgisi) düz metin (plain text) olarak gider ve ağdaki \"aradaki adam\" (Man-in-the-Middle) saldırılarıyla çalınabilir. HTTPS bu verileri şifreleyerek gizliliği ve bütünlüğü sağlar."
+    },
+    {
+      "id": "HLD-66",
+      "category": "Kolay",
+      "title": "DNS (Domain Name System) Nedir?",
+      "question": "DNS (Domain Name System) ne işe yarar?",
+      "answer": "İnsanların okuyabildiği alan adlarını (örn: 'google.com') bilgisayarların anladığı IP adreslerine (örn: '142.250.184.174') çeviren \"internetin telefon rehberi\"dir.",
+      "explanation": "Tarayıcınıza bir alan adı yazdığınızda, ilk adım DNS sunucusuna gidip o alan adının hangi IP adresindeki sunucuda barındırıldığını sormaktır."
+    },
+    {
+      "id": "HLD-67",
+      "category": "Kolay",
+      "title": "Veritabanı Replikasyonu (Replication)",
+      "question": "Veritabanı replikasyonu (Replication) nedir ve neden yapılır?",
+      "answer": "Bir ana (Primary/Master) veritabanındaki verilerin kopyalarının bir veya daha fazla ikincil (Secondary/Replica) veritabanına çoğaltılmasıdır.",
+      "explanation": "İki ana amacı vardır: 1. Yüksek Erişilebilirlik (High Availability): Ana veritabanı çökerse, replikalardan biri hemen onun yerini alabilir (failover). 2. Okuma Ölçeklemesi (Read Scaling): Yazma işlemleri Ana'ya giderken, yoğun okuma işlemleri ('SELECT' sorguları) replikalara dağıtılarak ana veritabanının yükü azaltılır."
+    },
+    {
+      "id": "HLD-68",
+      "category": "Kolay",
+      "title": "Single Point of Failure (SPOF)",
+      "question": "Sistem tasarımında \"Single Point of Failure\" (SPOF - Tek Hata Noktası) ne demektir?",
+      "answer": "Sistemin bir bileşenidir ki, eğer o bileşen başarısız olursa (çökerse), tüm sistemin çalışması durur.",
+      "explanation": "Örnek: Yedeklemesi (redundancy) olmayan tek bir veritabanı, tek bir Load Balancer veya tek bir API Gateway. Yüksek erişilebilir (Highly Available) sistemler tasarlarken amaç, tüm SPOF'ları ortadan kaldırmak için yedeklilik (örn: 2+ Load Balancer, replike veritabanı) eklemektir."
+    },
+    {
+      "id": "HLD-69",
+      "category": "Kolay",
+      "title": "REST vs RPC (gRPC)",
+      "question": "Servisler arası iletişimde REST (JSON/HTTP) yerine gRPC (Protobuf/HTTP2) kullanmanın bir avantajını belirtiniz.",
+      "answer": "Performans. gRPC, veriyi serileştirmek için metin tabanlı JSON yerine ikili (binary) format olan Protobuf (Protocol Buffers) kullanır. Bu, çok daha küçük veri paketleri ve daha hızlı serileştirme/çözümleme (serialization/deserialization) sağlar.",
+      "explanation": "Ayrıca gRPC, HTTP/2 üzerinden çalışır ki bu da tek bir TCP bağlantısı üzerinde çoklama (multiplexing) ve sunucu itme (server push) gibi avantajlar sunar. Özellikle mikroservisler arası yoğun iç iletişim (doğu-batı trafiği) için tercih edilir."
+    },
+    {
+      "id": "HLD-70",
+      "category": "Kolay",
+      "title": "ACID Garantisi",
+      "question": "İlişkisel veritabanlarının (RDBMS) sunduğu ACID garantisinin açılımı nedir?",
+      "answer": "Atomicity (Atomiklik): İşlem (transaction) ya tamamen başarılı olur ya da tamamen geri alınır; yarım kalmaz.\nConsistency (Tutarlılık): İşlem, veritabanını bir tutarlı durumdan başka bir tutarlı duruma geçirir; kuralları (constraints) bozmaz.\nIsolation (İzolasyon): Eşzamanlı çalışan işlemler birbirlerinin ara durumlarını göremez; sanki tek başlarına çalışıyormuş gibi davranırlar.\nDurability (Dayanıklılık): Başarıyla tamamlanan (commit edilen) bir işlem, sistem çökse bile kalıcıdır.",
+      "explanation": "Bu özellikler, özellikle finansal sistemler gibi veri bütünlüğünün kritik olduğu uygulamalar için gereklidir."
+    },
+    {
+      "id": "HLD-71",
+      "category": "Orta",
+      "title": "Load Balancer Algoritmaları",
+      "question": "Load Balancer'lar tarafından kullanılan iki yaygın yük dağıtım algoritmasını açıklayınız.",
+      "answer": "1. Round Robin: Gelen istekleri sırayla sunuculara dağıtır (Sunucu 1, Sunucu 2, Sunucu 3, sonra tekrar Sunucu 1...).\n2. Least Connections (En Az Bağlantı): Yeni isteği, o an üzerinde en az aktif bağlantı bulunan sunucuya yönlendirir. Bu, sunucuların yükünü daha adil dağıtır.",
+      "explanation": "Round Robin basit ve etkilidir, ancak bazı istekler daha yoğunsa (örn: dosya indirme) sunucu yükü dengesizleşebilir. Least Connections bu durumu daha iyi yönetir."
+    },
+    {
+      "id": "HLD-72",
+      "category": "Orta",
+      "title": "Cache Stratejisi: Cache-Aside (Lazy Loading)",
+      "question": "\"Cache-Aside\" (Yandan Önbellekleme) veya \"Lazy Loading\" (Tembel Yükleme) önbellek stratejisi nasıl çalışır?",
+      "answer": "Uygulamanın en sık kullandığı ve en basit stratejidir.\n1. Uygulama önce veriyi Cache'den (örn: Redis) ister.\n2. Cache Miss (Iskalama): Veri cache'de yoksa, uygulama veriyi ana veritabanından (DB) okur.\n3. Uygulama, DB'den okuduğu veriyi Cache'e yazar (gelecek istekler için).\n4. Uygulama veriyi istemciye döndürür.\n5. Cache Hit (İsabet): Veri cache'de varsa, DB'ye gitmeden doğrudan cache'den döndürülür (hızlı).",
+      "explanation": "Bu strateji sadece gerçekten ihtiyaç duyulan verinin önbelleğe alınmasını sağlar, ancak ilk istek (Cache Miss) yavaş olur ve önbellekteki verinin güncelliğini (staleness) yönetme sorumluluğu uygulamadadır."
+    },
+    {
+      "id": "HLD-73",
+      "category": "Orta",
+      "title": "Veritabanı İndeksleme (Indexing)",
+      "question": "Bir veritabanı tablosuna İndeks (Index) eklemenin amacı nedir? Bunun avantajı ve dezavantajı nedir?",
+      "answer": "Amaç, 'SELECT' sorgularının (özellikle 'WHERE' koşulu olanların) performansını hızlandırmaktır. İndeks, bir kitaptaki \"içindekiler\" bölümü gibi çalışır; veritabanının tüm tabloyu taramak (Full Table Scan) yerine aranan verinin konumunu hızla bulmasını sağlar (genellikle B-Tree veri yapısı kullanır).",
+      "explanation": "Avantaj: Okuma ('SELECT') performansı ciddi oranda artar.\nDezavantaj: Yazma ('INSERT', 'UPDATE', 'DELETE') performansı yavaşlar, çünkü veri değiştikçe indeksin de güncellenmesi gerekir. Ayrıca indeksler diskte ek yer kaplar."
+    },
+    {
+      "id": "HLD-74",
+      "category": "Orta",
+      "title": "Eventual Consistency (Nihai Tutarlılık)",
+      "question": "Dağıtık sistemlerde \"Eventual Consistency\" (Nihai Tutarlılık) modeli ne anlama gelir?",
+      "answer": "Sisteme yeni bir veri yazıldığında, tüm replikaların (kopyaların) bu yeni verinin güncel haline *hemen* sahip olacağının garantisi yoktur. Ancak, sisteme yeni yazma işlemi gelmediği takdirde, replikaların *nihayetinde* (eventually) tutarlı hale geleceği garanti edilir.",
+      "explanation": "Bu, yüksek erişilebilirlik (Availability) ve düşük gecikme (Low Latency) için \"Anlık Tutarlılık\"tan (Strong Consistency) feragat edilen bir modeldir. NoSQL veritabanları (örn: Cassandra, DynamoDB) genellikle bu modeli kullanır."
+    },
+    {
+      "id": "HLD-75",
+      "category": "Orta",
+      "title": "CQRS (Command Query Responsibility Segregation)",
+      "question": "CQRS (Command Query Responsibility Segregation - Komut Sorgu Sorumluluğu Ayrımı) deseni nedir?",
+      "answer": "Uygulamanın veri değiştirme (Write/Command) modelini (örn: 'CreateOrderCommand') ve veri okuma (Read/Query) modelini (örn: 'GetOrderDetailsQuery') birbirinden tamamen ayırma prensibidir.",
+      "explanation": "Genellikle, yazma işlemleri için normalize edilmiş bir SQL veritabanı (OLTP) kullanılırken, okuma işlemleri için optimize edilmiş (denormalize edilmiş) bir okuma veritabanı (örn: Elasticsearch, NoSQL veya materyalize görünüm) kullanılır. Bu, her iki tarafın da (yazma ve okuma) bağımsız olarak optimize edilmesini ve ölçeklenmesini sağlar."
+    },
+    {
+      "id": "HLD-76",
+      "category": "Orta",
+      "title": "Idempotency (Tekrarlanabilirlik) ve MQ",
+      "question": "Bir mesaj kuyruğu (Message Queue) tüketicisinin (Consumer) neden \"idempotent\" (tekrarlanabilir) olması gerekir?",
+      "answer": "Mesaj kuyruğu sistemleri (örn: RabbitMQ, Kafka) en az bir kez teslimat (at-least-once delivery) garantisi verir. Bu şu demektir: Bir tüketici mesajı alıp işlese, ancak işlediğine dair onayı (acknowledgment) kuyruğa gönderemeden çökse, kuyruk o mesajı \"işlenmedi\" zannedip başka bir tüketiciye (veya aynı tüketiciye yeniden) gönderebilir.",
+      "explanation": "Eğer tüketici idempotent değilse, aynı mesajı (örn: \"kullanıcıya 10 TL ekle\") iki kez işlemesi sistemde tutarsızlığa (kullanıcıya 20 TL eklenmesi) yol açar. Tüketici, bir işlemi (örn: 'transaction_id'yi kontrol ederek) daha önce yapıp yapmadığını kontrol etmeli, yani idempotent olmalıdır."
+    },
+    {
+      "id": "HLD-77",
+      "category": "Orta",
+      "title": "Health Check (Sağlık Kontrolü)",
+      "question": "Load Balancer'lar ve Orkestrasyon araçları (örn: Kubernetes) \"Health Check\" (Sağlık Kontrolü) endpoint'lerini (örn: '/health') neden kullanır?",
+      "answer": "Bir uygulama sunucusunun (instance) sadece \"çalışıyor\" (ayakta) olmasının ötesinde, \"sağlıklı\" (istek kabul edebilir durumda) olup olmadığını kontrol etmek için kullanılır.",
+      "explanation": "Load Balancer, düzenli aralıklarla bu endpoint'e istek atar. Eğer sunucu 200 OK dönmezse (örn: veritabanı bağlantısı koptuğu için 503 dönerse), Load Balancer o sunucuyu \"sağlıksız\" olarak işaretler ve ona trafik göndermeyi durdurur. Kubernetes ise sağlıksız pod'u (instance'ı) sonlandırıp yerine yenisini başlatır (self-healing)."
+    },
+    {
+      "id": "HLD-78",
+      "category": "Orta",
+      "title": "Veritabanı Seçimi: Twitter Örneği",
+      "question": "Twitter gibi bir sosyal medya uygulamasının \"Timeline\" (Zaman Tüneli) özelliğini tasarlıyor olsaydınız, SQL mi yoksa NoSQL mi tercih ederdiniz? Neden?",
+      "answer": "NoSQL (özellikle Geniş Sütun - Wide-Column store, örn: Cassandra) tercih edilirdi.",
+      "explanation": "1. Yüksek Yazma Yükü (Write-heavy): Her saniye milyonlarca tweet atılıyor. 2. Yatay Ölçeklenebilirlik: Veri miktarı çok büyüktür ve yatay olarak kolayca ölçeklenmesi gerekir. 3. Esnek Şema: Tweet verisi zamanla değişebilir. 4. Yüksek Erişilebilirlik: Sistemin sürekli ayakta kalması, anlık tutarlılıktan daha önemlidir. SQL'in JOIN işlemleri ve katı şeması bu senaryo (Big Data) için uygun değildir."
+    },
+    {
+      "id": "HLD-79",
+      "category": "Orta",
+      "title": "API Versiyonlama (Versioning)",
+      "question": "API'nizde \"breaking change\" (mevcut istemcileri bozacak değişiklik) yaptığınızda, bunu yönetmek için kullanılan iki yaygın API versiyonlama stratejisi nedir?",
+      "answer": "1. URI Path Versioning (Yol ile Versiyonlama): Versiyon bilgisi URL yoluna eklenir. (En yaygını).\n/api/v1/users\n/api/v2/users\n2. Header Versioning (Başlık ile Versiyonlama): Versiyon bilgisi özel bir HTTP başlığına (Header) eklenir.\nGET /api/users\nAccept-Version: v1 (veya v2)",
+      "explanation": "Versiyonlama, yeni özellikleri sunarken eski istemcilerin (örn: eski mobil uygulama sürümleri) bozulmadan çalışmaya devam etmesini sağlar."
+    },
+    {
+      "id": "HLD-80",
+      "category": "Orta",
+      "title": "Strong vs Eventual Consistency (Seçim)",
+      "question": "Bir e-ticaret sisteminde \"Stok Miktarı\" ile \"Kullanıcı Yorumları\" verilerini düşünün. Bu iki veri için hangi tutarlılık (Consistency) modelini seçerdiniz?",
+      "answer": "Stok Miktarı: Strong Consistency (Güçlü Tutarlılık) gerektirir. Bir ürün satıldığında, stok miktarının anında güncellenmesi ve tüm kullanıcılar tarafından aynı görülmesi gerekir (örn: ACID destekli SQL veritabanı). İki kişinin aynı anda son ürünü almasını engel olmalısınız.\nKullanıcı Yorumları: Eventual Consistency (Nihai Tutarlılık) yeterlidir. Bir kullanıcının yaptığı yorumun diğer kullanıcılara birkaç saniye veya dakika gecikmeyle yansıması kabul edilebilir bir durumdur (örn: NoSQL veritabanı).",
+      "explanation": "Doğru tutarlılık modelini seçmek, iş gereksinimleri ile performans/ölçeklenebilirlik arasındaki dengeyi kurmaktır."
+    },
+    {
+      "id": "HLD-81",
+      "category": "Orta",
+      "title": "Retry (Tekrar Deneme) ve Exponential Backoff",
+      "question": "Bir mikroservis diğerini çağırdığında geçici bir ağ hatası (örn: 503 Service Unavailable) alırsa, \"Retry\" (Tekrar Deneme) mekanizması nasıl çalışmalıdır ve \"Exponential Backoff\" (Üstel Geri Çekilme) nedir?",
+      "answer": "Çağıran servis, isteği hemen tekrar denemelidir. Ancak, başarısız olan servisi boğmamak (thundering herd problem) için \"Exponential Backoff\" stratejisi uygulanır.",
+      "explanation": "Bu strateji, tekrar denemeler arasındaki bekleme süresini katlanarak artırır. Örn: İlk deneme başarısız olursa 1 saniye bekle, ikincisi de başarısız olursa 2 saniye bekle, sonra 4 saniye, sonra 8 saniye bekle... Bu, çöken veya yavaşlayan servise toparlanması için zaman tanır."
+    },
+    {
+      "id": "HLD-82",
+      "category": "Orta",
+      "title": "Rate Limiting (Hız Sınırlaması)",
+      "question": "API Gateway'lerde kullanılan \"Rate Limiting\" (Hız Sınırlaması) nedir ve neden gereklidir?",
+      "answer": "Belirli bir zaman aralığında bir istemcinin (IP adresi, kullanıcı veya API anahtarı başına) yapabileceği istek sayısını kısıtlayan bir mekanizmadır.",
+      "explanation": "İki ana nedeni vardır: 1. Güvenlik: Kötü niyetli saldırıları (DDoS, Brute Force) yavaşlatmak. 2. Hizmet Kalitesi (QoS): Tek bir kullanıcının aşırı kaynak tüketerek diğer kullanıcıların hizmet almasını engellemesini (Noisy Neighbor) önlemek ve sunucu kaynaklarını korumak."
+    },
+    {
+      "id": "HLD-83",
+      "category": "Orta",
+      "title": "Veritabanı Okuma Replikası (Read Replica)",
+      "question": "Okuma (Read) yoğun bir uygulamanın (örn: blog sitesi) veritabanı performansını nasıl iyileştirirsiniz?",
+      "answer": "Veritabanı Replikasyonu (Database Replication) kullanılır. Ana (Master) veritabanı sadece yazma ('INSERT', 'UPDATE') işlemleri için kullanılır. Bir veya daha fazla Okuma Replikası (Read Replica) oluşturulur ve tüm okuma ('SELECT') işlemleri bu replikalara yönlendirilir.",
+      "explanation": "Bu, ana veritabanı üzerindeki okuma yükünü ortadan kaldırır ve sistemin genel okuma kapasitesini (throughput) yatay olarak ölçeklendirir."
+    },
+    {
+      "id": "HLD-84",
+      "category": "Orta",
+      "title": "Message Queue vs Message Broker",
+      "question": "Kafka ve RabbitMQ arasındaki temel mimari fark nedir (Point-to-Point vs Pub/Sub)?",
+      "answer": "RabbitMQ (Message Broker): Genellikle \"Smart Broker / Dumb Consumer\" modelini kullanır. Mesajları alır, hangi tüketiciye gideceğini bilir (routing) ve mesaj teslim edildiğinde kuyruktan siler (Point-to-Point veya Pub/Sub destekler).\nKafka (Distributed Log): \"Dumb Broker / Smart Consumer\" modelini kullanır. Mesajları sadece sıralı bir log (kayıt defteri) olarak topic'e ekler ve silmez. Tüketiciler (Consumer Groups) nerede kaldıklarını (offset) kendileri takip eder ve veriyi istedikleri kadar geriden okuyabilirler (Pub/Sub).",
+      "explanation": "RabbitMQ, karmaşık yönlendirme (routing) ve görev kuyrukları için; Kafka ise yüksek hacimli (high-throughput) veri akışı (streaming), olay (event) kaydı ve tekrar oynatılabilirlik (replayability) için daha uygundur."
+    },
+    {
+      "id": "HLD-85",
+      "category": "Orta",
+      "title": "Sistem Tasarımı: TinyURL",
+      "question": "TinyURL (URL Kısaltma) servisi tasarlarken, uzun URL'ye karşılık gelen kısa kodu nasıl üretirsiniz ve hangi veritabanı türünü kullanırsınız?",
+      "answer": "Üretim: Gelen uzun URL'yi hash'leyip (örn: MD5) bu hash'in ilk 6-7 karakterini (Base62 kodlamasıyla) kısa kod olarak kullanabilirsiniz. Çakışma (collision) olursa, farklı bir karakter veya hash denersiniz. Alternatif olarak, artan bir sayısal ID'yi (örn: 10001) Base62'ye çevirerek (örn: 'aYf') çakışmasız kod üretebilirsiniz.\nVeritabanı: Yüksek okuma/yazma hızı ve basit anahtar-değer (Key-Value) yapısı gerektiği için NoSQL Key-Value Store (örn: Redis, DynamoDB) idealdir. Anahtar (Key) kısa kod (örn: 'aYf'), Değer (Value) ise uzun URL olur.",
+      "explanation": "Yönlendirme (redirect) işlemi ('GET /aYf') çok hızlı olmalıdır; Key-Value veritabanları bu O(1) erişim hızını sağlar."
+    },
+    {
+      "id": "HLD-86",
+      "category": "Orta",
+      "title": "Authentication vs Authorization",
+      "question": "Authentication (Kimlik Doğrulama) ile Authorization (Yetkilendirme) arasındaki fark nedir?",
+      "answer": "Authentication (AuthN): Kişinin \"kim olduğunu\" doğrulamaktır. (Örn: Kullanıcı adı ve şifreyi kontrol etmek). Sisteme \"Ben kimim?\" sorusunun cevabıdır.\nAuthorization (AuthZ): Kimliği doğrulanmış bu kişinin \"ne yapmaya izni olduğunu\" kontrol etmektir. (Örn: Bu kullanıcı 'Admin' mi? Bu belgeyi silebilir mi?). \"Ne yapabilirim?\" sorusunun cevabıdır.",
+      "explanation": "Önce Authentication yapılır (kapıdan giriş), sonra her eylem için Authorization kontrol edilir (odaları gezme izni)."
+    },
+    {
+      "id": "HLD-87",
+      "category": "Orta",
+      "title": "WebSockets Nedir?",
+      "question": "HTTP'den farklı olarak WebSockets hangi iletişim sorununu çözer?",
+      "answer": "WebSockets, istemci (tarayıcı) ile sunucu arasında *çift yönlü* (bi-directional) ve *kalıcı* (persistent) bir bağlantı sağlar. HTTP ise istemci-sunucu arası, istek-cevap (request-response) tabanlı ve bağlantısızdır (stateless).",
+      "explanation": "HTTP'de sunucu, istemciden istek gelmeden veri gönderemez (Polling/Long-Polling gerekir). WebSockets ile sunucu, istediği an istemciye veri \"itebilir\" (Server Push). Bu, canlı sohbet (chat) uygulamaları, anlık borsa verileri veya online oyunlar için idealdir."
+    },
+    {
+      "id": "HLD-88",
+      "category": "Orta",
+      "title": "ACID vs BASE",
+      "question": "NoSQL veritabanlarının genellikle tercih ettiği BASE modelinin açılımı nedir ve ACID'den farkı nedir?",
+      "answer": "Basically Available (Temelde Erişilebilir): Sistem, ağ bölünmesi durumunda bile yanıt verir (hata veya eski veri olsa bile).\nSoft State (Esnek Durum): Sistem durumu zamanla değişebilir (anlık tutarlılık olmadan).\nEventually Consistent (Nihai Tutarlılık): Sistem, nihayetinde tutarlı hale gelecektir.",
+      "explanation": "BASE, ACID'in katı Tutarlılık (Consistency) garantisini feda ederek Yüksek Erişilebilirlik (High Availability) ve ölçeklenebilirliği önceliklendirir. CAP Teoreminde AP (Availability + Partition Tolerance) modeline karşılık gelir."
+    },
+    {
+      "id": "HLD-89",
+      "category": "Orta",
+      "title": "Veritabanı İzolasyon Seviyeleri",
+      "question": "Veritabanı izolasyon seviyelerinden \"Read Committed\" ile \"Serializable\" arasındaki fark nedir?",
+      "answer": "Read Committed: Bir transaction, sadece diğer transaction'lar tarafından *commit edilmiş* (onaylanmış) verileri okuyabilir (Dirty Read'i önler). Ancak, aynı transaction içinde aynı sorgu tekrar çalıştırılırsa farklı sonuçlar alabilir (Non-Repeatable Read).\nSerializable: En katı izolasyon seviyesidir. Transaction'lar, sanki sistemde aynı anda sadece bir işlem çalışıyormuş gibi (sırayla) çalıştırılır. Tüm anomalileri (Dirty Read, Non-Repeatable Read, Phantom Read) önler.",
+      "explanation": "Serializable, tam tutarlılık sağlar ancak eşzamanlılığı (concurrency) ciddi şekilde azaltır ve performansı düşürür. Read Committed (gençok veritabanının varsayılanıdır) performans ve tutarlılık arasında iyi bir denge sunar."
+    },
+    {
+      "id": "HLD-90",
+      "category": "Orta",
+      "title": "Sistem Tasarımı: Instagram Bildirimleri",
+      "question": "Instagram gibi bir sistemde bir kullanıcı fotoğraf paylaştığında, takipçilerine bildirim (notification) gönderme sistemini nasıl tasarlarsınız? (Senkron mu, Asenkron mu?)",
+      "answer": "Kesinlikle Asenkron ve Mesaj Kuyruğu (Message Queue) tabanlı olmalıdır.",
+      "explanation": "1. Kullanıcı fotoğrafı yüklediğinde ('POST /upload'), API (Upload Service) fotoğrafı kaydeder ve \"photo_published\" olayını (event) bir mesaj kuyruğuna (örn: Kafka/RabbitMQ) atar.\n2. API, kullanıcıya hemen \"Yüklendi\" (201 OK) yanıtını döner (kullanıcıyı bekletmez).\n3. Ayrı bir \"Notification Service\" (Bildirim Servisi), bu kuyruğu dinler.\n4. Mesajı aldığında, fotoğrafı paylaşan kullanıcının *tüm* takipçilerini veritabanından bulur (bu yavaş bir işlem olabilir).\n5. Her takipçi için ayrı ayrı \"push notification\" (anlık bildirim) görevleri oluşturur (belki bunları da başka bir kuyruğa atar).\nBu yapı, yavaş olan bildirim gönderme işleminin, hızlı olan fotoğraf yükleme işlemini bloke etmesini (decoupling) engeller."
+    },
+    {
+      "id": "HLD-91",
+      "category": "Zor",
+      "title": "Consistent Hashing (Tutarlı Karma)",
+      "question": "Dağıtık önbellekleme (Distributed Caching - örn: Memcached) sistemlerinde, bir anahtarı (key) hangi sunucuya (node) koyacağımıza karar vermek için neden standart Modulo (%) hash yerine \"Consistent Hashing\" (Tutarlı Karma) kullanılır?",
+      "answer": "Standart Modulo ('hash(key) % N', N=sunucu sayısı) kullanıldığında, sunucu sayısı değiştiğinde (yeni sunucu eklenip çıkarıldığında - N değiştiğinde) neredeyse *tüm* anahtarların yeri değişir. Bu, önbelleğin tamamen boşalmasına (cache invalidation) ve tüm yükün veritabanına binmesine (thundering herd) neden olur.",
+      "explanation": "Consistent Hashing, sunucuları ve anahtarları bir \"halka\" (ring) üzerine yerleştirir. Bir sunucu eklendiğinde veya çıkarıldığında, sadece o sunucunun komşularını etkiler ve anahtarların çok küçük bir kısmı (K/N) yeniden haritalanır. Bu, önbellek sisteminin stabilitesini sağlar."
+    },
+    {
+      "id": "HLD-92",
+      "category": "Zor",
+      "title": "Leader Election (Lider Seçimi)",
+      "question": "Dağıtık sistemlerde (örn: Kafka, ZooKeeper) \"Leader Election\" (Lider Seçimi) süreci nedir ve neden gereklidir?",
+      "answer": "Bir grup sunucu (cluster) içinde belirli bir görevi (örn: bir partition'a yazma işlemini koordine etme) üstlenecek tek bir \"Lider\" (Leader/Master) sunucunun demokratik olarak seçilmesi sürecidir. Diğer sunucular \"Takipçi\" (Follower/Replica) olur.",
+      "explanation": "Bu, \"Single Point of Failure\" (SPOF) sorununu çözer. Eğer mevcut Lider çökerse (health check'lere cevap vermezse), Takipçiler bunu fark eder ve aralarından yeni bir Lider seçmek için bir algoritma (örn: Paxos, Raft) başlatır. Bu, sistemin kesintisiz (high availability) çalışmasını sağlar."
+    },
+    {
+      "id": "HLD-93",
+      "category": "Zor",
+      "title": "Thundering Herd Problemi",
+      "question": "\"Thundering Herd\" (Ezici Sürü) problemi nedir ve cache bağlamında nasıl oluşur?",
+      "answer": "Yüksek trafik alan bir verinin önbellekten (cache) aniden silinmesi (expire olması veya çökmesi) durumunda, o veriye erişmek isteyen binlerce eşzamanlı isteğin *hepsinin* aynı anda önbelleği ıskalaması (cache miss) ve *hepsinin* aynı anda veritabanına giderek onu çökertmesidir.",
+      "explanation": "Çözüm Yolları: 1. Cache Recomputation (Semafor/Lock): Veriyi DB'den getirecek olan *ilk* thread'in bir kilit (lock) alması, diğer thread'lerin o kilidin bırakılmasını (ve verinin cache'e yazılmasını) beklemesi. 2. Stale Cache (Eski Veri Sunma): Veri expire olduğunda, eski (stale) veriyi sunmaya devam ederken arka planda *tek bir* thread'in veriyi asenkron olarak yenilemesi (Cache Revalidation)."
+    },
+    {
+      "id": "HLD-94",
+      "category": "Zor",
+      "title": "Database Sharding Stratejileri",
+      "question": "Veritabanı Sharding (Parçalama) için \"Ranged-Based\" (Aralık Bazlı) ve \"Hash-Based\" (Karma Bazlı) stratejilerini karşılaştırın.",
+      "answer": "Ranged-Based Sharding: Veriler anahtara (Shard Key) göre sıralı aralıklara bölünür (Örn: A-D harfleri Shard 1'e, E-H harfleri Shard 2'ye). Aralık sorguları (A-C arası kullanıcılar) kolaydır ancak \"Hotspot\" (Sıcak Nokta) riski vardır (örn: yeni kayıtlar hep son Shard'a yazılırsa orası aşırı yüklenir).\nHash-Based Sharding: Shard Key bir hash fonksiyonundan geçirilir ve sonucun Modulo'suna göre hangi Shard'a gideceğine karar verilir. Bu, veriyi Shard'lar arasında rastgele ve *eşit* dağıtır, Hotspot riskini azaltır. Ancak aralık sorguları (range queries) imkansız hale gelir (tüm shard'lara sormak gerekir).",
+      "explanation": "Çoğu modern sistem, veri dağılımını dengelemek için Hash-Based Sharding'i tercih eder."
+    },
+    {
+      "id": "HLD-95",
+      "category": "Zor",
+      "title": "High Availability (HA) vs Disaster Recovery (DR)",
+      "question": "High Availability (Yüksek Erişilebilirlik) ve Disaster Recovery (Felaket Kurtarma) arasındaki fark nedir?",
+      "answer": "High Availability (HA): Sistemin, donanım arızası veya küçük kesintiler (örn: tek bir sunucunun çökmesi) durumunda bile *kesintisiz* çalışmaya devam etmesini sağlamaya odaklanır. Genellikle aynı veri merkezi (Data Center) içindeki yedeklilik (redundancy - örn: Load Balancer, replikasyon) ile sağlanır.\nDisaster Recovery (DR): Tüm veri merkezini (bina, şehir) etkileyen büyük felaketler (yangın, sel, deprem) durumunda sistemin nasıl kurtarılacağına odaklanır. Genellikle coğrafi olarak farklı bir bölgedeki (örn: başka şehir) yedek (pasif veya yarı-aktif) bir sistemin devreye alınmasını içerir.",
+      "explanation": "HA, saniyeler/dakikalar içindeki kesintileri önler (RTO ~ 0). DR, saatler/günler sürebilecek büyük kesintilerden kurtarmayı planlar (RTO > 1 saat)."
+    },
+    {
+      "id": "HLD-96",
+      "category": "Zor",
+      "title": "Sistem Tasarımı: Netflix Video Yükleme Akışı",
+      "question": "Netflix gibi bir video streaming servisine bir stüdyo yeni bir film yüklediğinde (upload) arka planda (backend) gerçekleşmesi gereken temel işlemleri (pipeline) yüksek seviyede açıklayın.",
+      "answer": "Bu, asenkron ve yoğun işlem (compute-heavy) gerektiren bir \"pipeline\" (iş hattı) ile yapılır, genellikle bir Mesaj Kuyruğu veya Workflow Orkestratörü (örn: Cadence/Temporal) kullanılır.\n1. Upload: Orijinal yüksek çözünürlüklü dosya (örn: 4K Master) bir depolama alanına (örn: S3) yüklenir.\n2. Event (Olay): Yükleme tamamlandığında bir olay ('video_uploaded') tetiklenir (örn: S3 Event -> SQS/Kafka).\n3. Transcoding (Dönüştürme): Bir grup \"Worker\" (işçi) servisi bu olayı alır. Orijinal dosyayı, farklı internet hızları ve cihazlar (mobil, TV, PC) için farklı çözünürlüklere ve formatlara (1080p, 720p, 480p vb. - Adaptive Bitrate Streaming) dönüştürür.\n4. DRM (Şifreleme): Dönüştürülen dosyalar kopyalamaya karşı şifrelenir (Digital Rights Management).\n5. Dağıtım (CDN): Şifrelenmiş ve dönüştürülmüş bu parçalar (segments) dünyanın dört bir yanındaki CDN sunucularına dağıtılır (kopyalanır).\n6. Metadata: Film bilgileri (afiş, oyuncular, altyazılar) veritabanına yazılır ve CDN'deki dosya konumları ile eşleştirilir.",
+      "explanation": "Transcoding adımı paralel olarak (örn: filmi 10 dakikalık parçalara bölüp farklı worker'lara vererek) çalıştırılmalıdır çünkü bu, tüm sürecin en yavaş ve en çok CPU tüketen adımıdır."
+    },
+    {
+      "id": "HLD-97",
+      "category": "Zor",
+      "title": "Saga Deseni (Saga Pattern)",
+      "question": "Mikroservis mimarisinde, birden fazla servise yayılan işlemlerde (örn: Sipariş + Ödeme + Stok) ACID transaction'ları kullanamayız. Bu durumda veri tutarlılığını sağlamak için kullanılan \"Saga\" deseni nedir?",
+      "answer": "Saga, bir dizi lokal (yerel) transaction'ın bir araya gelmesidir. Her lokal transaction, kendi servisi içindeki veriyi günceller ve bir sonraki adımı tetiklemek için bir olay (event) yayınlar. Eğer bir adım başarısız olursa, Saga, o ana kadar yapılmış olan işlemleri geri almak için \"Telafi Edici İşlemleri\" (Compensating Transactions) tetikler.",
+      "explanation": "Örnek: Sipariş ('OrderCreated') -> Ödeme ('PaymentProcessed') -> Stok ('StockReserved'). Eğer Stok başarısız olursa ('StockFailed'), Stok servisi bir olay yayınlar. Hem Ödeme hem de Sipariş servisleri bu olayı dinleyerek kendi telafi edici işlemlerini (Ödemeyi iade et, Siparişi iptal et) çalıştırır. Bu, \"Eventual Consistency\" (Nihai Tutarlılık) sağlar."
+    },
+    {
+      "id": "HLD-98",
+      "category": "Zor",
+      "title": "Sistem Tasarımı: Google Maps (Yakındaki Restoranlar)",
+      "question": "Google Maps gibi bir uygulamada, kullanıcının mevcut konumuna (Enlem/Boylam) \"en yakın 10 restoranı\" bulma sorgusunu verimli hale getirmek için hangi veri yapısı veya veritabanı özelliği kullanılır?",
+      "answer": "Standart B-Tree indeksler coğrafi (geospatial) sorgular için verimsizdir. Bunun yerine Geospatial Indexing (Coğrafi İndeksleme) gerekir.",
+      "explanation": "Bu, genellikle Quadtree (2D alanlar için) veya Geohash gibi özel veri yapıları kullanılarak yapılır. Geohash, bir (Enlem, Boylam) çiftini, \"yakınlık\" bilgisini koruyan kısa bir alfanümerik string'e (örn: 'u4pruydqq') dönüştürür. İki konumun Geohash string'lerinin başlangıcı ne kadar çok ortaksa, birbirlerine o kadar yakındırlar. Bu, veritabanının (örn: Elasticsearch, PostGIS, MongoDB) \"yakınımdaki\" sorgularını çok hızlı bir şekilde (tüm noktaların mesafesini hesaplamadan) yapmasını sağlar."
+    },
+    {
+      "id": "HLD-99",
+      "category": "Zor",
+      "title": "C10K Problemi (10.000 Eşzamanlı Bağlantı)",
+      "question": "C10K Problemi nedir ve bu sorunu çözmek için geleneksel \"Thread-per-Connection\" (Bağlantı Başına Thread) modeli yerine hangi mimari kullanılır?",
+      "answer": "C10K (Concurrent 10,000 connections), bir sunucunun aynı anda 10.000 veya daha fazla bağlantıyı verimli bir şekilde yönetme zorluğudur. \"Thread-per-Connection\" modelinde (örn: eski Apache), her bağlantı için bir işletim sistemi thread'i ayrılır. 10.000 thread, çok fazla bellek tüketir ve thread'ler arası geçiş (context switching) maliyeti CPU'yu kilitler.",
+      "explanation": "Çözüm, Event-Driven (Olay Güdümlü) / Non-Blocking I/O (Engellemeyen G/Ç) mimarisidir. Bu model (örn: Nginx, Node.js, Spring WebFlux), az sayıda thread (genellikle CPU çekirdeği sayısı kadar) kullanarak binlerce bağlantıyı bir \"Event Loop\" (Olay Döngüsü) üzerinden yönetir. Bir bağlantı I/O beklerken (örn: ağı veya diski), thread bloke olmaz, döngüdeki diğer bağlantıların işlerini yapmaya devam eder. Bu, kaynak kullanımını dramatik ölçüde azaltır."
+    },
+    {
+      "id": "HLD-100",
+      "category": "Zor",
+      "title": "Sistem Tasarımı: WhatsApp Mesajlaşma Sistemi",
+      "question": "WhatsApp gibi bir anlık mesajlaşma sisteminin (1-1 sohbet) temel mimarisini tasarlayın. Bir kullanıcı mesaj gönderdiğinde (A kullanıcısı -> B kullanıcısı) neler olur?",
+      "answer": "1. Bağlantı Yönetimi: Her iki kullanıcı da (A ve B) uygulamayı açtığında, sunucularla kalıcı bir WebSocket (veya benzeri) bağlantısı kurar. Bir \"Connection Manager\" servisi, hangi kullanıcının hangi sunucuya bağlı olduğunu (ve online/offline durumunu) bir Key-Value Store'da (örn: Redis) tutar ('userId -> server_ip').\n2. Mesaj Gönderme (A): Kullanıcı A, mesajı WebSocket üzerinden bağlı olduğu sunucuya gönderir.\n3. Yönlendirme (Routing): Sunucu, mesajı alır. Mesajı kalıcı depolama için bir veritabanına (örn: Cassandra/ScyllaDB, mesajlar için optimize) yazar ('chat_id'ye göre).\n4. Sunucu, Connection Manager'a bakar: \"B kullanıcısı online mı ve hangi sunucuda?\"\n5. Senaryo 1 (B Online): Eğer B online ise, A'nın sunucusu mesajı B'nin bağlı olduğu sunucuya (belki bir mesaj kuyruğu üzerinden) iletir. B'nin sunucusu da mesajı B'nin cihazına WebSocket üzerinden anında \"push\" eder (iter).\n6. Senaryo 2 (B Offline): Eğer B offline ise, mesaj sadece veritabanına yazılır. B kullanıcısı online olduğunda (uygulamayı açtığında), sunucuya \"okunmamış mesajlarım var mı?\" diye sorar ve veritabanından çekilen mesajlar cihazına iletilir. (Ayrıca B offline iken Push Notification (APN/FCM) gönderilebilir).",
+      "explanation": "Bu mimari, düşük gecikmeli (low-latency) anlık teslimatı (WebSocket ile) ve dayanıklılığı (veritabanı ve offline mekanizması ile) birleştirir."
     }
   ]
 }

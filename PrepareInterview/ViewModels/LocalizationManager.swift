@@ -63,6 +63,19 @@ struct LocalizedStrings {
         language == .turkish ? "JSON dosyası yüklenemedi" : "Failed to load JSON file"
     }
     
+    // Menu Tabs
+    var questionsTab: String {
+        language == .turkish ? "Sorular" : "Questions"
+    }
+    
+    var notesTab: String {
+        language == .turkish ? "Ders Notları" : "Notes"
+    }
+    
+    var page: String {
+        language == .turkish ? "Sayfa" : "Page"
+    }
+    
     // Categories
     var lowLevelDesign: String {
         language == .turkish ? "Low Level Design" : "Low Level Design"

@@ -12,7 +12,6 @@ struct QuestionDetailView: View {
     @ObservedObject var viewModel: QuestionViewModel
     @EnvironmentObject var languageManager: LanguageManager
     @Environment(\.dismiss) var dismiss
-
     @State private var translatedTitle: String = ""
     @State private var translatedQuestion: String = ""
     @State private var translatedAnswer: String = ""
@@ -26,10 +25,8 @@ struct QuestionDetailView: View {
     }
     
     // Get display text based on current language
+    // Title is always shown in original (already in English)
     var displayTitle: String {
-        if languageManager.currentLanguage == .english && !translatedTitle.isEmpty {
-            return translatedTitle
-        }
         return question.title
     }
     
@@ -225,75 +222,73 @@ struct QuestionDetailView: View {
                             )
                             .padding(.horizontal)
                             
-
-                            
-                            // Answer Section - Always visible
+                            // Answer Section - Always Visible
                             VStack(alignment: .leading, spacing: 20) {
-                                HStack(spacing: 12) {
-                                    ZStack {
-                                        Circle()
-                                            .fill(
-                                                LinearGradient(
-                                                    colors: [Color.green.opacity(0.3), Color.green.opacity(0.2)],
-                                                    startPoint: .topLeading,
-                                                    endPoint: .bottomTrailing
+                                    HStack(spacing: 12) {
+                                        ZStack {
+                                            Circle()
+                                                .fill(
+                                                    LinearGradient(
+                                                        colors: [Color.green.opacity(0.3), Color.green.opacity(0.2)],
+                                                        startPoint: .topLeading,
+                                                        endPoint: .bottomTrailing
+                                                    )
                                                 )
-                                            )
-                                            .frame(width: 44, height: 44)
+                                                .frame(width: 44, height: 44)
+                                            
+                                            Image(systemName: "checkmark.circle.fill")
+                                                .font(.title3)
+                                                .foregroundColor(.green)
+                                        }
                                         
-                                        Image(systemName: "checkmark.circle.fill")
+                                        Text(localized.answer)
                                             .font(.title3)
-                                            .foregroundColor(.green)
+                                            .fontWeight(.bold)
+                                            .foregroundColor(.primary)
+                                        
+                                        Spacer()
                                     }
                                     
-                                    Text(localized.answer)
-                                        .font(.title3)
-                                        .fontWeight(.bold)
+                                    Text(displayAnswer)
+                                        .font(.body)
+                                        .lineSpacing(8)
                                         .foregroundColor(.primary)
+                                        .fixedSize(horizontal: false, vertical: true)
                                     
-                                    Spacer()
-                                }
-                                
-                                Text(displayAnswer)
-                                    .font(.body)
-                                    .lineSpacing(8)
-                                    .foregroundColor(.primary)
-                                    .fixedSize(horizontal: false, vertical: true)
-                                
-                                Divider()
-                                    .background(Color.gray.opacity(0.3))
-                                    .padding(.vertical, 8)
-                                
-                                HStack(spacing: 12) {
-                                    ZStack {
-                                        Circle()
-                                            .fill(
-                                                LinearGradient(
-                                                    colors: [Color.orange.opacity(0.3), Color.orange.opacity(0.2)],
-                                                    startPoint: .topLeading,
-                                                    endPoint: .bottomTrailing
+                                    Divider()
+                                        .background(Color.gray.opacity(0.3))
+                                        .padding(.vertical, 8)
+                                    
+                                    HStack(spacing: 12) {
+                                        ZStack {
+                                            Circle()
+                                                .fill(
+                                                    LinearGradient(
+                                                        colors: [Color.orange.opacity(0.3), Color.orange.opacity(0.2)],
+                                                        startPoint: .topLeading,
+                                                        endPoint: .bottomTrailing
+                                                    )
                                                 )
-                                            )
-                                            .frame(width: 44, height: 44)
+                                                .frame(width: 44, height: 44)
+                                            
+                                            Image(systemName: "lightbulb.fill")
+                                                .font(.title3)
+                                                .foregroundColor(.orange)
+                                        }
                                         
-                                        Image(systemName: "lightbulb.fill")
+                                        Text(localized.explanation)
                                             .font(.title3)
-                                            .foregroundColor(.orange)
+                                            .fontWeight(.bold)
+                                            .foregroundColor(.primary)
+                                        
+                                        Spacer()
                                     }
                                     
-                                    Text(localized.explanation)
-                                        .font(.title3)
-                                        .fontWeight(.bold)
-                                        .foregroundColor(.primary)
-                                    
-                                    Spacer()
-                                }
-                                
-                                Text(displayExplanation)
-                                    .font(.body)
-                                    .lineSpacing(8)
-                                    .foregroundColor(.secondary)
-                                    .fixedSize(horizontal: false, vertical: true)
+                                    Text(displayExplanation)
+                                        .font(.body)
+                                        .lineSpacing(8)
+                                        .foregroundColor(.secondary)
+                                        .fixedSize(horizontal: false, vertical: true)
                             }
                             .padding(24)
                             .background(
@@ -417,6 +412,45 @@ struct QuestionDetailView: View {
                                 .shadow(color: Color.black.opacity(0.1), radius: 20, x: 0, y: -5)
                         )
                     }
+                    .blur(radius: isTranslating ? 8 : 0)
+                    .disabled(isTranslating)
+                }
+                
+                // Translation Loading Overlay
+                if isTranslating {
+                    ZStack {
+                        // Semi-transparent overlay
+                        Color.black.opacity(0.5)
+                            .ignoresSafeArea()
+                        
+                        // Spinner with background
+                        VStack(spacing: 24) {
+                            ZStack {
+                                Circle()
+                                    .fill(Color(.systemBackground))
+                                    .frame(width: 100, height: 100)
+                                    .shadow(color: Color.black.opacity(0.3), radius: 25, x: 0, y: 10)
+                                
+                                ProgressView()
+                                    .scaleEffect(1.8)
+                                    .tint(.blue)
+                            }
+                            
+                            Text("Translating...")
+                                .font(.headline)
+                                .fontWeight(.bold)
+                                .foregroundColor(.primary)
+                                .padding(.horizontal, 28)
+                                .padding(.vertical, 14)
+                                .background(
+                                    Capsule()
+                                        .fill(Color(.systemBackground))
+                                        .shadow(color: Color.black.opacity(0.15), radius: 12, x: 0, y: 5)
+                                )
+                        }
+                    }
+                    .transition(.opacity)
+                    .zIndex(1000)
                 }
             }
             .navigationTitle(question.id)
@@ -448,32 +482,28 @@ struct QuestionDetailView: View {
     }
     
     private func translateContent() {
-        // Only translate when English is selected
         guard languageManager.currentLanguage == .english else {
-            print("ℹ️ Current language is Turkish, skipping translation")
             resetTranslations()
             return
         }
         
-        print("🌍 Starting translation to English...")
         isTranslating = true
         
         Task {
-            // Translate all fields in parallel
-            async let titleTask = translationService.translateToEnglish(question.title)
+            // Don't translate title - it's already in English
             async let questionTask = translationService.translateToEnglish(question.question)
             async let answerTask = translationService.translateToEnglish(question.answer)
             async let explanationTask = translationService.translateToEnglish(question.explanation)
             
-            let results = await (titleTask, questionTask, answerTask, explanationTask)
+            let (questionText, answer, explanation) = await (questionTask, answerTask, explanationTask)
             
             await MainActor.run {
-                translatedTitle = results.0
-                translatedQuestion = results.1
-                translatedAnswer = results.2
-                translatedExplanation = results.3
+                // Keep title empty - we don't translate it
+                translatedTitle = ""
+                translatedQuestion = questionText
+                translatedAnswer = answer
+                translatedExplanation = explanation
                 isTranslating = false
-                print("✅ Translation completed for question: \(question.id)")
             }
         }
     }
