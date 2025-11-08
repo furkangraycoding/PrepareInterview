@@ -1,0 +1,662 @@
+[
+  {
+    "topic": "Java Core",
+    "question": "Hangisi sadece Java programlarını çalıştırmak için gerekli olan çalışma zamanı ortamıdır?",
+    "options": [
+      "JDK (Java Development Kit)",
+      "JRE (Java Runtime Environment)",
+      "JVM (Java Virtual Machine)",
+      "JIT (Just-In-Time) Compiler"
+    ],
+    "answer": "JRE (Java Runtime Environment)"
+  },
+  {
+    "topic": "Java Core",
+    "question": "Java'da Garbage Collector (GC) temel olarak hangi bellek bölgesindeki erişilmeyen (unreachable) nesneleri temizler?",
+    "options": [
+      "Stack",
+      "Heap",
+      "Metaspace (veya PermGen)",
+      "PC Register"
+    ],
+    "answer": "Heap"
+  },
+  {
+    "topic": "Java Core",
+    "question": "Hangi Java Collection yapısı 'key-value' (anahtar-değer) çiftlerini saklar ve anahtarların (key) benzersiz olmasını garanti eder?",
+    "options": [
+      "List",
+      "Set",
+      "Map",
+      "Queue"
+    ],
+    "answer": "Map"
+  },
+  {
+    "topic": "Java Core",
+    "question": "Hangi Collection, elemanların eklenme sırasına göre (FIFO - First In First Out) erişildiği bir yapı sunar?",
+    "options": [
+      "Stack",
+      "Queue",
+      "HashSet",
+      "HashMap"
+    ],
+    "answer": "Queue"
+  },
+  {
+    "topic": "Java Core",
+    "question": "`try-catch` bloğunda, 'finally' bloğunun temel amacı nedir?",
+    "options": [
+      "Sadece bir exception (istisna) yakalandığında çalışır.",
+      "Sadece exception yakalanmadığında çalışır.",
+      "Exception yakalansa da yakalanmasa da *her zaman* çalışır.",
+      "Sadece `RuntimeException` türü istisnalarda çalışır."
+    ],
+    "answer": "Exception yakalansa da yakalanmasa da *her zaman* çalışır."
+  },
+  {
+    "topic": "OOP & SOLID Prensipleri",
+    "question": "Bir sınıfın iç detaylarını (veri ve metotlar) gizleyerek sadece kontrollü bir arayüz (public metotlar) sunmasına ne ad verilir?",
+    "options": [
+      "Inheritance (Kalıtım)",
+      "Polymorphism (Çok Biçimlilik)",
+      "Abstraction (Soyutlama)",
+      "Encapsulation (Kapsülleme)"
+    ],
+    "answer": "Encapsulation (Kapsülleme)"
+  },
+  {
+    "topic": "OOP & SOLID Prensipleri",
+    "question": "Bir üst sınıfın (parent) metotlarının, alt sınıflar (child) tarafından farklı şekillerde (override edilerek) uygulanabilmesine ne ad verilir?",
+    "options": [
+      "Inheritance (Kalıtım)",
+      "Polymorphism (Çok Biçimlilik)",
+      "Encapsulation (Kapsülleme)",
+      "Composition (Bileşim)"
+    ],
+    "answer": "Polymorphism (Çok Biçimlilik)"
+  },
+  {
+    "topic": "OOP & SOLID Prensipleri",
+    "question": "SOLID prensiplerindeki 'S' harfi (Single Responsibility Principle) neyi ifade eder?",
+    "options": [
+      "Bir sınıf, birden fazla arayüzü (interface) implemente etmelidir.",
+      "Bir sınıfın değişmesi için sadece bir tek nedeni olmalıdır.",
+      "Üst sınıflar, alt sınıflarla değiştirilebilmelidir.",
+      "Kod, genişlemeye açık ancak değişime kapalı olmalıdır."
+    ],
+    "answer": "Bir sınıfın değişmesi için sadece bir tek nedeni olmalıdır."
+  },
+  {
+    "topic": "OOP & SOLID Prensipleri",
+    "question": "'Yazılım bileşenleri (sınıflar, modüller) genişlemeye açık (open for extension) olmalı, ancak değiştirmeye kapalı (closed for modification) olmalıdır.' Bu tanım hangi SOLID ilkesine aittir?",
+    "options": [
+      "Single Responsibility Principle (SRP)",
+      "Open/Closed Principle (OCP)",
+      "Liskov Substitution Principle (LSP)",
+      "Dependency Inversion Principle (DIP)"
+    ],
+    "answer": "Open/Closed Principle (OCP)"
+  },
+  {
+    "topic": "OOP & SOLID Prensipleri",
+    "question": "Hangi SOLID ilkesi, yüksek seviyeli modüllerin düşük seviyeli modüllere değil, her ikisinin de soyutlamalara (abstractions) bağlı olması gerektiğini savunur?",
+    "options": [
+      "Interface Segregation Principle (ISP)",
+      "Liskov Substitution Principle (LSP)",
+      "Open/Closed Principle (OCP)",
+      "Dependency Inversion Principle (DIP)"
+    ],
+    "answer": "Dependency Inversion Principle (DIP)"
+  },
+  {
+    "topic": "Multithreading & Concurrency",
+    "question": "Java'da yeni bir thread (iş parçacığı) oluşturmanın iki temel yolu nedir?",
+    "options": [
+      "`Thread` sınıfından kalıtım almak veya `Runnable` arayüzünü implemente etmek.",
+      "`ExecutorService` kullanmak veya `Future` objesi oluşturmak.",
+      "`synchronized` blok kullanmak veya `volatile` değişken tanımlamak.",
+      "`start()` metodunu çağırmak veya `run()` metodunu çağırmak."
+    ],
+    "answer": "`Thread` sınıfından kalıtım almak veya `Runnable` arayüzünü implemente etmek."
+  },
+  {
+    "topic": "Multithreading & Concurrency",
+    "question": "Çoklu thread yönetimini kolaylaştıran, thread havuzu (thread pool) oluşturmayı ve görevlerin (task) yönetilmesini sağlayan Java arayüzü hangisidir?",
+    "options": [
+      "ThreadFactory",
+      "ExecutorService",
+      "Callable",
+      "Lock"
+    ],
+    "answer": "ExecutorService"
+  },
+  {
+    "topic": "Multithreading & Concurrency",
+    "question": "`volatile` anahtar kelimesinin Java'daki temel amacı nedir?",
+    "options": [
+      "Bir metodun sadece bir thread tarafından çalıştırılmasını garanti eder (mutual exclusion).",
+      "Bir değişkenin değerinin her zaman ana bellekten (main memory) okunmasını ve yazılmasını sağlar (visibility).",
+      "Bir thread'in çalışmasını durdurur (deadlock).",
+      "Otomatik olarak 'Garbage Collection' tetikler."
+    ],
+    "answer": "Bir değişkenin değerinin her zaman ana bellekten (main memory) okunmasını ve yazılmasını sağlar (visibility)."
+  },
+  {
+    "topic": "Multithreading & Concurrency",
+    "question": "`synchronized` bloğunun veya metodunun sağladığı temel güvence nedir?",
+    "options": [
+      "Sadece görünürlük (visibility).",
+      "Sadece atomiklik (atomicity).",
+      "Görünürlük (visibility) ve karşılıklı dışlama (mutual exclusion/atomicity).",
+      "Sadece thread'in önceliğini (priority) artırma."
+    ],
+    "answer": "Görünürlük (visibility) ve karşılıklı dışlama (mutual exclusion/atomicity)."
+  },
+  {
+    "topic": "Multithreading & Concurrency",
+    "question": "İki veya daha fazla thread'in paylaşılan bir kaynağa aynı anda erişmeye çalışması ve bu erişimin sırasının programın sonucunu beklenmedik şekilde etkilemesi durumuna ne ad verilir?",
+    "options": [
+      "Deadlock (Kilitlenme)",
+      "Race Condition (Yarış Durumu)",
+      "Starvation (Açlık)",
+      "Livelock"
+    ],
+    "answer": "Race Condition (Yarış Durumu)"
+  },
+  {
+    "topic": "Design Patterns",
+    "question": "Hangi tasarım deseni, bir sınıftan sadece bir tek nesne (instance) oluşturulmasını ve bu nesneye global bir erişim noktası sağlanmasını garanti eder?",
+    "options": [
+      "Factory",
+      "Observer",
+      "Singleton",
+      "Strategy"
+    ],
+    "answer": "Singleton"
+  },
+  {
+    "topic": "Design Patterns",
+    "question": "Nesne oluşturma mantığını (creation logic) istemciden (client) soyutlayan ve hangi alt sınıfın oluşturulacağına karar verme işini bir 'fabrika' metoduna bırakan tasarım deseni hangisidir?",
+    "options": [
+      "Builder",
+      "Factory (veya Abstract Factory)",
+      "Singleton",
+      "Prototype"
+    ],
+    "answer": "Factory (veya Abstract Factory)"
+  },
+  {
+    "topic": "Design Patterns",
+    "question": "Bir algoritma ailesi tanımlayan, her birini ayrı bir sınıfta kapsülleyen ve bu algoritmaların çalışma zamanında (runtime) değiştirilebilir olmasını sağlayan desen hangisidir?",
+    "options": [
+      "Strategy",
+      "Observer",
+      "Decorator",
+      "Template Method"
+    ],
+    "answer": "Strategy"
+  },
+  {
+    "topic": "Design Patterns",
+    "question": "Bir nesnede (Subject/Publisher) meydana gelen durum değişikliğinde, bu nesneye 'abone' (subscribe) olmuş diğer nesnelerin (Observers/Subscribers) otomatik olarak bilgilendirilmesini sağlayan desen hangisidir?",
+    "options": [
+      "Mediator",
+      "Observer",
+      "Command",
+      "State"
+    ],
+    "answer": "Observer"
+  },
+  {
+    "topic": "Design Patterns",
+    "question": "Karmaşık bir nesneyi (çok fazla constructor parametresi olan) adım adım oluşturmayı sağlayan ve 'immutable' (değiştirilemez) nesneler yaratmak için sıklıkla kullanılan tasarım deseni hangisidir?",
+    "options": [
+      "Prototype",
+      "Facade",
+      "Builder",
+      "Adapter"
+    ],
+    "answer": "Builder"
+  },
+  {
+    "topic": "Spring Framework",
+    "question": "Spring Framework'te 'Dependency Injection' (DI) kavramının temel amacı nedir?",
+    "options": [
+      "Nesnelerin yaşam döngüsünü (lifecycle) yönetmek.",
+      "Bir nesnenin bağımlı olduğu diğer nesnelerin, nesnenin kendisi tarafından değil, dışarıdan (Spring container) verilmesidir.",
+      "Metotların arasına girerek (AOP) loglama veya güvenlik eklemektir.",
+      "Web isteklerini (HTTP requests) yönetmektir."
+    ],
+    "answer": "Bir nesnenin bağımlı olduğu diğer nesnelerin, nesnenin kendisi tarafından değil, dışarıdan (Spring container) verilmesidir."
+  },
+  {
+    "topic": "Spring Framework",
+    "question": "Spring'de IoC (Inversion of Control) container'ının temel görevi nedir?",
+    "options": [
+      "Sadece veritabanı bağlantılarını yönetmek.",
+      "Nesnelerin (Bean) oluşturulmasından, yapılandırılmasından ve yaşam döngüsünden sorumlu olmak.",
+      "Kullanıcı kimlik doğrulamasını (authentication) yapmak.",
+      "Statik dosyaları (CSS, JS) sunmak."
+    ],
+    "answer": "Nesnelerin (Bean) oluşturulmasından, yapılandırılmasından ve yaşam döngüsünden sorumlu olmak."
+  },
+  {
+    "topic": "Spring Framework",
+    "question": "Spring AOP (Aspect-Oriented Programming) hangi sorunu çözmek için kullanılır?",
+    "options": [
+      "Veritabanı sorgularını optimize etmek.",
+      "Uygulamanın farklı katmanlarını (örn: UI ve Business) ayırmak.",
+      "Uygulamanın birden fazla yerinde tekrarlanan (loglama, güvenlik, transaction gibi) yatay kesişen kaygıları (cross-cutting concerns) modüler hale getirmek.",
+      "Nesneleri 'thread-safe' hale getirmek."
+    ],
+    "answer": "Uygulamanın birden fazla yerinde tekrarlanan (loglama, güvenlik, transaction gibi) yatay kesişen kaygıları (cross-cutting concerns) modüler hale getirmek."
+  },
+  {
+    "topic": "Spring Framework",
+    "question": "Bir Spring Bean'inin bağımlılıkları enjekte edildikten *hemen sonra* çalışan ve başlatma (initialization) işlemleri için kullanılan metodu işaretlemek için hangi anotasyon kullanılır?",
+    "options": [
+      "@Autowired",
+      "@Bean",
+      "@PostConstruct",
+      "@PreDestroy"
+    ],
+    "answer": "@PostConstruct"
+  },
+  {
+    "topic": "Spring Framework",
+    "question": "Spring'de Java tabanlı konfigürasyon (Java-based configuration) yapmak için hangi iki anotasyon genellikle birlikte kullanılır?",
+    "options": [
+      "@Service ve @Repository",
+      "@Configuration ve @Bean",
+      "@Component ve @Autowired",
+      "@Controller ve @RequestMapping"
+    ],
+    "answer": "@Configuration ve @Bean"
+  },
+  {
+    "topic": "Spring Boot & Microservices",
+    "question": "Spring Boot'un 'AutoConfiguration' (Otomatik Yapılandırma) özelliği ne işe yarar?",
+    "options": [
+      "Koddaki hataları otomatik olarak düzeltir.",
+      "Projenin 'classpath'inde bulunan kütüphanelere (jar) bakarak, Spring uygulamasını varsayılan ayarlarla otomatik olarak yapılandırır.",
+      "Tüm veritabanı tablolarını otomatik olarak oluşturur.",
+      "Otomatik olarak birim (unit) testleri yazar."
+    ],
+    "answer": "Projenin 'classpath'inde bulunan kütüphanelere (jar) bakarak, Spring uygulamasını varsayılan ayarlarla otomatik olarak yapılandırır."
+  },
+  {
+    "topic": "Spring Boot & Microservices",
+    "question": "Spring Boot ile RESTful bir web servisi oluştururken, bir sınıfın HTTP isteklerini işleyeceğini belirtmek için hangi anotasyon kullanılır?",
+    "options": [
+      "@Service",
+      "@Component",
+      "@RestController",
+      "@Repository"
+    ],
+    "answer": "@RestController"
+  },
+  {
+    "topic": "Spring Boot & Microservices",
+    "question": "Spring Boot Actuator'ün temel amacı nedir?",
+    "options": [
+      "Veritabanı migrasyonlarını yönetmek.",
+      "Çalışan uygulamanın sağlık durumu (health), metrikleri (metrics) gibi operasyonel bilgilerini izlemek ve yönetmek için 'endpoint'ler sağlamak.",
+      "Güvenlik (security) katmanı eklemek.",
+      "Kullanıcı arayüzü (UI) oluşturmak."
+    ],
+    "answer": "Çalışan uygulamanın sağlık durumu (health), metrikleri (metrics) gibi operasyonel bilgilerini izlemek ve yönetmek için 'endpoint'ler sağlamak."
+  },
+  {
+    "topic": "Spring Boot & Microservices",
+    "question": "Mikroservis mimarisinde, servislerin birbirleriyle REST API üzerinden deklaratif (declarative) bir şekilde (sadece bir arayüz tanımlayarak) iletişim kurmasını sağlayan Spring Cloud bileşeni hangisidir?",
+    "options": [
+      "Eureka",
+      "FeignClient",
+      "Resilience4j (Circuit Breaker)",
+      "API Gateway (Spring Cloud Gateway)"
+    ],
+    "answer": "FeignClient"
+  },
+  {
+    "topic": "Spring Boot & Microservices",
+    "question": "Mikroservis mimarisinde, bir servisin çökmesi durumunda, bu servise yapılan çağrıların başarısızlığa uğrayarak tüm sistemi çökertmesini engelleyen (fail-fast) hata toleransı deseni hangisidir?",
+    "options": [
+      "Service Discovery (Eureka)",
+      "API Gateway",
+      "Circuit Breaker (Hystrix, Resilience4j)",
+      "Config Server"
+    ],
+    "answer": "Circuit Breaker (Hystrix, Resilience4j)"
+  },
+  {
+    "topic": "Database & ORM",
+    "question": "SQL (ilişkisel) ve NoSQL (ilişkisel olmayan) veritabanları arasındaki temel farklardan biri nedir?",
+    "options": [
+      "SQL veritabanları sadece 'read-only' (sadece okunur) verileri saklar.",
+      "NoSQL veritabanları katı bir şema (schema) gerektirmez ve genellikle yatayda ölçeklenir, SQL ise genellikle katı şema ve dikey ölçeklenme kullanır.",
+      "SQL veritabanları verileri JSON formatında saklar, NoSQL ise tablolarda saklar.",
+      "Tüm NoSQL veritabanları 'transaction' (işlem) desteği sunmaz."
+    ],
+    "answer": "NoSQL veritabanları katı bir şema (schema) gerektirmez ve genellikle yatayda ölçeklenir, SQL ise genellikle katı şema ve dikey ölçeklenme kullanır."
+  },
+  {
+    "topic": "Database & ORM",
+    "question": "JPA (Java Persistence API) nedir?",
+    "options": [
+      "Belirli bir NoSQL veritabanı (MongoDB gibi) için kullanılan bir sürücüdür.",
+      "Java nesnelerinin (objects) ilişkisel veritabanı tablolarıyla (relational database) nasıl eşleştirileceğini (mapping) tanımlayan bir spesifikasyondur (şartnamedir).",
+      "Sadece SQL sorguları yazmak için kullanılan bir kütüphanedir.",
+      "Bir 'connection pool' (bağlantı havuzu) yönetim aracıdır."
+    ],
+    "answer": "Java nesnelerinin (objects) ilişkisel veritabanı tablolarıyla (relational database) nasıl eşleştirileceğini (mapping) tanımlayan bir spesifikasyondur (şartnamedir)."
+  },
+  {
+    "topic": "Database & ORM",
+    "question": "Spring Data JPA'de, veritabanı işlemleri (CRUD) için temel metotları sağlayan ve genellikle genişletilen (extend) arayüz hangisidir?",
+    "options": [
+      "EntityManager",
+      "JpaRepository (veya CrudRepository)",
+      "DataSource",
+      "SessionFactory"
+    ],
+    "answer": "JpaRepository (veya CrudRepository)"
+  },
+  {
+    "topic": "Database & ORM",
+    "question": "JPA'de bir Java sınıfının veritabanı tablosuna karşılık geldiğini belirtmek için kullanılan temel anotasyon hangisidir?",
+    "options": [
+      "@Bean",
+      "@Table",
+      "@Entity",
+      "@Component"
+    ],
+    "answer": "@Entity"
+  },
+  {
+    "topic": "Database & ORM",
+    "question": "Veritabanı işlemlerinde `@Transactional` anotasyonunun temel amacı nedir?",
+    "options": [
+      "Sorguların daha hızlı çalışmasını sağlamak.",
+      "Bir dizi veritabanı işleminin ya *hepsinin* başarılı olmasını (Commit) ya da *hiçbirinin* uygulanmamasını (Rollback) garanti etmek (Atomicity).",
+      "Sadece 'SELECT' sorgularını çalıştırmak.",
+      "Veritabanı şemasını otomatik olarak oluşturmak."
+    ],
+    "answer": "Bir dizi veritabanı işleminin ya *hepsinin* başarılı olmasını (Commit) ya da *hiçbirinin* uygulanmamasını (Rollback) garanti etmek (Atomicity)."
+  },
+  {
+    "topic": "REST, Security & JWT",
+    "question": "Bir kaynağı (resource) sunucuda *güncellemek* için kullanılması gereken 'idempotent' (tekrarlanabilir) HTTP metodu hangisidir?",
+    "options": [
+      "GET",
+      "POST",
+      "PUT",
+      "DELETE"
+    ],
+    "answer": "PUT"
+  },
+  {
+    "topic": "REST, Security & JWT",
+    "question": "HTTP metotlarından hangisi 'idempotent' (bir işlemi birden fazla kez tekrarlamanın, bir kez yapmaktan farksız olması) *değildir*?",
+    "options": [
+      "GET",
+      "PUT",
+      "DELETE",
+      "POST"
+    ],
+    "answer": "POST"
+  },
+  {
+    "topic": "REST, Security & JWT",
+    "question": "Güvenlikte, 'Kullanıcının kim olduğunu (who you are) doğrulama' işlemi nedir?",
+    "options": [
+      "Authentication (Kimlik Doğrulama)",
+      "Authorization (Yetkilendirme)",
+      "Encryption (Şifreleme)",
+      "Auditing (Denetleme)"
+    ],
+    "answer": "Authentication (Kimlik Doğrulama)"
+  },
+  {
+    "topic": "REST, Security & JWT",
+    "question": "Güvenlikte, 'Kullanıcının ne yapmaya (what you can do) izni olduğunu kontrol etme' işlemi nedir?",
+    "options": [
+      "Authentication (Kimlik Doğrulama)",
+      "Authorization (Yetkilendirme)",
+      "Session Management (Oturum Yönetimi)",
+      "Logging (Loglama)"
+    ],
+    "answer": "Authorization (Yetkilendirme)"
+  },
+  {
+    "topic": "REST, Security & JWT",
+    "question": "JWT (JSON Web Token) yapısı hangi üç ana bölümden oluşur?",
+    "options": [
+      "Header, Payload, Signature (Başlık, Veri, İmza)",
+      "Username, Password, Timestamp",
+      "Algorithm, Key, Data",
+      "Public Key, Private Key, Certificate"
+    ],
+    "answer": "Header, Payload, Signature (Başlık, Veri, İmza)"
+  },
+  {
+    "topic": "Cloud & DevOps",
+    "question": "Docker'ın temel amacı nedir?",
+    "options": [
+      "Kod derlemek (compile) için kullanılır.",
+      "Uygulamaları ve onların tüm bağımlılıklarını 'container' adı verilen taşınabilir birimler halinde paketlemek ve çalıştırmak.",
+      "Sanal makineler (Virtual Machines) oluşturmak.",
+      "CI/CD 'pipeline'ları (iş akışları) yönetmek."
+    ],
+    "answer": "Uygulamaları ve onların tüm bağımlılıklarını 'container' adı verilen taşınabilir birimler halinde paketlemek ve çalıştırmak."
+  },
+  {
+    "topic": "Cloud & DevOps",
+    "question": "Kubernetes (K8s) nedir ve temel olarak neyi yönetir?",
+    "options": [
+      "Kod 'repository'lerini (Git gibi) yönetir.",
+      "'Container'ize edilmiş uygulamaların 'deployment' (dağıtım), 'scaling' (ölçekleme) ve 'management' (yönetim) işlemlerini otomatize eden bir 'container orchestration' platformudur.",
+      "Bir veritabanı yönetim sistemidir.",
+      "Bir 'API Gateway' çözümüdür."
+    ],
+    "answer": "'Container'ize edilmiş uygulamaların 'deployment' (dağıtım), 'scaling' (ölçekleme) ve 'management' (yönetim) işlemlerini otomatize eden bir 'container orchestration' platformudur."
+  },
+  {
+    "topic": "Cloud & DevOps",
+    "question": "CI/CD'deki 'CI' (Continuous Integration - Sürekli Entegrasyon) ne anlama gelir?",
+    "options": [
+      "Kodun sürekli olarak manuel (el ile) test edilmesi.",
+      "Geliştiricilerin kodlarını sık sık ana bir 'repository'ye entegre etmesi ve her entegrasyonun otomatik bir 'build' (derleme) ve 'test' ile doğrulanması.",
+      "Uygulamanın sadece yıl sonunda (production) canlıya alınması.",
+      "Sadece bulut (cloud) ortamında kod yazmak."
+    ],
+    "answer": "Geliştiricilerin kodlarını sık sık ana bir 'repository'ye entegre etmesi ve her entegrasyonun otomatik bir 'build' (derleme) ve 'test' ile doğrulanması."
+  },
+  {
+    "topic": "Cloud & DevOps",
+    "question": "CI/CD'deki 'CD' (Continuous Deployment - Sürekli Dağıtım) ne anlama gelir?",
+    "options": [
+      "Kodun sadece geliştirme (development) ortamına otomatik gönderilmesi.",
+      "Otomatik 'build' ve 'test' adımlarını geçen kodun, *manuel bir onay* sonrası 'production' (canlı) ortama dağıtılması.",
+      "Otomatik 'build' ve 'test' adımlarını geçen her değişikliğin *otomatik olarak* 'production' (canlı) ortama dağıtılması.",
+      "Sadece kodun derlenmesi (build)."
+    ],
+    "answer": "Otomatik 'build' ve 'test' adımlarını geçen her değişikliğin *otomatik olarak* 'production' (canlı) ortama dağıtılması."
+  },
+  {
+    "topic": "Cloud & DevOps",
+    "question": "'Blue-Green Deployment' stratejisi nedir?",
+    "options": [
+      "Yeni versiyonu tüm kullanıcılara aynı anda (big-bang) sunmak.",
+      "İki adet *birebir aynı* 'production' ortamı (Blue ve Green) bulundurmak ve trafiği birinden diğerine yönlendirerek kesintisiz geçiş yapmak.",
+      "Yeni versiyonu sadece kullanıcıların küçük bir yüzdesine sunmak (Canary).",
+      "Uygulamayı yavaş yavaş kapatıp (downtime) yenisini açmak."
+    ],
+    "answer": "İki adet *birebir aynı* 'production' ortamı (Blue ve Green) bulundurmak ve trafiği birinden diğerine yönlendirerek kesintisiz geçiş yapmak."
+  },
+  {
+    "topic": "Testing",
+    "question": "Sadece tek bir birimin (genellikle bir metot veya sınıf) işlevselliğini, dış bağımlılıklardan (veritabanı, servisler) izole ederek test etme türüne ne ad verilir?",
+    "options": [
+      "Unit Test (Birim Testi)",
+      "Integration Test (Entegrasyon Testi)",
+      "End-to-End (E2E) Test",
+      "Performance Test (Performans Testi)"
+    ],
+    "answer": "Unit Test (Birim Testi)"
+  },
+  {
+    "topic": "Testing",
+    "question": "Birden fazla modülün (örneğin servisin veritabanı ile konuşması) birlikte nasıl çalıştığını test etme türüne ne ad verilir?",
+    "options": [
+      "Unit Test (Birim Testi)",
+      "Integration Test (Entegrasyon Testi)",
+      "Smoke Test",
+      "Load Test (Yük Testi)"
+    ],
+    "answer": "Integration Test (Entegrasyon Testi)"
+  },
+  {
+    "topic": "Testing",
+    "question": "Java uygulamalarında birim testleri (unit tests) yazmak için en yaygın kullanılan kütüphane (framework) hangisidir?",
+    "options": [
+      "Mockito",
+      "JUnit",
+      "Selenium",
+      "Testcontainers"
+    ],
+    "answer": "JUnit"
+  },
+  {
+    "topic": "Testing",
+    "question": "Birim testleri (unit tests) yazarken, dış bağımlılıkları (örneğin bir Repository veya dış API servisi) taklit etmek (sahte nesneler oluşturmak) için kullanılan kütüphane hangisidir?",
+    "options": [
+      "JUnit",
+      "Mockito",
+      "Maven",
+      "Lombok"
+    ],
+    "answer": "Mockito"
+  },
+  {
+    "topic": "Testing",
+    "question": "Entegrasyon testleri sırasında, veritabanı (örn. PostgreSQL) veya mesaj kuyruğu (örn. Kafka) gibi servisleri Docker 'container'ları içinde programatik olarak başlatmayı sağlayan kütüphane hangisidir?",
+    "options": [
+      "JUnit 5",
+      "Docker Compose",
+      "Testcontainers",
+      "Mockito"
+    ],
+    "answer": "Testcontainers"
+  },
+  {
+    "topic": "Clean Code & Best Practices",
+    "question": "'DRY' (Don't Repeat Yourself) ilkesi neyi savunur?",
+    "options": [
+      "Kodun her zaman mümkün olan en kısa şekilde yazılması gerektiğini.",
+      "Bilginin veya mantığın (logic) sistem içinde birden fazla yerde tekrarlanmaması gerektiğini.",
+      "Her metodun sadece bir iş yapması gerektiğini (SRP).",
+      "Gelecekte ihtiyaç duyulmayacak özelliklerin eklenmemesi gerektiğini (YAGNI)."
+    ],
+    "answer": "Bilginin veya mantığın (logic) sistem içinde birden fazla yerde tekrarlanmaması gerektiğini."
+  },
+  {
+    "topic": "Clean Code & Best Practices",
+    "question": "'YAGNI' (You Ain't Gonna Need It) prensibi neyi ifade eder?",
+    "options": [
+      "Kodun karmaşık olmamasını, basit tutulmasını (KISS).",
+      "Sadece *şu anki* gereksinimler için gerekli olan özellikleri implemente etmeyi, gelecekte 'belki gerekir' diye düşünülen özellikleri eklemekten kaçınmayı.",
+      "Kodu sürekli 'refactor' etmeyi.",
+      "Kodu tekrarlamamayı (DRY)."
+    ],
+    "answer": "Sadece *şu anki* gereksinimler için gerekli olan özellikleri implemente etmeyi, gelecekte 'belki gerekir' diye düşünülen özellikleri eklemekten kaçınmayı."
+  },
+  {
+    "topic": "Clean Code & Best Practices",
+    "question": "Temiz Kod (Clean Code) prensiplerine göre, metot (fonksiyon) isimleri nasıl olmalıdır?",
+    "options": [
+      "Mümkün olduğunca kısa (örn: x(), proc()).",
+      "Yaptığı işi net bir şekilde anlatan bir fiil (verb) veya fiil cümlesi şeklinde (örn: calculateTotalPrice()).",
+      "Her zaman bir isim (noun) olmalıdır (örn: calculator).",
+      "Sadece büyük harflerle yazılmalıdır (örn: CALCULATE)."
+    ],
+    "answer": "Yaptığı işi net bir şekilde anlatan bir fiil (verb) veya fiil cümlesi şeklinde (örn: calculateTotalPrice())."
+  },
+  {
+    "topic": "Clean Code & Best Practices",
+    "question": "Katmanlı Mimaride (Layered Architecture) (örn: Controller -> Service -> Repository), 'Service' katmanının (Business Logic Layer) temel sorumluluğu nedir?",
+    "options": [
+      "Gelen HTTP isteklerini (requests) almak ve JSON yanıtları (responses) hazırlamak.",
+      "Doğrudan veritabanı sorgularını (SQL) yazmak.",
+      "Uygulamanın temel iş kurallarını (business logic) uygulamak ve 'Repository' katmanını koordine etmek.",
+      "Kullanıcı arayüzünü (UI) oluşturmak."
+    ],
+    "answer": "Uygulamanın temel iş kurallarını (business logic) uygulamak ve 'Repository' katmanını koordine etmek."
+  },
+  {
+    "topic": "Clean Code & Best Practices",
+    "question": "Etkili 'logging' (kayıt tutma) için hangisi *kötü* bir uygulamadır (anti-pattern)?",
+    "options": [
+      "Farklı seviyeler (DEBUG, INFO, WARN, ERROR) kullanmak.",
+      "Hata (ERROR) seviyesinde 'stack trace' (hata dökümü) eklemek.",
+      "Hata ayıklama (DEBUG) loglarını 'production' (canlı) ortamda varsayılan olarak açık bırakmak.",
+      "Loglara, sorunu anlamak için yeterli bağlam (context) eklemek (örn: UserID, OrderID)."
+    ],
+    "answer": "Hata ayıklama (DEBUG) loglarını 'production' (canlı) ortamda varsayılan olarak açık bırakmak."
+  },
+  {
+    "topic": "Ekstra Konular",
+    "question": "Kafka ve RabbitMQ arasındaki temel fark nedir?",
+    "options": [
+      "Kafka bir veritabanıdır, RabbitMQ bir mesaj kuyruğudur.",
+      "Kafka, 'publish/subscribe' modeli kullanan dağıtık bir 'event streaming' platformu (log tabanlı) iken; RabbitMQ, 'point-to-point' ve 'publish/subscribe' modlarını destekleyen geleneksel bir mesaj broker'ıdır (kuyruk tabanlı).",
+      "Kafka sadece Java ile çalışır, RabbitMQ dillerden bağımsızdır.",
+      "RabbitMQ veriyi kalıcı (persistent) saklamaz, Kafka saklar."
+    ],
+    "answer": "Kafka, 'publish/subscribe' modeli kullanan dağıtık bir 'event streaming' platformu (log tabanlı) iken; RabbitMQ, 'point-to-point' ve 'publish/subscribe' modlarını destekleyen geleneksel bir mesaj broker'ıdır (kuyruk tabanlı)."
+  },
+  {
+    "topic": "Ekstra Konular",
+    "question": "Redis'in en yaygın kullanım alanı nedir?",
+    "options": [
+      "İlişkisel verileri (SQL) saklamak.",
+      "'In-memory' (bellek-içi) çalışan bir 'key-value' (anahtar-değer) veri deposu olarak, genellikle 'caching' (önbellekleme) veya 'session' (oturum) yönetimi için kullanılır.",
+      "Tam metin araması (Full-text search) yapmak.",
+      "Dosya depolamak (S3 gibi)."
+    ],
+    "answer": "'In-memory' (bellek-içi) çalışan bir 'key-value' (anahtar-değer) veri deposu olarak, genellikle 'caching' (önbellekleme) veya 'session' (oturum) yönetimi için kullanılır."
+  },
+  {
+    "topic": "Ekstra Konular",
+    "question": "'Caching' (Önbellekleme) stratejilerinden 'Write-Through' (Doğrudan Yazma) nedir?",
+    "options": [
+      "Veri sadece 'cache'e yazılır, veritabanına yazılmaz.",
+      "Veri önce veritabanına yazılır, başarılı olursa 'cache'e yazılır.",
+      "Veri *aynı anda* (atomik olarak) hem 'cache'e hem de veritabanına yazılır. İstemciye yanıt, her ikisi de tamamlandığında döner.",
+      "Veri sadece veritabanına yazılır, 'cache'e hiç yazılmaz."
+    ],
+    "answer": "Veri *aynı anda* (atomik olarak) hem 'cache'e hem de veritabanına yazılır. İstemciye yanıt, her ikisi de tamamlandığında döner."
+  },
+  {
+    "topic": "Ekstra Konular",
+    "question": "DDD (Domain-Driven Design) yaklaşımında 'Aggregate' (Küme) nedir?",
+    "options": [
+      "Bir grup 'Entity' ve 'Value Object'ten (Değer Nesneleri) oluşan, işlemsel (transactional) bütünlüğü olan ve bir 'Aggregate Root' (Küme Kökü) tarafından yönetilen birimdir.",
+      "Sadece veritabanı tablolarını temsil eden sınıflardır (JPA Entity gibi).",
+      "Uygulamanın UI katmanıdır.",
+      "Mikroservislerin birbirleriyle konuştuğu API'dir."
+    ],
+    "answer": "Bir grup 'Entity' ve 'Value Object'ten (Değer Nesneleri) oluşan, işlemsel (transactional) bütünlüğü olan ve bir 'Aggregate Root' (Küme Kökü) tarafından yönetilen birimdir."
+  },
+  {
+    "topic": "Ekstra Konular",
+    "question": "Hexagonal Architecture (Ports and Adapters) mimarisinin temel amacı nedir?",
+    "options": [
+      "Uygulamayı sadece iki katmana (UI ve Database) ayırmak.",
+      "Uygulamanın 'domain' (iş mantığı) çekirdeğini dış dünyadan (UI, veritabanı, dış API'ler gibi) 'Ports' (arayüzler) aracılığıyla izole etmek ve dış dünyayla 'Adapters' (uyarlayıcılar) aracılığıyla konuşmak.",
+      "Sadece 'serverless' (sunucusuz) fonksiyonlar yazmak.",
+      "Her zaman Kafka kullanmayı zorunlu kılmak."
+    ],
+    "answer": "Uygulamanın 'domain' (iş mantığı) çekirdeğini dış dünyadan (UI, veritabanı, dış API'ler gibi) 'Ports' (arayüzler) aracılığıyla izole etmek ve dış dünyayla 'Adapters' (uyarlayıcılar) aracılığıyla konuşmak."
+  }
+]

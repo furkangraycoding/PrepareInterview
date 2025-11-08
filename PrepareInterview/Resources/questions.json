@@ -1601,6 +1601,30 @@
       "question": "WhatsApp gibi bir anlık mesajlaşma sisteminin (1-1 sohbet) temel mimarisini tasarlayın. Bir kullanıcı mesaj gönderdiğinde (A kullanıcısı -> B kullanıcısı) neler olur?",
       "answer": "1. Bağlantı Yönetimi: Her iki kullanıcı da (A ve B) uygulamayı açtığında, sunucularla kalıcı bir WebSocket (veya benzeri) bağlantısı kurar. Bir \"Connection Manager\" servisi, hangi kullanıcının hangi sunucuya bağlı olduğunu (ve online/offline durumunu) bir Key-Value Store'da (örn: Redis) tutar ('userId -> server_ip').\n2. Mesaj Gönderme (A): Kullanıcı A, mesajı WebSocket üzerinden bağlı olduğu sunucuya gönderir.\n3. Yönlendirme (Routing): Sunucu, mesajı alır. Mesajı kalıcı depolama için bir veritabanına (örn: Cassandra/ScyllaDB, mesajlar için optimize) yazar ('chat_id'ye göre).\n4. Sunucu, Connection Manager'a bakar: \"B kullanıcısı online mı ve hangi sunucuda?\"\n5. Senaryo 1 (B Online): Eğer B online ise, A'nın sunucusu mesajı B'nin bağlı olduğu sunucuya (belki bir mesaj kuyruğu üzerinden) iletir. B'nin sunucusu da mesajı B'nin cihazına WebSocket üzerinden anında \"push\" eder (iter).\n6. Senaryo 2 (B Offline): Eğer B offline ise, mesaj sadece veritabanına yazılır. B kullanıcısı online olduğunda (uygulamayı açtığında), sunucuya \"okunmamış mesajlarım var mı?\" diye sorar ve veritabanından çekilen mesajlar cihazına iletilir. (Ayrıca B offline iken Push Notification (APN/FCM) gönderilebilir).",
       "explanation": "Bu mimari, düşük gecikmeli (low-latency) anlık teslimatı (WebSocket ile) ve dayanıklılığı (veritabanı ve offline mekanizması ile) birleştirir."
+    },
+    {
+      "id": "HLD-101",
+      "category": "Zor",
+      "title": "Outbox Pattern - Temel Kavram",
+      "question": "Mikroservis mimarisinde, bir servis hem veritabanına veri yazıp hem de bir mesaj kuyruğuna (message queue) event yayınlaması gerektiğinde hangi sorunla karşılaşırız ve Outbox Pattern bu sorunu nasıl çözer?",
+      "answer": "Sorun: Veritabanı yazma işlemi başarılı olur ama mesaj kuyruğuna event yayınlama başarısız olursa (veya tam tersi), veri tutarsızlığı (data inconsistency) oluşur. Bu, \"Dual Write Problem\" (Çift Yazma Problemi) olarak bilinir.\n\nOutbox Pattern Çözümü: Servis, veritabanına yazma işlemini yaparken, yayınlamak istediği event'i de aynı transaction içinde bir \"Outbox\" tablosuna yazar. Daha sonra, ayrı bir background process (polling veya CDC - Change Data Capture) bu Outbox tablosunu kontrol eder ve yayınlanmamış event'leri mesaj kuyruğuna yayınlar. Event başarıyla yayınlandıktan sonra Outbox tablosundan silinir veya \"published\" olarak işaretlenir.",
+      "explanation": "Bu pattern, ACID transaction garantilerini kullanarak veritabanı yazma ve event yayınlama işlemlerini atomik hale getirir. Aynı transaction içinde hem business data hem de outbox event yazıldığı için, ya ikisi de başarılı olur ya da ikisi de rollback olur."
+    },
+    {
+      "id": "HLD-102",
+      "category": "Zor",
+      "title": "Outbox Pattern - Implementasyon Detayları",
+      "question": "Outbox Pattern'i implement ederken, Outbox tablosundaki event'leri mesaj kuyruğuna yayınlayan background process'i tasarlarken dikkat edilmesi gereken önemli noktalar nelerdir?",
+      "answer": "1. Polling vs CDC: Polling (belirli aralıklarla Outbox tablosunu sorgulama) basit ama gecikmeli olabilir. CDC (Change Data Capture - Debezium gibi) daha gerçek zamanlı ama daha karmaşık.\n2. Idempotency (Tekrarlanabilirlik): Aynı event birden fazla kez yayınlanmamalı. Event ID veya unique constraint kullanılmalı.\n3. Retry Mekanizması: Event yayınlama başarısız olursa, exponential backoff ile tekrar denenmeli.\n4. Dead Letter Queue (DLQ): Belirli sayıda denemeden sonra başarısız olan event'ler DLQ'ya gönderilmeli, manuel inceleme için.\n5. Transactional Outbox: Outbox tablosu, business data ile aynı veritabanında olmalı (aynı transaction içinde yazılabilmesi için).\n6. Ordering (Sıralama): Event'lerin sırası önemliyse (örn: OrderCreated -> OrderPaid), event'leri sırayla yayınlamak için sequence number veya timestamp kullanılmalı.",
+      "explanation": "Bu pattern, distributed transaction'ların olmadığı mikroservis mimarisinde eventual consistency sağlamak için kritik öneme sahiptir."
+    },
+    {
+      "id": "LLD-101",
+      "category": "Orta",
+      "title": "Outbox Pattern - Spring Boot Implementasyonu",
+      "question": "Spring Boot uygulamasında Outbox Pattern'i nasıl implement edersiniz? TransactionalOutbox pattern için gerekli bileşenleri açıklayınız.",
+      "answer": "1. Outbox Entity: JPA entity olarak OutboxEvent tablosu oluşturulur (id, aggregateId, eventType, payload, status, createdAt).\n2. Transactional Event Listener: @TransactionalEventListener kullanarak, business transaction commit edildikten sonra event'i Outbox tablosuna yazar.\n3. Outbox Publisher Service: @Scheduled annotation ile periyodik olarak (örn: her 5 saniyede) Outbox tablosunu sorgular, 'PENDING' status'ündeki event'leri bulur.\n4. Message Queue Integration: Event'i Kafka/RabbitMQ'ya yayınlar, başarılı olursa status'ü 'PUBLISHED' yapar.\n5. Idempotency: Event ID veya unique constraint ile aynı event'in birden fazla kez yayınlanmasını önler.\n\nAlternatif: Spring Cloud Stream veya Debezium CDC kullanılabilir.",
+      "explanation": "Spring Boot'ta @TransactionalEventListener, transaction commit edildikten sonra çalışır, bu da Outbox Pattern için idealdir. Ayrıca Spring Data JPA'nın @Modifying ve @Query annotation'ları ile batch processing yapılabilir."
     }
   ]
 }

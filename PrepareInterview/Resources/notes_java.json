@@ -1,0 +1,411 @@
+{
+  "sections": [
+    {
+      "id": 1,
+      "title": "Java Core",
+      "topics": [
+        {
+          "id": "1.1",
+          "title": "JVM, JDK, JRE Farkı",
+          "content": "JVM (Java Virtual Machine): Java bytecode'unu çalıştıran sanal makinadır. Platform bağımsızlığını (Write Once, Run Anywhere) sağlar.\n\nJRE (Java Runtime Environment): JVM + Java Kütüphaneleri. Java programlarını *çalıştırmak* için gerekli minimum ortamdır.\n\nJDK (Java Development Kit): JRE + Geliştirme Araçları (javac - derleyici, debugger, javadoc). Java programları *geliştirmek* için gereklidir.\n\nHiyerarşi: JDK ⊃ JRE ⊃ JVM"
+        },
+        {
+          "id": "1.2",
+          "title": "Memory Management, Garbage Collector",
+          "content": "Java Bellek Alanları:\n* Stack: Metot çağrıları, lokal değişkenler ve referansları tutar. Her thread için ayrı bir Stack vardır. Hızlıdır, otomatik yönetilir.\n* Heap: 'new' anahtar kelimesiyle oluşturulan tüm nesneler (objects) burada yaşar. Tüm thread'ler için ortaktır.\n* Metaspace (Java 8+): Sınıf metaverilerini (sınıf tanımları, metotlar) tutar.\n\nGarbage Collector (GC): Heap'te artık 'erişilemeyen' (referansı kalmamış) nesneleri otomatik olarak bularak belleği temizleyen süreçtir. Genellikle 'Stop-the-World' duraklamalarına neden olur."
+        },
+        {
+          "id": "1.3",
+          "title": "Collections Framework",
+          "content": "Ana Arayüzler (Interfaces):\n* List: Sıralı (ordered) koleksiyon, duplike elemanlara izin verir. (Örn: ArrayList, LinkedList)\n* Set: Benzersiz (unique) elemanların oluşturduğu küme. Sıra garantisi yoktur (HashSet) veya vardır (TreeSet, LinkedHashSet). (Örn: HashSet, TreeSet)\n* Map: Anahtar-Değer (Key-Value) çiftlerini saklar. Anahtarlar (Key) benzersiz olmalıdır. (Örn: HashMap, TreeMap)\n* Queue: FIFO (First-In, First-Out / İlk Giren İlk Çıkar) yapısını destekler. (Örn: PriorityQueue, LinkedList)"
+        },
+        {
+          "id": "1.4",
+          "title": "Exception Handling",
+          "content": "Hata Yönetimi Anahtar Kelimeleri:\n* try: Hata fırlatabilecek (riskli) kod bloğu.\n* catch: Fırlatılan hatayı (exception) yakalayan blok.\n* finally: Hata olsun veya olmasın *her zaman* çalışan blok (kaynakları kapatmak için idealdir).\n* throw: Manuel olarak bir hata fırlatmak için kullanılır.\n* throws: Bir metodun hangi 'checked' hataları fırlatabileceğini imzasında bildirmesidir.\n\nException Türleri:\n* Checked Exception: Derleme zamanında (compile-time) kontrol edilmesi zorunlu hatalar. `try-catch` veya `throws` gerektirir. (Örn: IOException, SQLException).\n* Unchecked (Runtime) Exception: Çalışma zamanında (runtime) oluşan hatalar. Genellikle programlama mantığı hatalarıdır. (Örn: NullPointerException, ArrayIndexOutOfBoundsException)."
+        },
+        {
+          "id": "1.5",
+          "title": "Java 8+ Features (Lambda, Stream API)",
+          "content": "* Lambda Expressions: Fonksiyonel programlamayı sağlar; anonim metotlar (isimsiz fonksiyonlar) yazmayı sağlar. (Örn: `(a, b) -> a + b`). `Runnable`, `Comparator` gibi 'functional interface' (tek metotlu arayüz) implementasyonlarını basitleştirir.\n\n* Stream API: Collection'lar (List, Set vb.) üzerinde 'declarative' (bildirimsel), akıcı (fluent) ve paralel (parallel) veri işleme (filter, map, reduce) operasyonları sağlar.\n\n* Optional: `NullPointerException` (NPE) riskini azaltmak için kullanılan, bir değerin 'null' olabileceğini belirten bir sarmalayıcı (wrapper) sınıftır."
+        },
+        {
+          "id": "1.6",
+          "title": "Generics",
+          "content": "Generics (Jenerikler), derleme zamanında (compile-time) tip güvenliği (type safety) sağlamak için kullanılır. Sınıfların, arayüzlerin ve metotların farklı veri tipleriyle çalışabilmesini sağlar.\n\n* Amaç: `ClassCastException` gibi çalışma zamanı (runtime) hatalarını önler.\n\n* Örnek: `List<String> list = new ArrayList<>();` Bu liste, sadece `String` tipinde elemanlar kabul eder. `list.add(10);` derleme hatası verir."
+        },
+        {
+          "id": "1.7",
+          "title": "Java I/O vs NIO",
+          "content": "* I/O (java.io): 'Blocking' (engelleyici) ve 'stream-based' (akış tabanlı) çalışır. Bir thread, I/O işlemi (dosya okuma/yazma, ağ) bitene kadar kilitlenir (bekler). Karakter tabanlı (`Reader`/`Writer`) ve byte tabanlı (`InputStream`/`OutputStream`) olarak ayrılır.\n\n* NIO (java.nio - New I/O): 'Non-blocking' (engelleyici olmayan) ve 'buffer-based' (tampon tabanlı) çalışır. 'Channels' (Kanallar) ve 'Buffers' (Tamponlar) kullanarak tek bir thread ile birden fazla I/O işlemini yönetmeyi (Selector ile) sağlar. Yüksek performanslı sunucu uygulamaları için kritiktir."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "OOP & SOLID Prensipleri",
+      "topics": [
+        {
+          "id": "2.1",
+          "title": "Encapsulation, Inheritance, Polymorphism, Abstraction",
+          "content": "* Encapsulation (Kapsülleme): Sınıfın iç verilerini (değişkenler) 'private' yaparak gizlemek ve bu verilere sadece 'public' metotlar (getter/setter) aracılığıyla kontrollü erişim sağlamaktır. Veri koruma sağlar.\n\n* Inheritance (Kalıtım): Bir sınıfın (alt sınıf/child) başka bir sınıfın (üst sınıf/parent) özelliklerini (metotlar, değişkenler) miras almasıdır. Kod tekrarını önler. 'is-a' (bir...türüdür) ilişkisini modeller.\n\n* Polymorphism (Çok Biçimlilik): Bir nesnenin, kendi sınıfı gibi veya miras aldığı üst sınıf(lar) gibi davranabilmesidir. \n  - Override (Ezme): Üst sınıftaki metodun alt sınıfta yeniden yazılması (Runtime Polymorphism).\n  - Overload (Aşırı Yükleme): Aynı isimli metodun farklı parametrelerle (imza) kullanılması (Compile-time Polymorphism).\n\n* Abstraction (Soyutlama): Gereksiz karmaşık detayları gizleyerek, sadece temel ve gerekli işlevselliği göstermektir. 'abstract' sınıflar ve 'interface'ler ile sağlanır."
+        },
+        {
+          "id": "2.2",
+          "title": "SOLID İlkeleri",
+          "content": "* S - Single Responsibility (Tek Sorumluluk): Bir sınıfın veya metodun değişmek için sadece *bir* nedeni olmalıdır. Her bileşen sadece bir iş yapmalıdır.\n\n* O - Open/Closed (Açık/Kapalı): Yazılım bileşenleri (sınıflar, metotlar) *genişlemeye açık* (yeni özellik eklenebilir), ancak *değişime kapalı* (mevcut kod değiştirilmemeli) olmalıdır.\n\n* L - Liskov Substitution (Liskov Yerine Geçme): Alt sınıflar (child class), üst sınıfların (parent class) yerine, programın davranışını bozmadan kullanılabilmelidir.\n\n* I - Interface Segregation (Arayüz Ayrıştırma): Sınıflar, kullanmadıkları metotları içeren 'şişkin' (fat) arayüzleri implemente etmeye zorlanmamalıdır. Büyük arayüzler yerine küçük ve spesifik arayüzler tercih edilmelidir.\n\n* D - Dependency Inversion (Bağımlılıkların Tersine Çevrilmesi): Yüksek seviyeli modüller (iş mantığı), düşük seviyeli modüllere (veritabanı, API) doğrudan bağımlı olmamalıdır. Her ikisi de *soyutlamalara* (interface, abstract class) bağlı olmalıdır."
+        },
+        {
+          "id": "2.3",
+          "title": "Composition vs. Inheritance (Has-A vs. Is-A)",
+          "content": "* Inheritance (Kalıtım - 'Is-A'): 'Bir...türüdür' ilişkisidir. (Örn: `Kopek` 'Is-A' `Hayvan`). Sıkı bir bağımlılık (tight coupling) yaratır. Üst sınıfın değişmesi alt sınıfları doğrudan etkiler.\n\n* Composition (Bileşim - 'Has-A'): 'Bir...sahiptir' ilişkisidir. (Örn: `Araba` 'Has-A' `Motor`). Bir sınıfın, başka bir sınıfın nesnesini 'instance' değişkeni olarak tutmasıdır. Gevşek bağımlılık (loose coupling) sağlar ve kalıtıma göre *genellikle tercih edilir* (Favor Composition over Inheritance)."
+        },
+        {
+          "id": "2.4",
+          "title": "Interface vs. Abstract Class",
+          "content": "* Abstract Class: 'abstract' olarak işaretlenmiş, 'instance'ı alınamayan sınıftır. Hem 'abstract' (gövdesiz) hem de 'concrete' (gövdeli) metotlar içerebilir. Değişken (state) tutabilir. Sadece *bir* abstract class 'extend' edilebilir.\n\n* Interface: Sınıfların implemente etmesi gereken bir 'sözleşme' (contract) tanımlar. Java 8 öncesi sadece 'abstract' metotlar içerirdi; Java 8+ ile 'default' ve 'static' (gövdeli) metotlar da içerebilir. Bir sınıf *birden fazla* 'interface'i 'implemente' edebilir."
+        },
+        {
+          "id": "2.5",
+          "title": "equals() and hashCode() Sözleşmesi",
+          "content": "Bu iki metot, `Object` sınıfından gelir ve `HashMap`, `HashSet` gibi koleksiyonların düzgün çalışması için kritik öneme sahiptir.\n\nSözleşme:\n1. Eğer iki nesne `equals()` metoduna göre *eşit* ise, `hashCode()` metotları da *aynı* tamsayı değerini döndürmek zorundadır.\n2. Eğer iki nesne `equals()` metoduna göre *eşit değilse*, `hashCode()` metotları farklı değerler döndürmek *zorunda değildir* (ancak performans için farklı döndürmeleri şiddetle tavsiye edilir - 'collision' önleme).\n\nEğer birini 'override' ediyorsanız, diğerini de *mutlaka* 'override' etmelisiniz."
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Multithreading & Concurrency",
+      "topics": [
+        {
+          "id": "3.1",
+          "title": "Thread, Runnable, ExecutorService",
+          "content": "Thread Oluşturma Yolları:\n1. `Thread` sınıfını 'extend' (kalıtım) etmek.\n2. `Runnable` arayüzünü 'implemente' etmek (Tavsiye edilen yoldur, çünkü Java'da tek kalıtım hakkı vardır).\n\nExecutorService: Thread oluşturma ve yönetme işini (thread havuzu - pool) soyutlayan bir yapıdır. Görevleri (`Runnable` veya `Callable`) alır ve havuzdaki müsait bir thread'e atar. Thread'leri yeniden kullanarak performansı artırır. Örn: `Executors.newFixedThreadPool(10)`."
+        },
+        {
+          "id": "3.2",
+          "title": "synchronized, volatile, Lock",
+          "content": "* synchronized: Bir metot veya bloğa aynı anda sadece *bir* thread'in girmesini sağlayan bir 'intrinsic lock' (içsel kilit) mekanizmasıdır. 'Mutual Exclusion' (Karşılıklı Dışlama) ve 'Visibility' (Görünürlük) sağlar.\n\n* volatile: Bir değişkenin değerinin her zaman ana bellekten (main memory) okunmasını ve yazılmasını garanti eder. 'Visibility' (Görünürlük) sorununu çözer ancak 'Atomicity' (Bölünmezlik) sağlamaz. (örn: `volatile boolean running = true;`)\n\n* Lock (Arayüz): `synchronized`'a göre daha esnek (örn: `tryLock`, kesintiye uğratılabilir kilitlenme) bir kilitleme mekanizması sunar. En bilinen uygulaması `ReentrantLock`'tır. `lock()` ile kilitlenir, `unlock()` ile *mutlaka* `finally` bloğunda serbest bırakılır."
+        },
+        {
+          "id": "3.3",
+          "title": "Deadlock, Race Condition",
+          "content": "* Race Condition (Yarış Durumu): İki veya daha fazla thread'in paylaşılan bir kaynağa (değişken, dosya) aynı anda erişmeye çalışması ve işlemlerin *sırasının* programın sonucunu beklenmedik şekilde etkilemesidir. (Çözüm: `synchronized`, `Lock`).\n\n* Deadlock (Kilitlenme): İki (veya daha fazla) thread'in, birbirlerinin elinde tuttuğu kaynaklara kilitlenip (lock) beklerken sonsuz bir döngüye girmesi durumudur. Hiçbir thread ilerleyemez. (Örn: Thread A, Kaynak 1'i kilitler Kaynak 2'yi bekler; Thread B, Kaynak 2'yi kilitler Kaynak 1'i bekler)."
+        },
+        {
+          "id": "3.4",
+          "title": "Callable and Future",
+          "content": "* Runnable: `run()` metodu 'void'dur, yani bir sonuç *döndürmez* ve 'checked exception' *fırlatamaz*.\n\n* Callable: `call()` metodu bir değer (Generic tipte) *döndürür* ve 'checked exception' *fırlatabilir*.\n\n* Future: Bir `ExecutorService`'e 'submit' edilen `Callable` görevinin sonucunu temsil eden bir nesnedir. Asenkron bir işlemin sonucunu (veya hatasını) tutar. `future.get()` metodu, sonuç hazır olana kadar *bloke olur* (bekler) ve sonucu döndürür."
+        },
+        {
+          "id": "3.5",
+          "title": "Concurrent Collections",
+          "content": "`java.util.concurrent` paketi altında bulunan, 'thread-safe' (eşzamanlı erişime uygun) koleksiyonlardır. `synchronized` sarmalayıcılarına (örn: `Collections.synchronizedMap`) göre daha performanslı ve ölçeklenebilir çözümler sunarlar.\n\n* ConcurrentHashMap: `HashMap`'in 'thread-safe' versiyonudur. 'Lock-stripping' tekniği sayesinde yüksek eşzamanlı okuma/yazma performansı sunar.\n\n* CopyOnWriteArrayList: `List` implementasyonudur. *Okuma* işlemleri çok hızlıdır ve kilit gerektirmez. *Yazma* (add, remove) işlemleri maliyetlidir çünkü her yazmada listenin bir kopyası oluşturulur. Okumanın yazmadan çok daha fazla olduğu senaryolar için idealdir."
+        },
+        {
+          "id": "3.6",
+          "title": "Atomic Variables (java.util.concurrent.atomic)",
+          "content": "Basit 'primitive' (ilkel) tipler (örn: int, long, boolean) veya referanslar üzerinde 'atomic' (bölünmez) işlemler yapmayı sağlayan sınıflardır (örn: `AtomicInteger`, `AtomicReference`). \n\n'Compare-And-Swap' (CAS) adı verilen donanım seviyesinde bir mekanizma kullanırlar. `synchronized` veya `Lock` kullanmadan 'thread-safe' artırma (`incrementAndGet()`), azaltma gibi işlemlere izin vererek 'lock-free' programlama sağlarlar."
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Design Patterns (Tasarım Desenleri)",
+      "topics": [
+        {
+          "id": "4.1",
+          "title": "Creational: Singleton, Factory, Builder",
+          "content": "* Singleton (Tek Nesne): Bir sınıftan *sadece bir* nesne (instance) oluşturulmasını ve bu nesneye global bir erişim noktası sağlanmasını garanti eder. (Örn: Veritabanı bağlantı havuzu, konfigürasyon yöneticisi).\n\n* Factory Method (Fabrika Metodu): Nesne oluşturma işini alt sınıflara devreden bir 'creational' desendir. İstemci, hangi somut sınıfın oluşturulacağını bilmez, sadece 'fabrika' metodunu çağırır.\n\n* Builder (İnşa Edici): Çok fazla constructor parametresi olan karmaşık nesnelerin adım adım oluşturulmasını sağlar. 'Immutable' (değişmez) nesneler oluşturmak için idealdir. (Örn: `User.builder().name(\"...\").surname(\"...\").build()`)."
+        },
+        {
+          "id": "4.2",
+          "title": "Behavioral: Strategy, Observer",
+          "content": "* Strategy (Strateji): Bir algoritma ailesi tanımlar, her birini ayrı bir sınıfta kapsüller ve bu algoritmaların çalışma zamanında (runtime) değiştirilebilir (tak-çıkar) olmasını sağlar. (Örn: Ödeme yöntemleri - KrediKartıStratejisi, HavaleStratejisi).\n\n* Observer (Gözlemci): Bir nesnede (Subject/Publisher) durum değişikliği olduğunda, bu nesneye 'abone' (subscribe) olmuş diğer nesnelerin (Observer/Subscriber) otomatik olarak bilgilendirilmesini ve güncellenmesini sağlayan bir 'behavioral' desendir. (Publish-Subscribe modeli)."
+        },
+        {
+          "id": "4.3",
+          "title": "Structural: Adapter Pattern",
+          "content": "Adapter (Uyarlayıcı) Deseni, birbiriyle uyumsuz olan iki arayüzün (interface) birlikte çalışabilmesini sağlar. Mevcut bir sınıfı (veya 3. parti kütüphaneyi), beklenen arayüze uymadığı için değiştiremediğimiz durumlarda kullanılır. \n\nÖrnek: `List` bekleyen bir kodunuz var ama elinizde bir 'Array' (`[]`) var. `Arrays.asList()` metodu bir 'Adapter' görevi görür."
+        },
+        {
+          "id": "4.4",
+          "title": "Structural: Decorator Pattern",
+          "content": "Decorator (Dekoratör/Süsleyici) Deseni, bir nesneye 'runtime'da (çalışma zamanında) dinamik olarak yeni sorumluluklar (davranışlar) eklemeyi sağlar. Kalıtıma (inheritance) esnek bir alternatiftir. \n\nÖrnek: Java I/O sınıfları. `new BufferedReader(new FileReader(\"file.txt\"))`. Burada `BufferedReader` (arabellekleme özelliği ekler), `FileReader` nesnesini 'dekore' eder (süsler)."
+        },
+        {
+          "id": "4.5",
+          "title": "Behavioral: Template Method Pattern",
+          "content": "Template Method (Şablon Metot) Deseni, bir algoritmanın ana iskeletini (şablonunu) bir 'abstract' üst sınıfta tanımlar, ancak algoritmanın bazı adımlarını (soyut metotlar) alt sınıfların yeniden tanımlamasına (override) izin verir. \n\nAlgoritmanın ana yapısı değişmez, sadece bazı adımları değişir. (Örn: Bir oyunun `play()` metodu; `initialize()`, `startTurn()`, `endGame()` adımlarını çağırır. `startTurn()` metodu her alt sınıf (örn: Satranç, Dama) için farklı olabilir.)"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Spring Framework",
+      "topics": [
+        {
+          "id": "5.1",
+          "title": "IoC, Dependency Injection, AOP",
+          "content": "* IoC (Inversion of Control - Kontrolün Tersine Çevrilmesi): Nesnelerin oluşturulması, yaşam döngülerinin yönetilmesi ve bağımlılıklarının (dependencies) birleştirilmesi işinin, geliştiriciden alınıp Spring Container'a (ApplicationContext) devredilmesidir.\n\n* Dependency Injection (DI - Bağımlılık Enjeksiyonu): IoC'nin uygulanma şeklidir. Bir nesnenin ihtiyaç duyduğu diğer nesnelerin (bağımlılıkların), o nesnenin *kendisi* tarafından değil, dışarıdan (Spring Container tarafından) verilmesidir. \n  - Yöntemler: Constructor Injection (Tavsiye edilen), Setter Injection, Field Injection (@Autowired).\n\n* AOP (Aspect-Oriented Programming - Yönelimli Programlama): Uygulamanın farklı yerlerinde tekrar eden (yatay kesişen) kaygıları (cross-cutting concerns) (örn: Loglama, Güvenlik, Transaction Yönetimi) ana iş mantığından (business logic) ayırmayı ve modüler hale getirmeyi sağlar."
+        },
+        {
+          "id": "5.2",
+          "title": "Bean Lifecycle, Configuration",
+          "content": "Spring Bean Yaşam Döngüsü (Basitleştirilmiş):\n1. Instantiate: Nesne oluşturulur.\n2. Populate Properties: Bağımlılıklar enjekte edilir (DI).\n3. Initialization: Başlatma metotları çalışır (örn: `@PostConstruct`, `init-method`).\n4. Bean is ready: Bean kullanıma hazırdır.\n5. Destruction: Container kapatıldığında yok etme metotları çalışır (örn: `@PreDestroy`, `destroy-method`).\n\nConfiguration (Yapılandırma):\n* @Configuration: Bir sınıfın, Spring Bean tanımlamaları içerdiğini belirtir.\n* @Bean: `@Configuration` sınıfı içindeki metotlara eklenir. Bu metodun döndürdüğü nesnenin bir Spring Bean'i olarak yönetilmesi gerektiğini belirtir."
+        },
+        {
+          "id": "5.3",
+          "title": "Spring MVC (Model-View-Controller)",
+          "content": "Spring'in web uygulamaları geliştirmek için kullandığı çekirdek modüldür.\n\n* DispatcherServlet: Gelen tüm HTTP isteklerini karşılayan merkezi 'front controller'dır. İsteği hangi 'Controller'ın işleyeceğine karar verir, yönlendirir ve yanıtı döndürür.\n\n* @Controller: Geleneksel Spring MVC'de, HTTP isteklerini işleyen ve bir 'View' (JSP, Thymeleaf) adı döndüren sınıfları işaretler.\n\n* @RequestMapping: Hangi URL'in ve HTTP metodunun (GET, POST) hangi 'Controller' metodu tarafından işleneceğini eşleştirir."
+        },
+        {
+          "id": "5.4",
+          "title": "Spring Bean Scopes (Kapsamları)",
+          "content": "Bir Bean'in yaşam döngüsünün ve paylaşım modelinin nasıl olacağını belirler:\n\n* singleton (Varsayılan): Tüm uygulama boyunca, o Bean tanımından *sadece bir* nesne oluşturulur ve her enjeksiyonda bu tek nesne paylaşılır.\n* prototype: Her enjeksiyon istendiğinde veya `context.getBean()` çağrıldığında *yeni* bir nesne (instance) oluşturulur.\n* request: (Web) Her HTTP isteği (request) için yeni bir nesne oluşturulur.\n* session: (Web) Her HTTP oturumu (session) için yeni bir nesne oluşturulur."
+        },
+        {
+          "id": "5.5",
+          "title": "Spring Stereotype Anotasyonları",
+          "content": "Spring'in IoC Container'ı tarafından otomatik olarak taranıp (component scanning) Bean olarak algılanması için kullanılan özel `@Component` türevi anotasyonlardır:\n\n* @Component: Genel amaçlı bir bileşendir.\n* @Service: Genellikle 'Service' katmanında (iş mantığı) kullanılır.\n* @Repository: Genellikle 'Data Access' (Veri Erişim - DAO) katmanında kullanılır ve veritabanı 'exception'larını Spring'in `DataAccessException` hiyerarşisine çevirir.\n* @Controller / @RestController: 'Presentation' (Web) katmanında kullanılır."
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Spring Boot & Microservices",
+      "topics": [
+        {
+          "id": "6.1",
+          "title": "AutoConfiguration, REST API, Actuator",
+          "content": "* AutoConfiguration (Otomatik Yapılandırma): Spring Boot'un 'classpath'i (projedeki kütüphaneleri) tarayarak, gerekli olan Bean'leri (örn: Tomcat, DataSource, Jackson) varsayılan ayarlarla otomatik olarak yapılandırmasıdır. 'Fikrini söylemezsen varsayılanı yaparım' (convention over configuration) mantığı güder.\n\n* REST API: `@RestController` (sınıf seviyesinde `@Controller` + `@ResponseBody`) ve `@RequestMapping` (veya `@GetMapping`, `@PostMapping` vb.) anotasyonları ile HTTP isteklerini (Request) alıp, genellikle JSON yanıtları (Response) dönen web servisleri oluşturulur.\n\n* Actuator: Uygulamanın çalışma zamanındaki (runtime) durumunu izlemek ve yönetmek için 'production-ready' HTTP endpoint'leri (/actuator) sağlar. (Örn: `/health` - sağlık durumu, `/metrics` - metrikler, `/info` - uygulama bilgisi)."
+        },
+        {
+          "id": "6.2",
+          "title": "Eureka, FeignClient, Circuit Breaker",
+          "content": "Mikroservis Mimarisi Bileşenleri (Spring Cloud):\n* Eureka (Service Discovery): Mikroservislerin birbirlerini ağ üzerinde (IP/Port bilmeden, sadece servis adıyla) bulmalarını sağlayan 'Servis Kayıt ve Keşif' (Service Registry & Discovery) sunucusudur.\n\n* FeignClient (Declarative REST Client): Diğer mikroservislere REST çağrıları yapmayı çok kolaylaştıran bir araçtır. Sadece bir `@FeignClient` arayüzü tanımlanır, Spring Boot arka planda HTTP istemci kodunu otomatik oluşturur.\n\n* Circuit Breaker (Devre Kesici - Resilience4j): Bir mikroservisin sürekli hata vermesi (veya yavaşlaması) durumunda, o servise giden çağrıları geçici olarak keserek (Devre Açık) sistemin çökmesini (cascading failure) engelleyen bir hata toleransı (fault tolerance) desenidir. Bir süre sonra tekrar deneme (Devre Yarı-Açık) yapar."
+        },
+        {
+          "id": "6.3",
+          "title": "API Gateway, Config Server",
+          "content": "* API Gateway (Spring Cloud Gateway): Tüm dış istemcilerin (Mobil, Web UI) mikroservislere erişmek için kullandığı tek bir giriş noktasıdır (Single Point of Entry). Yönlendirme (routing), kimlik doğrulama (authentication), rate limiting (hız sınırı), loglama gibi merkezi işlemleri yapar.\n\n* Config Server (Spring Cloud Config Server): Mikroservislerin yapılandırma (configuration) dosyalarını (application.properties/yml) merkezi bir yerden (genellikle bir Git repository) yönetmeyi sağlar. Servisler, ayarlarını bu sunucudan çeker ve yeniden başlatmaya gerek kalmadan güncelleyebilir."
+        },
+        {
+          "id": "6.4",
+          "title": "Spring Boot Starters",
+          "content": "Spring Boot'un temel sihridir. Belirli bir işlevsellik için gerekli olan tüm bağımlılıkları (dependencies) ve otomatik yapılandırma kodlarını bir araya toplayan 'dependency descriptor'larıdır (genellikle POM veya Gradle dosyaları).\n\nÖrnek: `spring-boot-starter-web` eklendiğinde, proje otomatik olarak Tomcat sunucusu, Spring MVC ve JSON işleme (Jackson) kütüphanelerini kazanır. Sadece *bir* bağımlılık ekleyerek web uygulaması geliştirmeye hazır hale gelir."
+        },
+        {
+          "id": "6.5",
+          "title": "Distributed Tracing (Sleuth, Zipkin)",
+          "content": "Mikroservis mimarisinde, bir isteğin (request) birden fazla servis arasında dolaşırken (örn: A -> B -> C) izlediği yolu takip etme işlemidir. \n\n* Spring Cloud Sleuth: Her isteğe benzersiz bir 'Trace ID' ve her servise geçişte 'Span ID' ekler. Bu ID'leri loglara otomatik olarak basar.\n* Zipkin: Sleuth tarafından üretilen bu 'trace' verilerini toplayan, saklayan ve görsel bir arayüzde (UI) hangi servisin ne kadar sürdüğünü (gecikme tespiti) gösteren merkezi bir araçtır."
+        },
+        {
+          "id": "6.6",
+          "title": "Externalized Configuration (Harici Yapılandırma)",
+          "content": "Spring Boot'un, uygulama kodunu değiştirmeden farklı ortamlarda (Dev, Test, Prod) farklı ayarlarla (örn: veritabanı URL'i) çalışabilmesini sağlama prensibidir. \n\nSpring Boot, ayarları `application.properties` (veya `.yml`) dosyası, OS ortam değişkenleri (Environment Variables), komut satırı argümanları gibi birçok yerden okuyabilir ve bu okuma işleminin bir *öncelik sırası* vardır (örn: Ortam değişkeni, `.properties` dosyasını ezer)."
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "Database & ORM",
+      "topics": [
+        {
+          "id": "7.1",
+          "title": "SQL vs NoSQL Farkı",
+          "content": "* SQL (İlişkisel - RDBMS): Veriyi yapısı önceden tanımlanmış (katı şema - rigid schema) tablolarda (satır/sütun) saklar. İlişkisel veri için idealdir. ACID (Atomicity, Consistency, Isolation, Durability) uyumluluğu yüksektir. Genellikle Dikey (Vertical) ölçeklenir. (Örn: PostgreSQL, MySQL, Oracle).\n\n* NoSQL (İlişkisel Olmayan): Şema esnektir (schema-less) veya dinamiktir. Yüksek hacimli ve yapılandırılmamış veri için idealdir. Genellikle Yatay (Horizontal) ölçeklenir. BASE (Basically Available, Soft state, Eventually consistent) modeline daha yakındır.\n  - Türleri: Document (MongoDB), Key-Value (Redis), Column-Family (Cassandra), Graph (Neo4j)."
+        },
+        {
+          "id": "7.2",
+          "title": "JPA, Hibernate Entity, Repository",
+          "content": "* JPA (Java Persistence API): Java nesnelerinin (POJO) ilişkisel veritabanı tabloları ile nasıl eşleştirileceğini (ORM - Object-Relational Mapping) tanımlayan bir *spesifikasyondur* (kurallar bütünü, arayüzler). Bir API'dir.\n\n* Hibernate: JPA spesifikasyonunu *uygulayan* (implemente eden) en popüler ORM aracıdır. JPA'nın 'motoru' gibi düşünülebilir.\n\n* @Entity: Bir Java sınıfının veritabanı tablosuna karşılık geldiğini (JPA tarafından yönetileceğini) belirtir. `@Id` anotasyonu ile 'primary key' belirtilir.\n\n* Repository (Spring Data JPA): Veritabanı işlemleri (CRUD - Create, Read, Update, Delete) için gerekli olan (boilerplate) kodları ortadan kaldıran bir soyutlama katmanıdır. `JpaRepository` gibi arayüzlerden 'extend' edilir."
+        },
+        {
+          "id": "7.3",
+          "title": "Transaction Management",
+          "content": "Transaction (İşlem): Birbiriyle ilişkili bir veya daha fazla veritabanı işleminin (örn: para transferi = hesaptan düş + hesaba ekle) tek bir iş birimi olarak ele alınmasıdır. Bu işlemlerin ya *hepsi* başarılı olur (COMMIT) ya da *hiçbiri* uygulanmaz ve geri alınır (ROLLBACK).\n\nACID Özellikleri:\n* Atomicity (Bölünmezlik): Ya hep ya hiç.\n* Consistency (Tutarlılık): İşlem sonrası veri tabanı tutarlı kalmalıdır.\n* Isolation (İzolasyon): Eşzamanlı işlemler birbirini etkilememelidir.\n* Durability (Kalıcılık): Başarılı (commit) işlem kalıcıdır.\n\nSpring'de `@Transactional`: Bir metot veya sınıfın üzerine eklenerek o metodun transaction içinde çalışmasını sağlar. 'Checked Exception'lar varsayılan olarak 'rollback' yapmazken, 'RuntimeException'lar (ve Error) otomatik olarak 'rollback' yapar."
+        },
+        {
+          "id": "7.4",
+          "title": "JPA/Hibernate İlişkileri (Relationships)",
+          "content": "Entity'ler arasındaki ilişkileri (SQL'deki 'join'ler gibi) tanımlamak için kullanılır:\n\n* @OneToOne: Bire-bir ilişki (örn: `User` - `UserProfile`).\n* @OneToMany: Bire-çok ilişki (örn: `User` (1) - `Order` (Çok)). `User` tarafında `List<Order>` olur.\n* @ManyToOne: Çoğa-bir ilişki (örn: `Order` (Çok) - `User` (1)). `Order` tarafında `User` olur. (En yaygın kullanılan ilişki tipidir).\n* @ManyToMany: Çoğa-çok ilişki (örn: `Student` - `Course`). Genellikle bir ara tablo (join table) gerektirir."
+        },
+        {
+          "id": "7.5",
+          "title": "JPQL (Java Persistence Query Language)",
+          "content": "Veritabanı (SQL) tabloları yerine, *JPA Entity'leri* (Java nesneleri) ve onların *alanları* (field) üzerinden sorgu yazmayı sağlayan, platformdan (SQL diyalektinden) bağımsız bir sorgu dilidir.\n\n* Örnek: `SELECT u FROM User u WHERE u.age > 18` (Burada `User`, sınıfın adıdır, tablonun değil).\n* Spring Data JPA: `@Query` anotasyonu içinde JPQL sorguları yazılabilir."
+        },
+        {
+          "id": "7.6",
+          "title": "Hibernate Caching (L1 & L2)",
+          "content": "Veritabanı okuma performansını artırmak için kullanılan önbellekleme mekanizmalarıdır.\n\n* L1 Cache (First-Level Cache): 'Session' (Oturum) bazlıdır ve varsayılan olarak *açıktır*. Bir 'transaction' (veya 'session') içinde aynı nesne (`@Id` ile) birden fazla kez istendiğinde, veritabanına sadece *bir kez* gider, sonrakiler L1 cache'den gelir. Kısa ömürlüdür.\n\n* L2 Cache (Second-Level Cache): 'SessionFactory' (Uygulama) bazlıdır ve varsayılan olarak *kapalıdır*. Açılması ve yapılandırılması (örn: EhCache, Hazelcast) gerekir. Farklı 'session'lar arasında paylaşılan verileri (örn: 'read-only' olan ülke listesi) önbelleğe almak için kullanılır. Performansı ciddi artırır."
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "title": "REST, Security & JWT",
+      "topics": [
+        {
+          "id": "8.1",
+          "title": "HTTP Metotları, REST İlkeleri",
+          "content": "Temel HTTP Metotları:\n* GET: Kaynak okumak/getirmek için kullanılır. Güvenlidir (side-effect yapmaz) ve 'Idempotent'tir (tekrarlanabilir).\n* POST: Yeni bir kaynak oluşturmak için kullanılır. 'Idempotent' *değildir*.\n* PUT: Mevcut bir kaynağı *komple* güncellemek için kullanılır. 'Idempotent'tir.\n* PATCH: Mevcut bir kaynağı *kısmi* olarak güncellemek için kullanılır.\n* DELETE: Bir kaynağı silmek için kullanılır. 'Idempotent'tir.\n\nREST (Representational State Transfer) İlkeleri: Stateless (sunucu oturum tutmaz), Client-Server mimarisi, Cacheable (önbelleklenebilir), Uniform Interface (standart arayüz)."
+        },
+        {
+          "id": "8.2",
+          "title": "Authentication vs Authorization",
+          "content": "* Authentication (AuthN - Kimlik Doğrulama): 'Sen kimsin?' sorusunun cevabıdır. Kullanıcının kimliğini (genellikle kullanıcı adı/şifre, token, biyometri ile) *doğrulama* işlemidir. (Örn: Sisteme giriş yapmak).\n\n* Authorization (AuthZ - Yetkilendirme): 'Neler yapabilirsin?' sorusunun cevabıdır. Kimliği doğrulanmış bir kullanıcının, hangi kaynaklara (endpoints, data) erişip ne tür işlemler (okuma, yazma, silme) yapabileceğine *karar verme* işlemidir. (Örn: 'ADMIN' rolü kullanıcı silebilir, 'USER' rolü sadece okuyabilir)."
+        },
+        {
+          "id": "8.3",
+          "title": "JWT Yapısı ve Akışı",
+          "content": "JWT (JSON Web Token): Kullanıcı bilgisi gibi verileri (claims) içeren, imzalı ve kompakt (taşınabilir) bir token formatıdır. 'Stateless' (sunucuda oturum tutmayan) kimlik doğrulama için kullanılır.\n\nYapısı (3 bölüm, Base64 ile kodlu, aralarında nokta '.' var):\n1. Header (Başlık): Token tipi (JWT) ve kullanılan imzalama algoritmasını (örn: HS256) içerir.\n2. Payload (Veri): 'Claims' adı verilen verileri (kullanıcı ID, roller, token sonlanma tarihi - 'exp') içerir. Bu kısım şifreli değildir, sadece kodludur.\n3. Signature (İmza): Header + Payload + Gizli Anahtar (Secret Key) kullanılarak oluşturulan imzadır. Token'ın değiştirilip değiştirilmediğini (veri bütünlüğü) kontrol eder.\n\nAkış: 1. Kullanıcı login olur (username/password). 2. Sunucu kimliği doğrular, bir JWT oluşturur, imzalar ve istemciye (client) döndürür. 3. İstemci, bu JWT'yi sonraki her korumalı isteğin 'Authorization: Bearer <token>' header'ına ekler. 4. Sunucu, her istekte bu imzayı 'secret key' ile doğrular."
+        },
+        {
+          "id": "8.4",
+          "title": "Spring Security (Temel Bileşenler)",
+          "content": "Spring uygulamalarında 'Authentication' ve 'Authorization' işlemlerini sağlayan güçlü bir framework'tür.\n\n* SecurityFilterChain: Gelen isteklere uygulanacak güvenlik kurallarını (örn: hangi URL herkese açık, hangisi 'login' gerektirir) tanımlayan bir filtre zinciridir.\n\n* AuthenticationManager: Kullanıcıdan gelen kimlik bilgilerini (örn: username/password) doğrulamakla (authenticate) yükümlü olan arayüzdür.\n\n* SecurityContextHolder: Kimliği doğrulanmış (authenticated) kullanıcının bilgilerini (Principal, Roller) 'ThreadLocal' bir değişkende tutar. Böylece uygulama içinde herhangi bir yerden `SecurityContextHolder.getContext().getAuthentication()` ile geçerli kullanıcıya erişilebilir."
+        },
+        {
+          "id": "8.5",
+          "title": "Session-Based vs. Token-Based Authentication",
+          "content": "* Session-Based (Oturum Tabanlı - Geleneksel): Sunucu, 'login' olan kullanıcı için bir 'session' (oturum) oluşturur, buna bir 'Session ID' atar ve bu ID'yi istemciye (genellikle 'cookie' ile) gönderir. Sunucu tüm 'session' bilgilerini *kendi belleğinde veya veritabanında saklamak zorundadır*. 'Stateful'dur.\n\n* Token-Based (JWT - Token Tabanlı - Modern/REST): Sunucu, 'login' olan kullanıcı için imzalı bir JWT (token) oluşturur ve bunu istemciye gönderir. Sunucu, 'session' bilgisi *saklamak zorunda değildir*. Token'ın kendisi (Payload) kullanıcı bilgilerini, imzası (Signature) ise geçerliliğini kanıtlar. 'Stateless'tir ve mikroservisler için idealdir."
+        },
+        {
+          "id": "8.6",
+          "title": "CORS (Cross-Origin Resource Sharing)",
+          "content": "Web tarayıcılarının uyguladığı bir güvenlik mekanizmasıdır. Bir web sayfasının (örn: `http://site-A.com`), kendi 'origin'i (domain) dışındaki bir sunucudan (örn: `http://api-B.com`) kaynak (API verisi, font) talep etmesini yönetir. \n\nVarsayılan olarak tarayıcılar buna izin *vermez*. `api-B.com` sunucusunun, `site-A.com`'dan gelen isteklere izin verdiğini belirten özel HTTP 'Header'ları (örn: `Access-Control-Allow-Origin: http://site-A.com`) dönmesi gerekir. Spring'de `@CrossOrigin` anotasyonu ile kolayca yönetilebilir."
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "title": "Cloud & DevOps",
+      "topics": [
+        {
+          "id": "9.1",
+          "title": "Docker, Kubernetes Temelleri",
+          "content": "* Docker: Uygulamaları ve onların tüm bağımlılıklarını (kütüphane, runtime, sistem araçları) 'container' adı verilen taşınabilir, izole ve hafif paketlere dönüştüren bir platformdur. 'Benim makinemde çalışıyordu' sorununu çözer.\n  - Dockerfile: Bir 'container image'inin nasıl oluşturulacağını tanımlayan reçetedir.\n  - Image: Uygulamanın çalışması için gereken her şeyi içeren, 'read-only' (salt okunur) bir şablondur.\n  - Container: Bir 'image'in çalışan (çalışma zamanı) örneğidir (instance).\n\n* Kubernetes (K8s): 'Container'ize edilmiş (Docker ile paketlenmiş) uygulamaların dağıtımını (deployment), ölçeklenmesini (scaling) ve yönetimini (management) otomatize eden bir 'Container Orchestration' (Konteyner Orkestrasyonu) platformudur.\n  - Pod: Kubernetes'in en küçük dağıtım birimidir. Genellikle bir 'container'ı (bazen birden fazla) kapsar.\n  - Deployment: Belirli sayıda 'Pod'un nasıl çalışacağını ve güncelleneceğini tanımlar.\n  - Service: 'Pod'lara erişmek için sabit bir IP ve DNS adı sağlayan bir soyutlamadır."
+        },
+        {
+          "id": "9.2",
+          "title": "CI/CD (Jenkins, GitHub Actions)",
+          "content": "* CI (Continuous Integration - Sürekli Entegrasyon): Geliştiricilerin kodlarını sık sık (günde birden çok kez) ana bir 'repository'ye (örn: Git) birleştirmesi sürecidir. Her birleştirme (merge/push) otomatik olarak bir 'build' (derleme) ve 'test' sürecini tetikler. Hataların erken tespit edilmesini sağlar.\n\n* CD (Continuous Delivery / Deployment - Sürekli Teslimat / Dağıtım):\n  - Continuous Delivery (Teslimat): CI'dan geçen kodun, 'production' (canlı) ortama dağıtılmaya *hazır* hale getirilmesidir. Canlıya geçiş için (genellikle) *manuel bir onay* (buton) gerekir.\n  - Continuous Deployment (Dağıtım): CI'dan geçen ve tüm otomatik testleri başarıyla tamamlayan kodun, *hiçbir manuel müdahale olmadan* otomatik olarak 'production'a (canlı) dağıtılmasıdır.\n\n* Araçlar: Jenkins (esnek, eklenti zengini, sunucuda çalışır), GitHub Actions (Git ile entegre, YAML tabanlı, bulut tabanlı)."
+        },
+        {
+          "id": "9.3",
+          "title": "Deployment Stratejileri",
+          "content": "* Rolling Update (Sıralı Güncelleme): En yaygın yöntemdir. Yeni versiyonun 'instance'ları (sunucuları/pod'ları) yavaş yavaş (örn: %25'lik gruplar halinde) eskisinin yerine geçer. Kesintisizdir (Zero-downtime) ancak geçiş süreci uzundur.\n\n* Blue-Green Deployment: İki adet birebir aynı 'production' ortamı (Blue - mevcut, Green - yeni) bulundurulur. Trafik Blue'dayken, Green'e yeni versiyon atılır ve test edilir. Testler bitince, 'Router/Load Balancer' tüm trafiği bir anda Blue'dan Green'e yönlendirir. Hata olursa anında Blue'ya geri dönülebilir (rollback). Pahalıdır (2 kat kaynak).\n\n* Canary (Kanarya) Deployment: Yeni versiyon önce çok küçük bir kullanıcı kitlesine (örn: %1, %5) verilir. Metrikler (hata oranları, performans) izlenir. Sorun yoksa, yeni versiyonun yüzdesi kademeli olarak artırılarak (%25, %50, %100) tüm kullanıcılara yayılır. Riskleri minimize eder."
+        },
+        {
+          "id": "9.4",
+          "title": "Infrastructure as Code (IaC)",
+          "content": "Altyapının (sunucular, veritabanları, ağlar, load balancer'lar) manuel olarak (örn: UI tıklamalarıyla) değil, *kod* (tanım dosyaları) aracılığıyla yönetilmesi ve sağlanmasıdır. \n\n* Faydaları: Tekrarlanabilirlik, versiyonlama (altyapıyı kod gibi Git'te saklama), otomasyon ve tutarlılık sağlar.\n\n* Araçlar:\n  - Terraform (Declarative - Bildirimsel): 'Ne istediğini' söylersin (örn: 3 sunucu, 1 load balancer), Terraform nasıl yapacağını bilir.\n  - Ansible (Procedural - Prosedürel): 'Nasıl yapılacağını' adım adım (script gibi) tanımlarsın. Genellikle mevcut sunucuları yapılandırmak (configuration management) için kullanılır."
+        },
+        {
+          "id": "9.5",
+          "title": "Build Tools (Maven, Gradle)",
+          "content": "Java projelerinin yaşam döngüsünü (lifecycle) yöneten, bağımlılıkları (dependencies - 3. parti kütüphaneler) yöneten ve projeyi 'build' eden (derleme, test, paketleme) araçlardır.\n\n* Maven: XML tabanlı (`pom.xml`) çalışır. Katı (rigid) ama standartlaşmış bir yapıya sahiptir. Bağımlılıkları merkezi 'Maven Central' repository'sinden indirir.\n\n* Gradle: Groovy veya Kotlin (DSL) tabanlı (`build.gradle`) çalışır. Maven'a göre çok daha esnek, script'lenebilir ve genellikle daha hızlıdır. Android geliştirmesinin standartıdır."
+        },
+        {
+          "id": "9.6",
+          "title": "Monitoring & Alerting (Prometheus, Grafana)",
+          "content": "DevOps'un kritik bir parçasıdır.\n\n* Monitoring (İzleme): Sistemin *şu anda* ne yaptığını ve sağlık durumunu (CPU, bellek, istek sayısı, hata oranı) anlamak için metriklerin toplanmasıdır. \n  - Prometheus: Metrikleri toplamak ve saklamak için popüler bir 'time-series database' (zaman serisi veritabanı) ve izleme aracıdır.\n\n* Alerting (Alarma Geçme): İzlenen metrikler belirli bir eşiğin dışına çıktığında (örn: Hata oranı > %5, Disk kullanımı > %90) ilgili ekiplere (mail, Slack, PagerDuty) otomatik olarak haber verme işlemidir."
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "title": "Testing",
+      "topics": [
+        {
+          "id": "10.1",
+          "title": "Unit vs Integration Test Farkı",
+          "content": "* Unit Test (Birim Testi): En küçük kod parçasını (genellikle tek bir metot veya sınıf) test eder. *İzole* bir şekilde çalışmalıdır; tüm dış bağımlılıklar (Veritabanı, Dış API, diğer sınıflar) 'Mock' (taklit) edilmelidir. Çok hızlı çalışır. (Kullanılan araçlar: JUnit, Mockito).\n\n* Integration Test (Entegrasyon Testi): Birden fazla modülün (bileşenin) birbiriyle *birlikte* çalışmasını test eder. (Örn: Controller -> Service -> Repository -> Veritabanı). Dış bağımlılıklar (genellikle) 'mock'lanmaz; bunun yerine H2 (in-memory db) veya Testcontainers (gerçek DB) gibi yapılar kullanılır. Birim testlerine göre daha yavaştır."
+        },
+        {
+          "id": "10.2",
+          "title": "JUnit, Mockito, Testcontainers",
+          "content": "* JUnit: Java için 'de-facto' standart olan birim testi (unit test) 'framework'üdür. `@Test` ile test metotlarını, `assertEquals()` gibi 'assertion' (doğrulama) metotlarını ve `@BeforeEach`, `@AfterEach` gibi yaşam döngüsü anotasyonlarını sağlar.\n\n* Mockito: Birim testlerinde (unit tests) bağımlılıkları *taklit etmek* (mock'lamak) için kullanılan bir kütüphanedir. `mock(Class.class)` ile sahte nesne oluşturulur. `when(mock.method()).thenReturn(value)` ile sahte davranışlar tanımlanır. Testin *izole* kalmasını sağlar.\n\n* Testcontainers: Entegrasyon testleri (integration test) için harika bir araçtır. Veritabanı (PostgreSQL, MySQL), mesaj kuyruğu (Kafka, RabbitMQ) veya herhangi bir servisi *gerçek* Docker 'container'ları içinde programatik olarak (JUnit testi içinden) başlatmayı, testi çalıştırmayı ve sonrasında 'container'ı kapatmayı sağlar. 'Gerçek' ortama en yakın testi sağlar."
+        },
+        {
+          "id": "10.3",
+          "title": "Test-Driven Development (TDD)",
+          "content": "Önce testi yaz, sonra kodu yaz' felsefesine dayanan bir yazılım geliştirme metodolojisidir.\n\nAkış (Red-Green-Refactor):\n1. Red (Kırmızı): Önce çalışmayan (başarısız olan) bir 'unit test' yazılır. (Henüz kod yazılmadığı için test kırmızı olur).\n2. Green (Yeşil): Testin başarılı (yeşil) olmasını sağlayacak *en basit* kod yazılır.\n3. Refactor (Yeniden Düzenle): Kodun çalışması (yeşil) bozulmadan, kodun kalitesini (temizlik, performans) artırmak için 'refactor' edilir.\nBu döngü, her yeni özellik için tekrarlanır."
+        },
+        {
+          "id": "10.4",
+          "title": "Spring Boot Testing Anotasyonları",
+          "content": "Spring Boot, test yazmayı kolaylaştırmak için özel anotasyonlar sağlar:\n\n* @SpringBootTest: Tam bir 'integration test' için kullanılır. Tüm Spring 'ApplicationContext'i (Bean'ler, konfigürasyon) ayağa kaldırır. Yavaştır ama gerçeğe en yakın testi sağlar.\n\n* @WebMvcTest: Sadece Web (Controller) katmanını test etmek için kullanılır. `@Controller`, `@RestController`, `JsonSerializer` gibi Bean'leri yükler, ancak `@Service` veya `@Repository` Bean'lerini *yüklemez*. (Bunlar 'mock'lanmalıdır). `@SpringBootTest`'ten çok daha hızlıdır.\n\n* @DataJpaTest: Sadece JPA (Repository) katmanını test etmek için kullanılır. Varsayılan olarak 'in-memory' H2 veritabanı kullanır ve her testten sonra 'transaction'ı 'rollback' yapar."
+        },
+        {
+          "id": "10.5",
+          "title": "Test Pyramid (Test Piramidi)",
+          "content": "Etkili bir test stratejisi için kullanılan bir modeldir. Piramidin tabanı geniş, tepesi dardır:\n\n1. Unit Tests (Taban): En çok sayıda olmalıdırlar. Hızlı çalışırlar, izoledirler, yazması kolaydır. (örn: %70-80).\n2. Integration Tests (Orta): Daha az sayıda olmalıdırlar. Modüllerin birlikte çalışmasını doğrularlar. Daha yavaştır. (örn: %15-20).\n3. End-to-End (E2E) / UI Tests (Tepe): En az sayıda olmalıdırlar. Tüm sistemin kullanıcı arayüzünden (UI) başlayarak baştan sona (veritabanı dahil) akışını test ederler. Çok yavaştırlar, kırılgandırlar (brittle) ve bakımı zordur. (örn: <%5)."
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "title": "Clean Code & Best Practices",
+      "topics": [
+        {
+          "id": "11.1",
+          "title": "Naming, Modularity, DRY, KISS, YAGNI",
+          "content": "* Naming (İsimlendirme): Kodun okunabilirliği için kritiktir. \n  - Sınıflar: İsim (Noun) olmalı (örn: `User`, `OrderService`).\n  - Metotlar: Fiil (Verb) olmalı ve ne yaptığını anlatmalı (örn: `calculateTotalPrice()`, `saveUser()`).\n\n* Modularity (Modülerlik): Uygulamayı, birbiriyle 'gevşek bağlı' (Loosely Coupled) ve kendi içinde 'yüksek uyumlu' (Highly Cohesive) modüllere (parçalara) ayırmaktır. Bakımı ve geliştirmeyi kolaylaştırır.\n\n* DRY (Don't Repeat Yourself - Tekrar Etme): Bilgi ve mantığı (iş kuralı, algoritma) sistem içinde birden fazla yerde kopyala-yapıştır yapmamaktır. Tekrar eden kodlar metotlara veya sınıflara taşınmalıdır.\n\n* KISS (Keep It Simple, Stupid - Basit Tut): Gereksiz karmaşıklıktan kaçınmaktır. Mümkün olan en basit ve en anlaşılır çözümü tercih etmektir.\n\n* YAGNI (You Ain't Gonna Need It - İhtiyacın Olmayacak): Sadece *şu anda* ihtiyaç duyulan özellikleri kodlamaktır. 'Belki gelecekte gerekir' diyerek şu an gerekmeyen özellikleri eklemekten kaçınmaktır. Bu, gereksiz karmaşıklığı ve maliyeti önler."
+        },
+        {
+          "id": "11.2",
+          "title": "Logging, Exception, Layered Architecture",
+          "content": "* Logging (Loglama): Uygulamanın çalışması hakkında anlamlı kayıtlar tutmaktır (SLF4J, Logback kullanılır). \n  - Seviyeler: DEBUG (geliştirme detayı), INFO (normal akış, örn: 'Sipariş 123 oluşturuldu'), WARN (potansiyel sorun, örn: 'API yavaş yanıt verdi'), ERROR (müdahale gerektiren hata, örn: 'Veritabanına bağlanılamadı').\n  - Kötü Pratik: Hassas verileri (şifre, kredi kartı) loglamak, boş `catch` bloğunda `e.printStackTrace()` kullanmak.\n\n* Exception Best Practices: Hataları asla 'yutma' (boş `catch` bloğu). Beklenen (kurtarılabilir) durumlar için 'checked exception', programlama hataları (kurtarılamaz) için 'unchecked exception' (RuntimeException) kullan. 'finally' bloğunda kaynakları kapat.\n\n* Layered Architecture (Katmanlı Mimari): Sorumlulukların ayrılması (Separation of Concerns) için kullanılan yaygın bir mimaridir. \n  - Presentation Katmanı (örn: `@RestController`): HTTP isteklerini alır, JSON döndürür, iş mantığı *içermez*.\n  - Business/Service Katmanı (örn: `@Service`): Uygulamanın temel iş mantığı (business logic) buradadır. Transaction'lar burada yönetilir.\n  - Data Access/Persistence Katmanı (örn: `@Repository`): Veritabanı ile iletişimi sağlar (JPA, SQL)."
+        },
+        {
+          "id": "11.3",
+          "title": "Code Smells & Refactoring",
+          "content": "* Code Smell (Kod Kokusu): Kodda 'yanlış' (bug) olmayan ancak potansiyel olarak daha derin bir tasarım sorununa işaret eden (kötü kokan) kod yapılarıdır. \n  - Örnekler: `Long Method` (Çok uzun metot), `Large Class` (Çok fazla sorumluluğu olan sınıf), `Duplicated Code` (Tekrarlanan kod - DRY ihlali), `Magic Numbers` (Anlamsız sayılar, örn: `if (status == 2)`).\n\n* Refactoring (Yeniden Düzenleme): Kodun dışarıdan görünen *davranışını değiştirmeden*, kodun iç yapısını (okunabilirlik, bakım kolaylığı, performans) iyileştirme işlemidir. 'Code Smell'leri düzeltmek için yapılır."
+        },
+        {
+          "id": "11.4",
+          "title": "High Cohesion, Low Coupling (Yüksek Uyum, Düşük Bağımlılık)",
+          "content": "İyi bir yazılım tasarımının (özellikle modülerlik ve SRP) temel hedefleridir:\n\n* High Cohesion (Yüksek Uyum): Bir modülün (sınıf, paket) içindeki elemanların (metotlar, değişkenler) birbiriyle *anlamsal olarak ne kadar ilişkili* olduğudur. Bir sınıf sadece birbiriyle *çok* ilişkili işleri yapmalıdır. (İstenen durum).\n\n* Low Coupling (Düşük Bağımlılık): Bir modülün, diğer modüllere *ne kadar az bağımlı* olduğudur. Modüller (sınıflar) birbirinden mümkün olduğunca habersiz (izole) olmalıdır; ideal olarak sadece 'interface'ler üzerinden konuşmalıdırlar. (İstenen durum)."
+        },
+        {
+          "id": "11.5",
+          "title": "Code Reviews (Kod Gözden Geçirme)",
+          "content": "Bir geliştiricinin yazdığı kodun, ana 'branch'e (örn: main/master) birleştirilmeden (merge) önce, diğer ekip üyeleri (peer) tarafından gözden geçirilmesi sürecidir. \n\n* Amaçları: Hataları (bug) erken yakalamak, kod kalitesini (clean code) artırmak, tasarım desenlerini ve 'best practice'leri (en iyi uygulamaları) standartlaştırmak ve ekip içinde bilgi paylaşımını (knowledge sharing) sağlamaktır. CI/CD sürecinin (Pull/Merge Request) önemli bir parçasıdır."
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "title": "Ekstra Konular",
+      "topics": [
+        {
+          "id": "12.1",
+          "title": "Kafka, RabbitMQ, Redis, Caching",
+          "content": "* Kafka (Apache Kafka): Yüksek hacimli (high-throughput) 'event streaming' (olay akışı) platformudur. Dağıtık, kalıcı (persistent) ve 'immutable' (değişmez) bir 'commit log' (kayıt defteri) yapısı kullanır. 'Publish/Subscribe' modeli için idealdir.\n\n* RabbitMQ: Geleneksel bir 'mesaj broker'ıdır (Message Queue). AMQP protokolünü destekler. 'Point-to-Point' (kuyruk) ve 'Publish/Subscribe' (topic/exchange) modellerini destekler. Karmaşık yönlendirme (routing) senaryolarında güçlüdür.\n\n* Redis: 'In-memory' (RAM üzerinde) çalışan çok hızlı bir Key-Value (Anahtar-Değer) veri deposudur. Disk persistansı da yapabilir ancak asıl gücü hızından gelir.\n  - Kullanım Alanları: Caching (Önbellekleme), Session Store (Oturum Yönetimi), Pub/Sub, Rate Limiting.\n\n* Caching (Önbellekleme): Sık erişilen ancak nadiren değişen verilerin (örn: veritabanı sorgu sonucu, dış API yanıtı) Redis gibi hızlı bir bellekte saklanarak, yavaş olan ana kaynağa (örn: veritabanı) giden istek sayısını azaltma tekniğidir. Performansı çok ciddi artırır."
+        },
+        {
+          "id": "12.2",
+          "title": "DDD, Hexagonal Architecture",
+          "content": "* DDD (Domain-Driven Design - Alan Odaklı Tasarım): Karmaşık iş gereksinimlerini (domain) anlamaya ve bu iş mantığını kodun merkezine koymaya odaklanan bir yazılım geliştirme yaklaşımıdır. \n  - Temel Kavramlar: Ubiquitous Language (Ortak Dil), Bounded Context (Sınırlı Bağlam), Aggregate (Küme), Entity (Varlık), Value Object (Değer Nesnesi).\n\n* Hexagonal Architecture (Ports and Adapters - Limanlar ve Uyarlayıcılar): Uygulamanın 'domain' (iş mantığı) çekirdeğini, dış dünyadan (UI, Veritabanı, Dış API'ler gibi) tamamen *izole* eden bir mimari desendir. \n  - Çekirdek (Hexagon): Saf iş mantığını içerir. Dış dünyadan habersizdir.\n  - Ports (Limanlar): Çekirdeğin dış dünya ile konuşmak için tanımladığı arayüzlerdir (interface). (Örn: `OrderRepository` arayüzü).\n  - Adapters (Uyarlayıcılar): Bu 'port'ları (arayüzleri) spesifik teknolojilerle (Örn: `JPAOrderRepository` implementasyonu, `OrderRESTController`) uygulayan sınıflardır."
+        },
+        {
+          "id": "12.3",
+          "title": "Reactive Programming (Spring WebFlux, Project Reactor)",
+          "content": "Geleneksel 'thread-per-request' (her istek için bir thread) modelinin aksine, 'asenkron' (asynchronous) ve 'non-blocking' (engelleyici olmayan) veri akışları (data streams) üzerine kurulu bir programlama paradigm_asıdır. \n\nAz sayıda thread kullanarak çok yüksek sayıda eşzamanlı (concurrent) isteği yönetmeyi (scalability) amaçlar. \n\n* Araçlar: Spring WebFlux (Spring Boot'un reaktif web framework'ü), Project Reactor (Java için reaktif kütüphane - `Mono` ve `Flux` tipleri)."
+        },
+        {
+          "id": "12.4",
+          "title": "GraphQL",
+          "content": "API'ler için geliştirilmiş bir sorgu dili (Query Language) ve 'runtime'ıdır. REST'e bir alternatiftir.\n\n* Farkı: REST'te genellikle sabit 'endpoint'ler vardır (örn: `/users/1` tüm kullanıcı verisini döner). GraphQL'de ise istemci (client), *sadece* ihtiyaç duyduğu veriyi (örn: `user(id: 1) { name, lastOrder { id } }`) tek bir 'endpoint'ten (genellikle `/graphql`) talep edebilir. \n\n* Avantajları: 'Over-fetching' (ihtiyaç fazlası veri çekme) ve 'under-fetching' (istenilen veri için birden fazla API çağırma) sorunlarını çözer."
+        },
+        {
+          "id": "12.5",
+          "title": "Microservice Sagas (Saga Deseni)",
+          "content": "Mikroservis mimarisinde, birden fazla servise yayılan 'distributed transaction' (dağıtık işlemleri) yönetmek için kullanılan bir yöntemdir. (Geleneksel 2-Phase-Commit, mikroservislerde iyi çalışmaz).\n\nSaga, bir dizi lokal 'transaction'dan oluşur. Her lokal 'transaction', servisin kendi veritabanını günceller ve bir 'event' (olay) yayınlayarak bir sonraki 'transaction'ı tetikler. \n\nEğer bir adımda hata olursa, Saga, 'compensating transaction' (telafi edici işlem - örn: 'iptal' olayı yayınlama) çalıştırarak önceki adımları geri alır."
+        }
+      ]
+    }
+  ]
+}

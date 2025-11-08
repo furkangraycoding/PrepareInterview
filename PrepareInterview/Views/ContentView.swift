@@ -60,44 +60,87 @@ struct QuestionListView: View {
     @ObservedObject var viewModel: QuestionViewModel
     @EnvironmentObject var languageManager: LanguageManager
     @State private var showQuestionDetail = false
+    @State private var translatingQuestions: Set<String> = []
+    @State private var isTranslating = false
     
     var localized: LocalizedStrings {
         LocalizedStrings(language: languageManager.currentLanguage)
     }
     
     var body: some View {
-        VStack(spacing: 0) {
-            // Modern Category Selector
-            CategorySelectorView(viewModel: viewModel)
-                .padding(.top, 8)
-            
-            // Question List with better styling
-            ScrollView {
-                LazyVStack(spacing: 12) {
-                    ForEach(Array(viewModel.questions.enumerated()), id: \.element.id) { index, question in
-                        QuestionRowView(
-                            question: question,
-                            index: index,
-                            isCurrent: index == viewModel.currentQuestionIndex
-                        )
-                        .onTapGesture {
-                            withAnimation(.spring(response: 0.3)) {
-                                viewModel.goToQuestion(at: index)
-                                showQuestionDetail = true
+        ZStack {
+            VStack(spacing: 0) {
+                // Modern Category Selector
+                CategorySelectorView(viewModel: viewModel)
+                    .padding(.top, 8)
+                
+                // Question List with better styling
+                ScrollView {
+                    LazyVStack(spacing: 12) {
+                        ForEach(Array(viewModel.questions.enumerated()), id: \.element.id) { index, question in
+                            QuestionRowView(
+                                question: question,
+                                index: index,
+                                isCurrent: index == viewModel.currentQuestionIndex,
+                                onTranslationStart: {
+                                    translatingQuestions.insert(question.id)
+                                    updateTranslatingState()
+                                },
+                                onTranslationComplete: {
+                                    translatingQuestions.remove(question.id)
+                                    updateTranslatingState()
+                                }
+                            )
+                            .onTapGesture {
+                                withAnimation(.spring(response: 0.3)) {
+                                    viewModel.goToQuestion(at: index)
+                                    showQuestionDetail = true
+                                }
                             }
                         }
                     }
+                    .padding(.horizontal)
+                    .padding(.vertical, 8)
                 }
-                .padding(.horizontal)
-                .padding(.vertical, 8)
+                .blur(radius: isTranslating ? 8 : 0)
+                .disabled(isTranslating)
             }
             
-            // Modern Navigation Buttons
-            if let currentQuestion = viewModel.currentQuestion {
-                NavigationButtonsView(
-                    viewModel: viewModel,
-                    currentQuestion: currentQuestion
-                )
+            // Translation Loading Overlay
+            if isTranslating {
+                ZStack {
+                    // Semi-transparent overlay
+                    Color.black.opacity(0.5)
+                        .ignoresSafeArea()
+                    
+                    // Spinner with background
+                    VStack(spacing: 24) {
+                        ZStack {
+                            Circle()
+                                .fill(Color(.systemBackground))
+                                .frame(width: 100, height: 100)
+                                .shadow(color: Color.black.opacity(0.3), radius: 25, x: 0, y: 10)
+                            
+                            ProgressView()
+                                .scaleEffect(1.8)
+                                .tint(.blue)
+                        }
+                        
+                        Text("Translating...")
+                            .font(.headline)
+                            .fontWeight(.bold)
+                            .foregroundColor(.primary)
+                            .padding(.horizontal, 28)
+                            .padding(.vertical, 14)
+                            .background(
+                                Capsule()
+                                    .fill(Color(.systemBackground))
+                                    .shadow(color: Color.black.opacity(0.15), radius: 12, x: 0, y: 5)
+                            )
+                    }
+                }
+                .transition(.opacity)
+                .zIndex(1000)
             }
         }
         .sheet(isPresented: $showQuestionDetail) {
@@ -105,6 +148,14 @@ struct QuestionListView: View {
                 QuestionDetailView(question: question, viewModel: viewModel)
             }
         }
+        .onChange(of: languageManager.currentLanguage) { _ in
+            translatingQuestions.removeAll()
+            updateTranslatingState()
+        }
+    }
+    
+    private func updateTranslatingState() {
+        isTranslating = !translatingQuestions.isEmpty
     }
 }
 
@@ -215,10 +266,22 @@ struct QuestionRowView: View {
     let question: Question
     let index: Int
     let isCurrent: Bool
+    let onTranslationStart: () -> Void
+    let onTranslationComplete: () -> Void
     @EnvironmentObject var languageManager: LanguageManager
+    @State private var translatedTitle: String = ""
+    
+    private let translationService = TranslationService.shared
     
     var localized: LocalizedStrings {
         LocalizedStrings(language: languageManager.currentLanguage)
+    }
+    
+    var displayTitle: String {
+        if languageManager.currentLanguage != .turkish && !translatedTitle.isEmpty {
+            return translatedTitle
+        }
+        return question.title
     }
     
     var body: some View {
@@ -251,7 +314,7 @@ struct QuestionRowView: View {
             }
             
             VStack(alignment: .leading, spacing: 10) {
-                Text(question.title)
+                Text(displayTitle)
                     .font(.system(size: 16, weight: .semibold, design: .rounded))
                     .foregroundColor(isCurrent ? .blue : .primary)
                     .lineLimit(2)
@@ -364,162 +427,31 @@ struct QuestionRowView: View {
                     lineWidth: isCurrent ? 2 : 0
                 )
         )
-    }
-}
-
-struct NavigationButtonsView: View {
-    @ObservedObject var viewModel: QuestionViewModel
-    let currentQuestion: Question
-    @EnvironmentObject var languageManager: LanguageManager
-    
-    var localized: LocalizedStrings {
-        LocalizedStrings(language: languageManager.currentLanguage)
+        .onAppear {
+            translateTitle()
+        }
+        .onChange(of: languageManager.currentLanguage) { _ in
+            translateTitle()
+        }
     }
     
-    var body: some View {
-        VStack(spacing: 0) {
-            Divider()
-                .background(Color.gray.opacity(0.3))
+    private func translateTitle() {
+        guard languageManager.currentLanguage != .turkish else {
+            translatedTitle = ""
+            return
+        }
+        
+        onTranslationStart()
+        
+        Task {
+            let targetLanguage = languageManager.currentLanguage
+            let translated = await translationService.translateFromTurkish(question.title, to: targetLanguage)
             
-            VStack(spacing: 16) {
-                // Enhanced Progress Bar with Info
-                VStack(spacing: 10) {
-                    HStack {
-                        HStack(spacing: 6) {
-                            Image(systemName: "list.number")
-                                .font(.caption2)
-                            Text("\(viewModel.currentQuestionIndex + 1) / \(viewModel.questions.count)")
-                                .font(.system(size: 13, weight: .semibold, design: .rounded))
-                        }
-                        .foregroundColor(.secondary)
-                        
-                        Spacer()
-                        
-                        HStack(spacing: 6) {
-                            Image(systemName: "chart.bar.fill")
-                                .font(.caption2)
-                            Text("\(Int(viewModel.progress * 100))%")
-                                .font(.system(size: 13, weight: .semibold, design: .rounded))
-                        }
-                        .foregroundColor(.secondary)
-                    }
-                    .padding(.horizontal)
-                    
-                    GeometryReader { geometry in
-                        ZStack(alignment: .leading) {
-                            RoundedRectangle(cornerRadius: 6)
-                                .fill(Color.gray.opacity(0.2))
-                                .frame(height: 8)
-                            
-                            RoundedRectangle(cornerRadius: 6)
-                                .fill(
-                                    LinearGradient(
-                                        colors: [Color.blue, Color.purple],
-                                        startPoint: .leading,
-                                        endPoint: .trailing
-                                    )
-                                )
-                                .frame(width: geometry.size.width * viewModel.progress, height: 8)
-                                .shadow(color: Color.blue.opacity(0.3), radius: 4, x: 0, y: 2)
-                        }
-                    }
-                    .frame(height: 8)
-                    .padding(.horizontal)
-                }
-                .padding(.top, 16)
-                
-                // Enhanced Navigation Buttons
-                HStack(spacing: 14) {
-                    Button(action: {
-                        withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                            viewModel.previousQuestion()
-                        }
-                    }) {
-                        HStack(spacing: 10) {
-                            Image(systemName: "chevron.left")
-                                .font(.system(size: 16, weight: .bold))
-                            Text(localized.previous)
-                                .font(.system(size: 16, weight: .bold, design: .rounded))
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 18)
-                        .background(
-                            Group {
-                                if viewModel.canGoPrevious {
-                                    LinearGradient(
-                                        colors: [Color.blue.opacity(0.9), Color.purple.opacity(0.8)],
-                                        startPoint: .leading,
-                                        endPoint: .trailing
-                                    )
-                                } else {
-                                    LinearGradient(
-                                        colors: [Color.gray.opacity(0.2), Color.gray.opacity(0.15)],
-                                        startPoint: .leading,
-                                        endPoint: .trailing
-                                    )
-                                }
-                            }
-                        )
-                        .foregroundColor(viewModel.canGoPrevious ? .white : .gray)
-                        .cornerRadius(16)
-                        .shadow(
-                            color: viewModel.canGoPrevious ? Color.blue.opacity(0.3) : Color.clear,
-                            radius: viewModel.canGoPrevious ? 8 : 0,
-                            x: 0,
-                            y: viewModel.canGoPrevious ? 4 : 0
-                        )
-                    }
-                    .disabled(!viewModel.canGoPrevious)
-                    
-                    Button(action: {
-                        withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                            viewModel.nextQuestion()
-                        }
-                    }) {
-                        HStack(spacing: 10) {
-                            Text(localized.next)
-                                .font(.system(size: 16, weight: .bold, design: .rounded))
-                            Image(systemName: "chevron.right")
-                                .font(.system(size: 16, weight: .bold))
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 18)
-                        .background(
-                            Group {
-                                if viewModel.canGoNext {
-                                    LinearGradient(
-                                        colors: [Color.blue.opacity(0.9), Color.purple.opacity(0.8)],
-                                        startPoint: .leading,
-                                        endPoint: .trailing
-                                    )
-                                } else {
-                                    LinearGradient(
-                                        colors: [Color.gray.opacity(0.2), Color.gray.opacity(0.15)],
-                                        startPoint: .leading,
-                                        endPoint: .trailing
-                                    )
-                                }
-                            }
-                        )
-                        .foregroundColor(viewModel.canGoNext ? .white : .gray)
-                        .cornerRadius(16)
-                        .shadow(
-                            color: viewModel.canGoNext ? Color.blue.opacity(0.3) : Color.clear,
-                            radius: viewModel.canGoNext ? 8 : 0,
-                            x: 0,
-                            y: viewModel.canGoNext ? 4 : 0
-                        )
-                    }
-                    .disabled(!viewModel.canGoNext)
-                }
-                .padding(.horizontal, 20)
-                .padding(.bottom, 16)
+            await MainActor.run {
+                translatedTitle = translated.isEmpty ? question.title : translated
+                onTranslationComplete()
             }
         }
-        .background(
-            Color(.systemBackground)
-                .shadow(color: Color.black.opacity(0.12), radius: 20, x: 0, y: -5)
-        )
     }
 }
 

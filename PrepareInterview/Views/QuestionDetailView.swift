@@ -25,27 +25,29 @@ struct QuestionDetailView: View {
     }
     
     // Get display text based on current language
-    // Title is always shown in original (already in English)
     var displayTitle: String {
+        if languageManager.currentLanguage != .turkish && !translatedTitle.isEmpty {
+            return translatedTitle
+        }
         return question.title
     }
     
     var displayQuestion: String {
-        if languageManager.currentLanguage == .english && !translatedQuestion.isEmpty {
+        if languageManager.currentLanguage != .turkish && !translatedQuestion.isEmpty {
             return translatedQuestion
         }
         return question.question
     }
     
     var displayAnswer: String {
-        if languageManager.currentLanguage == .english && !translatedAnswer.isEmpty {
+        if languageManager.currentLanguage != .turkish && !translatedAnswer.isEmpty {
             return translatedAnswer
         }
         return question.answer
     }
     
     var displayExplanation: String {
-        if languageManager.currentLanguage == .english && !translatedExplanation.isEmpty {
+        if languageManager.currentLanguage != .turkish && !translatedExplanation.isEmpty {
             return translatedExplanation
         }
         return question.explanation
@@ -53,7 +55,7 @@ struct QuestionDetailView: View {
     
     var body: some View {
         NavigationView {
-            ZStack {
+            ZStack(alignment: .topTrailing) {
                 // Enhanced Gradient Background
                 LinearGradient(
                     colors: [
@@ -66,47 +68,15 @@ struct QuestionDetailView: View {
                 )
                 .ignoresSafeArea()
                 
+                // Language Selector Button - Fixed at top right
+                LanguageSelectorButton()
+                    .padding(.top, 8)
+                    .padding(.trailing, 16)
+                    .zIndex(1000)
+                
                 VStack(spacing: 0) {
                     ScrollView {
                         VStack(alignment: .leading, spacing: 24) {
-                            // Progress Indicator
-                            if viewModel.questions.count > 0 {
-                                HStack {
-                                    Text("\(viewModel.currentQuestionIndex + 1) / \(viewModel.questions.count)")
-                                        .font(.caption)
-                                        .fontWeight(.medium)
-                                        .foregroundColor(.secondary)
-                                    Spacer()
-                                    Text("\(Int(viewModel.progress * 100))%")
-                                        .font(.caption)
-                                        .fontWeight(.medium)
-                                        .foregroundColor(.secondary)
-                                }
-                                .padding(.horizontal)
-                                .padding(.top, 8)
-                                
-                                GeometryReader { geometry in
-                                    ZStack(alignment: .leading) {
-                                        RoundedRectangle(cornerRadius: 6)
-                                            .fill(Color.gray.opacity(0.2))
-                                            .frame(height: 6)
-                                        
-                                        RoundedRectangle(cornerRadius: 6)
-                                            .fill(
-                                                LinearGradient(
-                                                    colors: [Color.blue, Color.purple],
-                                                    startPoint: .leading,
-                                                    endPoint: .trailing
-                                                )
-                                            )
-                                            .frame(width: geometry.size.width * viewModel.progress, height: 6)
-                                    }
-                                }
-                                .frame(height: 6)
-                                .padding(.horizontal)
-                                .padding(.bottom, 16)
-                            }
-                            
                             // Category Badge - Enhanced Design
                             HStack {
                                 ZStack {
@@ -304,116 +274,107 @@ struct QuestionDetailView: View {
                             )
                             .padding(.horizontal)
                             
-                            // Bottom padding for navigation buttons
+                            // Navigation Buttons - Inside Question Content
+                            HStack(spacing: 16) {
+                                // Previous Button
+                                Button(action: {
+                                    withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                                        viewModel.previousQuestion()
+                                        resetTranslations()
+                                        translateContent()
+                                    }
+                                }) {
+                                    HStack(spacing: 10) {
+                                        Image(systemName: "chevron.left")
+                                            .font(.headline)
+                                        Text(localized.previous)
+                                            .fontWeight(.bold)
+                                    }
+                                    .frame(maxWidth: .infinity)
+                                    .padding(.vertical, 18)
+                                    .background(
+                                        Group {
+                                            if viewModel.canGoPrevious {
+                                                LinearGradient(
+                                                    colors: [Color.blue.opacity(0.9), Color.purple.opacity(0.8)],
+                                                    startPoint: .leading,
+                                                    endPoint: .trailing
+                                                )
+                                            } else {
+                                                LinearGradient(
+                                                    colors: [Color.gray.opacity(0.2), Color.gray.opacity(0.15)],
+                                                    startPoint: .leading,
+                                                    endPoint: .trailing
+                                                )
+                                            }
+                                        }
+                                    )
+                                    .foregroundColor(viewModel.canGoPrevious ? .white : .gray)
+                                    .cornerRadius(16)
+                                    .shadow(
+                                        color: viewModel.canGoPrevious ? Color.blue.opacity(0.3) : Color.clear,
+                                        radius: viewModel.canGoPrevious ? 8 : 0,
+                                        x: 0,
+                                        y: viewModel.canGoPrevious ? 4 : 0
+                                    )
+                                }
+                                .disabled(!viewModel.canGoPrevious)
+                                
+                                // Next Button
+                                Button(action: {
+                                    withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                                        viewModel.nextQuestion()
+                                        resetTranslations()
+                                        translateContent()
+                                    }
+                                }) {
+                                    HStack(spacing: 10) {
+                                        Text(localized.next)
+                                            .fontWeight(.bold)
+                                        Image(systemName: "chevron.right")
+                                            .font(.headline)
+                                    }
+                                    .frame(maxWidth: .infinity)
+                                    .padding(.vertical, 18)
+                                    .background(
+                                        Group {
+                                            if viewModel.canGoNext {
+                                                LinearGradient(
+                                                    colors: [Color.blue.opacity(0.9), Color.purple.opacity(0.8)],
+                                                    startPoint: .leading,
+                                                    endPoint: .trailing
+                                                )
+                                            } else {
+                                                LinearGradient(
+                                                    colors: [Color.gray.opacity(0.2), Color.gray.opacity(0.15)],
+                                                    startPoint: .leading,
+                                                    endPoint: .trailing
+                                                )
+                                            }
+                                        }
+                                    )
+                                    .foregroundColor(viewModel.canGoNext ? .white : .gray)
+                                    .cornerRadius(16)
+                                    .shadow(
+                                        color: viewModel.canGoNext ? Color.blue.opacity(0.3) : Color.clear,
+                                        radius: viewModel.canGoNext ? 8 : 0,
+                                        x: 0,
+                                        y: viewModel.canGoNext ? 4 : 0
+                                    )
+                                }
+                                .disabled(!viewModel.canGoNext)
+                            }
+                            .padding(.horizontal)
+                            .padding(.top, 24)
+                            .blur(radius: isTranslating ? 8 : 0)
+                            .disabled(isTranslating)
+                            
+                            // Bottom padding
                             Spacer()
-                                .frame(height: 100)
+                                .frame(height: 40)
                         }
                         .padding(.vertical)
                     }
-                    
-                    // Navigation Buttons - Enhanced Design
-                    VStack(spacing: 0) {
-                        Divider()
-                            .background(Color.gray.opacity(0.3))
-                        
-                        HStack(spacing: 16) {
-                            // Previous Button
-                            Button(action: {
-                                withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                                    viewModel.previousQuestion()
-                                    resetTranslations()
-                                    translateContent()
-                                }
-                            }) {
-                                HStack(spacing: 10) {
-                                    Image(systemName: "chevron.left")
-                                        .font(.headline)
-                                    Text(localized.previous)
-                                        .fontWeight(.bold)
-                                }
-                                .frame(maxWidth: .infinity)
-                                .padding(.vertical, 18)
-                                .background(
-                                    Group {
-                                        if viewModel.canGoPrevious {
-                                            LinearGradient(
-                                                colors: [Color.blue.opacity(0.9), Color.purple.opacity(0.8)],
-                                                startPoint: .leading,
-                                                endPoint: .trailing
-                                            )
-                                        } else {
-                                            LinearGradient(
-                                                colors: [Color.gray.opacity(0.2), Color.gray.opacity(0.15)],
-                                                startPoint: .leading,
-                                                endPoint: .trailing
-                                            )
-                                        }
-                                    }
-                                )
-                                .foregroundColor(viewModel.canGoPrevious ? .white : .gray)
-                                .cornerRadius(16)
-                                .shadow(
-                                    color: viewModel.canGoPrevious ? Color.blue.opacity(0.3) : Color.clear,
-                                    radius: viewModel.canGoPrevious ? 8 : 0,
-                                    x: 0,
-                                    y: viewModel.canGoPrevious ? 4 : 0
-                                )
-                            }
-                            .disabled(!viewModel.canGoPrevious)
-                            
-                            // Next Button
-                            Button(action: {
-                                withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                                    viewModel.nextQuestion()
-                                    resetTranslations()
-                                    translateContent()
-                                }
-                            }) {
-                                HStack(spacing: 10) {
-                                    Text(localized.next)
-                                        .fontWeight(.bold)
-                                    Image(systemName: "chevron.right")
-                                        .font(.headline)
-                                }
-                                .frame(maxWidth: .infinity)
-                                .padding(.vertical, 18)
-                                .background(
-                                    Group {
-                                        if viewModel.canGoNext {
-                                            LinearGradient(
-                                                colors: [Color.blue.opacity(0.9), Color.purple.opacity(0.8)],
-                                                startPoint: .leading,
-                                                endPoint: .trailing
-                                            )
-                                        } else {
-                                            LinearGradient(
-                                                colors: [Color.gray.opacity(0.2), Color.gray.opacity(0.15)],
-                                                startPoint: .leading,
-                                                endPoint: .trailing
-                                            )
-                                        }
-                                    }
-                                )
-                                .foregroundColor(viewModel.canGoNext ? .white : .gray)
-                                .cornerRadius(16)
-                                .shadow(
-                                    color: viewModel.canGoNext ? Color.blue.opacity(0.3) : Color.clear,
-                                    radius: viewModel.canGoNext ? 8 : 0,
-                                    x: 0,
-                                    y: viewModel.canGoNext ? 4 : 0
-                                )
-                            }
-                            .disabled(!viewModel.canGoNext)
-                        }
-                        .padding(.horizontal, 20)
-                        .padding(.vertical, 16)
-                        .background(
-                            Color(.systemBackground)
-                                .shadow(color: Color.black.opacity(0.1), radius: 20, x: 0, y: -5)
-                        )
-                    }
-                    .blur(radius: isTranslating ? 8 : 0)
-                    .disabled(isTranslating)
                 }
                 
                 // Translation Loading Overlay
@@ -463,10 +424,6 @@ struct QuestionDetailView: View {
                     .fontWeight(.semibold)
                     .foregroundColor(.blue)
                 }
-                
-                ToolbarItem(placement: .navigationBarLeading) {
-                    LanguageToggleButton()
-                }
             }
             .onAppear {
                 translateContent()
@@ -482,27 +439,34 @@ struct QuestionDetailView: View {
     }
     
     private func translateContent() {
-        guard languageManager.currentLanguage == .english else {
+        guard languageManager.currentLanguage != .turkish else {
             resetTranslations()
+            isTranslating = false
             return
         }
         
+        // Reset all translations
+        resetTranslations()
         isTranslating = true
         
         Task {
-            // Don't translate title - it's already in English
-            async let questionTask = translationService.translateToEnglish(question.question)
-            async let answerTask = translationService.translateToEnglish(question.answer)
-            async let explanationTask = translationService.translateToEnglish(question.explanation)
+            let targetLanguage = languageManager.currentLanguage
+            // Translate title, question, answer, and explanation
+            async let titleTask = translationService.translateFromTurkish(question.title, to: targetLanguage)
+            async let questionTask = translationService.translateFromTurkish(question.question, to: targetLanguage)
+            async let answerTask = translationService.translateFromTurkish(question.answer, to: targetLanguage)
+            async let explanationTask = translationService.translateFromTurkish(question.explanation, to: targetLanguage)
             
-            let (questionText, answer, explanation) = await (questionTask, answerTask, explanationTask)
+            let (title, questionText, answer, explanation) = await (titleTask, questionTask, answerTask, explanationTask)
             
             await MainActor.run {
-                // Keep title empty - we don't translate it
-                translatedTitle = ""
-                translatedQuestion = questionText
-                translatedAnswer = answer
-                translatedExplanation = explanation
+                // Only set translations if they're not empty and different from original
+                translatedTitle = (title.isEmpty || title == question.title) ? question.title : title
+                translatedQuestion = (questionText.isEmpty || questionText == question.question) ? question.question : questionText
+                translatedAnswer = (answer.isEmpty || answer == question.answer) ? question.answer : answer
+                translatedExplanation = (explanation.isEmpty || explanation == question.explanation) ? question.explanation : explanation
+                
+                // Only hide spinner when all translations are complete
                 isTranslating = false
             }
         }
