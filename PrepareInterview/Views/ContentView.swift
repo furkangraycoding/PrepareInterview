@@ -50,6 +50,7 @@ struct ContentView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     LanguageToggleButton()
+                        .padding(.top, 60)
                 }
             }
         }

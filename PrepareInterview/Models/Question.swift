@@ -28,9 +28,9 @@ enum QuestionCategory: String, CaseIterable {
     var displayName: String {
         switch self {
         case .lowLevelDesign:
-            return "Low Level Design"
+            return "Low Level"  // "Low Level Design" yerine
         case .highLevelDesign:
-            return "High Level Design"
+            return "High Level"  // "High Level Design" yerine
         }
     }
 }

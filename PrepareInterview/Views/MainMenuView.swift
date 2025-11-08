@@ -33,7 +33,7 @@ struct MainMenuView: View {
                 
                 // Language Selector Button - Fixed at top right
                 LanguageSelectorButton()
-                    .padding(.top, 8)
+                    .padding(.top, 60)
                     .padding(.trailing, 16)
                     .zIndex(1000)
                 

@@ -7,16 +7,16 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		A0419F552EBF87F700058C23 /* PrepareInterview.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PrepareInterview.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A0419F552EBF87F700058C23 /* Java Interview.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Java Interview.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		A0419F7C2EBF8C7600058C23 /* Exceptions for "PrepareInterview" folder in "PrepareInterview" target */ = {
+		A0419F7C2EBF8C7600058C23 /* Exceptions for "PrepareInterview" folder in "Java Interview" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = A0419F542EBF87F700058C23 /* PrepareInterview */;
+			target = A0419F542EBF87F700058C23 /* Java Interview */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -24,7 +24,7 @@
 		A0419F572EBF87F700058C23 /* PrepareInterview */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				A0419F7C2EBF8C7600058C23 /* Exceptions for "PrepareInterview" folder in "PrepareInterview" target */,
+				A0419F7C2EBF8C7600058C23 /* Exceptions for "PrepareInterview" folder in "Java Interview" target */,
 			);
 			path = PrepareInterview;
 			sourceTree = "<group>";
@@ -53,7 +53,7 @@
 		A0419F562EBF87F700058C23 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A0419F552EBF87F700058C23 /* PrepareInterview.app */,
+				A0419F552EBF87F700058C23 /* Java Interview.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -61,9 +61,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A0419F542EBF87F700058C23 /* PrepareInterview */ = {
+		A0419F542EBF87F700058C23 /* Java Interview */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A0419F622EBF87F800058C23 /* Build configuration list for PBXNativeTarget "PrepareInterview" */;
+			buildConfigurationList = A0419F622EBF87F800058C23 /* Build configuration list for PBXNativeTarget "Java Interview" */;
 			buildPhases = (
 				A0419F512EBF87F700058C23 /* Sources */,
 				A0419F522EBF87F700058C23 /* Frameworks */,
@@ -76,11 +76,11 @@
 			fileSystemSynchronizedGroups = (
 				A0419F572EBF87F700058C23 /* PrepareInterview */,
 			);
-			name = PrepareInterview;
+			name = "Java Interview";
 			packageProductDependencies = (
 			);
 			productName = PrepareInterview;
-			productReference = A0419F552EBF87F700058C23 /* PrepareInterview.app */;
+			productReference = A0419F552EBF87F700058C23 /* Java Interview.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -98,7 +98,7 @@
 					};
 				};
 			};
-			buildConfigurationList = A0419F502EBF87F700058C23 /* Build configuration list for PBXProject "PrepareInterview" */;
+			buildConfigurationList = A0419F502EBF87F700058C23 /* Build configuration list for PBXProject "Java Interview" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -112,7 +112,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A0419F542EBF87F700058C23 /* PrepareInterview */,
+				A0419F542EBF87F700058C23 /* Java Interview */,
 			);
 		};
 /* End PBXProject section */
@@ -275,6 +275,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -304,6 +305,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -320,7 +322,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A0419F502EBF87F700058C23 /* Build configuration list for PBXProject "PrepareInterview" */ = {
+		A0419F502EBF87F700058C23 /* Build configuration list for PBXProject "Java Interview" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A0419F602EBF87F800058C23 /* Debug */,
@@ -329,7 +331,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A0419F622EBF87F800058C23 /* Build configuration list for PBXNativeTarget "PrepareInterview" */ = {
+		A0419F622EBF87F800058C23 /* Build configuration list for PBXNativeTarget "Java Interview" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A0419F632EBF87F800058C23 /* Debug */,

@@ -6,7 +6,7 @@ struct PrepareInterviewApp: App {
     
     var body: some Scene {
         WindowGroup {
-            MainMenuView()
+            SplashScreenView()
                 .environmentObject(languageManager)
         }
     }

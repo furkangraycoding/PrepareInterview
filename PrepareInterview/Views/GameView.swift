@@ -30,12 +30,6 @@ struct GameView: View {
             )
             .ignoresSafeArea()
             
-            // Language Selector Button - Fixed at top right
-            LanguageSelectorButton()
-                .padding(.top, 8)
-                .padding(.trailing, 16)
-                .zIndex(1000)
-            
             if viewModel.isLoading {
                 VStack(spacing: 20) {
                     ProgressView()
